@@ -182,7 +182,7 @@ void freq_list_open(lv_obj_t *parent, const char *title, const freq_list_item_t 
     lv_obj_t *hint = lv_label_create(panel);
     lv_obj_set_style_text_font(hint, &sony_18, 0);
     lv_obj_set_style_text_color(hint, lv_color_hex(COLOR_DIM), 0);
-    lv_label_set_text(hint, "MFK: choose - press: tune");
+    lv_label_set_text(hint, "MFK：选择 - 按下：调谐");
     lv_obj_set_pos(hint, 18, DIALOG_H - 30);
 
     table = lv_table_create(panel);

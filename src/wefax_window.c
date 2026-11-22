@@ -144,24 +144,24 @@ static char          tx_path[192];
 /* ---- buttons: F1 goes round the 4 pages ---- */
 
 static button_data_t btn_page_1  = {.type = BTN_TEXT, .label = "(FAX 1:4)", .press = page_2_cb};
-static button_data_t btn_freq    = {.type = BTN_TEXT, .label = "Freq.", .press = freq_cb};
+static button_data_t btn_freq    = {.type = BTN_TEXT, .label = "频率", .press = freq_cb};
 static button_data_t btn_rx_mode = {.type = BTN_TEXT_FN, .label_fn = rx_mode_label, .press = rx_mode_cb};
-static button_data_t btn_clear   = {.type = BTN_TEXT, .label = "Clear", .press = clear_cb};
-static button_data_t btn_close   = {.type = BTN_TEXT, .label = "Close", .press = close_cb};
+static button_data_t btn_clear   = {.type = BTN_TEXT, .label = "清除", .press = clear_cb};
+static button_data_t btn_close   = {.type = BTN_TEXT, .label = "关闭", .press = close_cb};
 
 static button_data_t btn_page_2 = {.type = BTN_TEXT, .label = "(FAX 2:4)", .press = page_3_cb};
 static button_data_t btn_align  = {.type = BTN_TEXT_FN, .label_fn = align_label, .press = align_cb,
                                    .ctrl = CTRL_WEFAX_ALIGN, .encoder_allowed = true};
 static button_data_t btn_tilt   = {.type = BTN_TEXT_FN, .label_fn = tilt_label, .press = tilt_cb,
                                    .ctrl = CTRL_WEFAX_TILT, .encoder_allowed = true};
-static button_data_t btn_view   = {.type = BTN_TEXT, .label = "View\nBig", .press = view_cb};
-static button_data_t btn_save   = {.type = BTN_TEXT, .label = "Save", .press = save_cb};
+static button_data_t btn_view   = {.type = BTN_TEXT, .label = "视图\\n放大", .press = view_cb};
+static button_data_t btn_save   = {.type = BTN_TEXT, .label = "保存", .press = save_cb};
 
 static button_data_t btn_page_3    = {.type = BTN_TEXT, .label = "(FAX 3:4)", .press = page_4_cb};
-static button_data_t btn_browser   = {.type = BTN_TEXT, .label = "Fax\nBrowser", .press = browser_cb};
-static button_data_t btn_fix_align = {.type = BTN_TEXT, .label = "Fix\nAlign", .press = fix_align_cb, .disabled = true};
-static button_data_t btn_fix_tilt  = {.type = BTN_TEXT, .label = "Fix\nTilt", .press = fix_tilt_cb, .disabled = true};
-static button_data_t btn_done      = {.type = BTN_TEXT, .label = "Done", .press = done_cb, .disabled = true};
+static button_data_t btn_browser   = {.type = BTN_TEXT, .label = "传真\\n浏览器", .press = browser_cb};
+static button_data_t btn_fix_align = {.type = BTN_TEXT, .label = "修正\\n对齐", .press = fix_align_cb, .disabled = true};
+static button_data_t btn_fix_tilt  = {.type = BTN_TEXT, .label = "修正\\n倾斜", .press = fix_tilt_cb, .disabled = true};
+static button_data_t btn_done      = {.type = BTN_TEXT, .label = "完成", .press = done_cb, .disabled = true};
 
 /* page 4: TX power */
 static button_data_t btn_page_4 = {.type = BTN_TEXT, .label = "(FAX 4:4)", .press = page_1_cb};
@@ -741,11 +741,11 @@ static void tx_start(const char *name)
     for (size_t i = 0; ok && i < len; i++)
         ok = isalnum((unsigned char)name[i]) || strchr("._ -", name[i]);
     if (!ok) {
-        msg_update_text_fmt("WeFax TX: bad file name");
+        msg_update_text_fmt("WeFax发射：文件名无效");
         return;
     }
     if (tx_running || tx_thread_on) {
-        msg_update_text_fmt("WeFax TX busy");
+        msg_update_text_fmt("WeFax发射忙");
         return;
     }
 
@@ -780,11 +780,11 @@ static void tx_poll(void)
     app_frame_bar(&frame, -1, 0);
 
     if (tx_result == 1)
-        msg_update_text_fmt("WeFax TX done");
+        msg_update_text_fmt("WeFax发射完成");
     else if (tx_result == -1)
-        msg_update_text_fmt("WeFax TX stopped");
+        msg_update_text_fmt("WeFax发射已停止");
     else
-        msg_update_text_fmt("WeFax TX failed (%i)", tx_result);
+        msg_update_text_fmt("WeFax发射失败（%i）", tx_result);
 
     if (decoder)
         rx_restart();       /* RX goes on from a clean decoder */
@@ -954,7 +954,7 @@ static void app_open(lv_obj_t *parent)
 {
     app_parent     = parent;
     view           = VIEW_BIG;          /* the common app look; Small shows the waterfall */
-    btn_view.label = "View\nBig";       /* the label names the view on screen */
+    btn_view.label = "视图\\n放大";       /* the label names the view on screen */
     align_on       = false;
     gen_seen       = 0;
     fax_on         = false;
@@ -1007,7 +1007,7 @@ static void app_open(lv_obj_t *parent)
     lv_obj_clear_flag(panel, LV_OBJ_FLAG_CLICKABLE);
 
     app_frame_create(&frame, dialog.obj);
-    lv_label_set_text(frame.status, "MFK: align   Freq.: stations   View: Small shows the waterfall");
+    lv_label_set_text(frame.status, "MFK：对齐   频率：台站   视图：缩小显示瀑布");
 
     /* the canvas takes the keys: the main screen's key handler is off while a dialog is open */
     lv_group_add_obj(keyboard_group, canvas);
@@ -1180,7 +1180,7 @@ static void browser_buttons(bool picture)
     }
 
     br_modified    = false;
-    btn_done.label = "Delete\nFax";
+    btn_done.label = "删除\\n传真";
     buttons_disabled(&btn_fix_align, true);
     buttons_disabled(&btn_fix_tilt, true);
     buttons_disabled(&btn_done, files_n == 0);
@@ -1195,7 +1195,7 @@ static void table_fill(void)
 
     if (!files_n) {
         lv_table_set_row_cnt(table, 1);
-        lv_table_set_cell_value(table, 0, 0, "No saved faxes");
+        lv_table_set_cell_value(table, 0, 0, "无已保存传真");
     } else {
         lv_table_set_row_cnt(table, files_n);
         for (unsigned i = 0; i < files_n; i++)
@@ -1400,7 +1400,7 @@ static void browser_open(void)
 
     br_open = true;
     browser_buttons(false);
-    btn_browser.label = "Close\nBrowser";
+    btn_browser.label = "关闭\\n浏览器";
     if (btn_browser.disp_btn)
         buttons_refresh(&btn_browser);
 }
@@ -1417,11 +1417,11 @@ static void browser_close(void)
     picture_free();
     br_open = false;
 
-    btn_done.label = "Done";
+    btn_done.label = "完成";
     buttons_disabled(&btn_done, true);
     if (btn_done.disp_btn)
         buttons_refresh(&btn_done);
-    btn_browser.label = "Fax\nBrowser";
+    btn_browser.label = "传真\\n浏览器";
 
     /* the live fax back over the picture, with the current layout */
     draw_live();
@@ -1653,7 +1653,7 @@ static void view_cb(button_data_t *data)
 {
     (void)data;
 
-    static const char *labels[] = {"View\nSmall", "View\nBig", "View\nFull Size"};
+    static const char *labels[] = {"视图\\n缩小", "View\nBig", "View\nFull Size"};
 
     view           = (view + 1) % 3;
     btn_view.label = labels[view];

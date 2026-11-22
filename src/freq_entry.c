@@ -38,7 +38,7 @@ static void tune_to_entry(void) {
     if (radio_check_freq(hz))
         main_screen_set_freq(hz);
     else
-        msg_update_text_fmt("Incorrect freq");
+        msg_update_text_fmt("频率无效");
 }
 
 /* F-INP again or ENTER tunes, ESC leaves it, VOL keeps the volume */

@@ -150,7 +150,7 @@ static bool toggle_freq_lock(void) {
 }
 
 static void say_lock(bool on) {
-    msg_update_text_fmt("%s", on ? "Dial locked" : "Dial unlocked");
+    msg_update_text_fmt("%s", on ? "拨盘已锁定" : "拨盘已解锁");
 }
 
 /* LOCK held: the base board restart, a way out when the base stops answering (#57), only once LOCK has been held
@@ -162,7 +162,7 @@ static lv_timer_t   *lock_reset_timer;
 static int          lock_reset_left;
 
 static void lock_reset_say(void) {
-    msg_update_text_fmt("Keep holding LOCK to restart: %i s", lock_reset_left);   /* fits the box whole */
+    msg_update_text_fmt("继续按住LOCK重启：%i秒", lock_reset_left);   /* fits the box whole */
 }
 
 static void lock_reset_tick(lv_timer_t *t) {
@@ -188,7 +188,7 @@ static void lock_reset_stop(void) {
     if (lock_reset_timer) {
         lv_timer_del(lock_reset_timer);
         lock_reset_timer = NULL;
-        msg_update_text_fmt("LOCK let go: no restart");
+        msg_update_text_fmt("已松开LOCK：不重启");
     }
 }
 
@@ -395,17 +395,17 @@ void mem_load(uint16_t id) {
     bool loaded = cfg_memory_load(id);
 
     if (!loaded) {
-        msg_update_text_fmt("Nothing to load for memory %i", id);
+        msg_update_text_fmt("记忆%i无内容可加载", id);
     }
     if (id != MEM_BACKUP_ID) {
-        msg_update_text_fmt("Loaded from memory %i", id);   /* even when empty: it covers the line above */
+        msg_update_text_fmt("已从记忆%i加载", id);   /* even when empty: it covers the line above */
     }
 }
 
 void mem_save(uint16_t id) {
     cfg_memory_save(id);
     if (id <= MEM_HKEY_MAX_ID) {
-        msg_update_text_fmt("Saved in memory %i", id);
+        msg_update_text_fmt("已存入记忆%i", id);
     }
 }
 
@@ -445,7 +445,7 @@ static bool toggle_atu(void) {
 static void step_freq_step(bool up) {
     char st[16];
 
-    msg_update_text_fmt("Freq step: %s", cfg_freq_step_text(cfg_mode_change_freq_step(up), st, sizeof(st)));
+    msg_update_text_fmt("频率步进：%s", cfg_freq_step_text(cfg_mode_change_freq_step(up), st, sizeof(st)));
 }
 
 static bool toggle_param(ParamInt *p) {
@@ -813,7 +813,7 @@ static void ab_key(bool tap, bool hold) {
         bool on_a = param_i_get(cfg_band_current_vfo) == RADIO_VFO_A;
 
         cfg_band_vfo_copy();
-        msg_update_text_fmt("Clone VFO %s", on_a ? "A->B" : "B->A");
+        msg_update_text_fmt("克隆VFO %s", on_a ? "A->B" : "B->A");
     }
 }
 
@@ -960,7 +960,7 @@ static void front_key_cb(lv_event_t *e) {
             if (tap) {
                 backlight_switch();
             } else if (hold) {
-                msg_update_text_fmt("Power off");
+                msg_update_text_fmt("关机");
                 cluster_client_stop();      /* the cluster link closed, not left to time out at the node */
                 if (radio_get_state() == RADIO_RX)
                     band_keep_end();        /* the Scanner or Propagation open: the dials back first, never on the air */
@@ -1006,7 +1006,7 @@ static void mic_vol_step(void) {
     uint16_t vol = radio_change_vol(mic_vol_key == HKEY_VOL_UP ? +1 : -1);
 
     if (!knobs_visible() || vol_get_ctrl() != CTRL_VOL) {
-        msg_update_text_fmt("Volume: %i", vol);
+        msg_update_text_fmt("音量：%i", vol);
     }
 }
 
@@ -1965,7 +1965,7 @@ static lv_timer_t *power_off_timer;
 
 static void power_off_cb(lv_timer_t *t) {
     power_off_timer = NULL;     /* one shot: LVGL deletes it */
-    msg_update_text_fmt("Power off");
+    msg_update_text_fmt("关机");
     radio_set_charger(true);
     cluster_client_stop();
     if (radio_get_state() == RADIO_RX)

@@ -137,7 +137,7 @@ static button_data_t btn_page3   = {.type = BTN_TEXT, .label = "(WSPR 3:3)", .pr
 static button_data_t btn_tx_pct  = {.type = BTN_TEXT_FN, .label_fn = tx_pct_label, .press = tx_pct_cb};
 static button_data_t btn_tx_next = {.type = BTN_TEXT_FN, .label_fn = tx_next_label, .press = tx_next_cb};
 static button_data_t btn_upload  = {.type = BTN_TEXT_FN, .label_fn = upload_label, .press = upload_cb};
-static button_data_t btn_clear   = {.type = BTN_TEXT, .label = "Clear", .press = clear_cb};
+static button_data_t btn_clear   = {.type = BTN_TEXT, .label = "清除", .press = clear_cb};
 static button_data_t btn_tx_pct2 = {.type = BTN_TEXT_FN, .label_fn = tx_pct_label, .press = tx_pct_cb};  /* TX % seen on page 2 too */
 static button_data_t btn_pwr     = {.type = BTN_TEXT_FN, .label_fn = pwr_label, .press = pwr_cb};  /* WSPR's own, not the radio's */
 static button_data_t btn_hop     = {.type = BTN_TEXT_FN, .label_fn = hop_label, .press = hop_cb};
@@ -273,11 +273,11 @@ static void tx_ok_update(void) {
     if (!ok && param_i_get(cfg_wspr_hop) && atomic_compare_exchange_strong(&state, &st, ST_WAIT)) {
         tx_next_look_cb(NULL);
         if (b < 0) {
-            msg_update_text_fmt("WSPR: no band of the hop here, beacon stopped");
+            msg_update_text_fmt("WSPR：此处无跳变波段，信标已停止");
         } else if (no_match) {
-            msg_update_text_fmt("WSPR: %dm: no ATU match stored, beacon stopped", wspr_hop_band_m(b));
+            msg_update_text_fmt("WSPR：%dm：无存储的天调匹配，信标已停止", wspr_hop_band_m(b));
         } else {
-            msg_update_text_fmt("WSPR: %dm is %s with Hop on, beacon stopped", wspr_hop_band_m(b),
+            msg_update_text_fmt("WSPR：%dm为%s且跳变开启，信标已停止", wspr_hop_band_m(b),
                                 wspr_hop_use_name(wspr_hop_use(param_i_get(cfg_wspr_bands), b)));
         }
     }
@@ -302,7 +302,7 @@ static void hop_to(time_t cycle) {
     }
     if (next >= 0 && !band_check(next, band_freq[next], &no_match) && no_match) {
         /* No tuning carrier of its own: the hop listens there. Tuning once on the band stores a match */
-        msg_update_text_fmt("%dm: no ATU match stored, RX only", wspr_hop_band_m(next));
+        msg_update_text_fmt("%dm：无存储的天调匹配，仅接收", wspr_hop_band_m(next));
     }
 }
 
@@ -620,7 +620,7 @@ static void decoded_cb(void *arg) {
     }
     table_fill();
     lv_obj_scroll_to_y(table, 0, LV_ANIM_OFF);
-    msg_update_text_fmt("WSPR: %d spot%s", res->n, res->n == 1 ? "" : "s");
+    msg_update_text_fmt("WSPR：%d个信标%s", res->n, res->n == 1 ? "" : "s");
 }
 
 void dialog_wspr_show_spots(const wspr_spot_t *spots, int n) {
@@ -635,7 +635,7 @@ void dialog_wspr_show_spots(const wspr_spot_t *spots, int n) {
 
 /* Each band's frequency, use, slots and whether the ATU has a match stored for it */
 static void bands_fill(void) {
-    static const char *heads[BAND_COLS] = {"Band", "MHz", "Use", "Slots", "ATU match"};
+    static const char *heads[BAND_COLS] = {"波段", "MHz", "Use", "Slots", "ATU match"};
     int32_t            bands = param_i_get(cfg_wspr_bands);
     bool               atu   = param_i_get(cfg_atu_enabled);
 
@@ -658,14 +658,14 @@ static void bands_fill(void) {
         if (i < WSPR_HOP_SLOTS) {
             lv_table_set_cell_value_fmt(bands_table, r, 3, ":%02d :%02d :%02d", 2 * i, 2 * i + 20, 2 * i + 40);
         } else {
-            lv_table_set_cell_value(bands_table, r, 3, "Off slots");   /* 6 m: none of its own */
+            lv_table_set_cell_value(bands_table, r, 3, "关闭时隙");   /* 6 m: none of its own */
         }
         if (!band_freq[i]) {
             lv_table_set_cell_value(bands_table, r, 4, "");
         } else if (cfg_atu_has_network_at(band_freq[i])) {
-            lv_table_set_cell_value(bands_table, r, 4, "Stored");
+            lv_table_set_cell_value(bands_table, r, 4, "已存储");
         } else {
-            lv_table_set_cell_value(bands_table, r, 4, atu && use == WSPR_USE_TX ? "None: RX only" : "None");
+            lv_table_set_cell_value(bands_table, r, 4, atu && use == WSPR_USE_TX ? "无：仅接收" : "无");
         }
     }
 }
@@ -799,7 +799,7 @@ static void timer_cb(lv_timer_t *t) {
             lv_label_set_text_fmt(frame.head_right, "#%06x TX#  %d:%02d", theme_hex(TC_tx), (int)s / 60, (int)s % 60);
             break;
         default:
-            lv_label_set_text_fmt(frame.head_right, "%s  %d:%02d", atomic_load(&decoding) ? "Decoding" : "Wait",
+            lv_label_set_text_fmt(frame.head_right, "%s  %d:%02d", atomic_load(&decoding) ? "正在解码" : "等待",
                                   (int)(CYCLE_S - s) / 60, (int)(CYCLE_S - s) % 60);
             break;
     }
@@ -844,11 +844,11 @@ static const char *tx_pct_label(void) {
  * at 1:56, when the beacon is made, with a message easy to miss (a radio with no QTH set and no GPS fix) */
 static bool tx_possible(void) {
     if (!my_call[0]) {
-        msg_update_text_fmt("WSPR TX: set the callsign in Settings");
+        msg_update_text_fmt("WSPR发射：请在设置中设置呼号");
         return false;
     }
     if (strlen(my_grid) < 4) {
-        msg_update_text_fmt("WSPR TX: set the QTH locator in Settings");
+        msg_update_text_fmt("WSPR发射：请在设置中设置QTH定位");
         return false;
     }
     return true;
@@ -869,7 +869,7 @@ static void tx_pct_cb(button_data_t *b) {
     }
     param_i_set(cfg_wspr_tx_pct, next);
     if (cur == 0 && next > 0 && param_i_get(cfg_wspr_hop) && !wspr_hop_any(param_i_get(cfg_wspr_bands), WSPR_USE_TX)) {
-        msg_update_text_fmt("WSPR Hop: no band is set to RX+TX (page 3), no beacon");
+        msg_update_text_fmt("WSPR跳变：无波段设为RX+TX（第3页），无信标");
     }
 }
 
@@ -913,7 +913,7 @@ static void stop_tx(void) {
     param_i_set(cfg_wspr_tx_pct, 0);
     atomic_compare_exchange_strong(&state, &st, ST_WAIT);   /* tx_abort_cb ends it */
     tx_next_look_cb(NULL);
-    msg_update_text_fmt("WSPR: TX stopped, TX %% off");
+    msg_update_text_fmt("WSPR：发射已停止，TX %%关闭");
 }
 
 /* While a beacon is due or on the air the button is Stop TX (page 1 has no room for one more). Before, a press
@@ -932,7 +932,7 @@ static void tx_next_cb(button_data_t *b) {
     atomic_store(&tx_next, on);
     tx_next_look_cb(NULL);
     if (on && param_i_get(cfg_wspr_hop) && !atomic_load(&band_tx_ok)) {
-        msg_update_text_fmt("WSPR Hop: receive only here, TX next waits for an RX+TX band");
+        msg_update_text_fmt("WSPR跳变：此处仅接收，下次发射等待RX+TX波段");
     }
 }
 
@@ -947,11 +947,11 @@ static void hop_cb(button_data_t *b) {
     param_i_set(cfg_wspr_hop, on);
     band_freqs_load();
     if (!on) {
-        msg_update_text_fmt("WSPR Hop off: %s stays", cfg_digital_label_get());
+        msg_update_text_fmt("WSPR跳变关闭：保持%s", cfg_digital_label_get());
     } else if (!wspr_hop_any(wspr_hop_usable(param_i_get(cfg_wspr_bands), band_freq), WSPR_USE_RX)) {
-        msg_update_text_fmt("WSPR Hop: every band is Off (page 3), it stays here");
+        msg_update_text_fmt("WSPR跳变：所有波段均关闭（第3页），保持此处");
     } else {
-        msg_update_text_fmt("WSPR Hop on: the band follows the 2-minute slots from the next cycle");
+        msg_update_text_fmt("WSPR跳变开启：波段按下一周期的2分钟时隙切换");
     }
     tx_ok_update();     /* after: a beacon it stops says so */
 }
@@ -998,9 +998,9 @@ static void use_cb(button_data_t *b) {
     }
     band_check(band_sel, band_freq[band_sel], &no_match);
     if (!band_freq[band_sel]) {
-        msg_update_text_fmt("%dm: no WSPR frequency in the list, the hop skips it", wspr_hop_band_m(band_sel));
+        msg_update_text_fmt("%dm：列表无WSPR频率，跳变跳过", wspr_hop_band_m(band_sel));
     } else if (no_match) {
-        msg_update_text_fmt("%dm: no ATU match stored, RX only", wspr_hop_band_m(band_sel));
+        msg_update_text_fmt("%dm：无存储的天调匹配，仅接收", wspr_hop_band_m(band_sel));
     }
 }
 
@@ -1017,15 +1017,15 @@ static void restart_cycle(void);
  * next hop leaves it again */
 static void goto_cb(button_data_t *b) {
     if (atomic_load(&state) == ST_TX) {
-        msg_update_text_fmt("WSPR: wait for the end of the beacon");
+        msg_update_text_fmt("WSPR：请等待信标结束");
         return;
     }
     if (!band_freq[band_sel]) {
-        msg_update_text_fmt("%dm: no WSPR frequency in the list", wspr_hop_band_m(band_sel));
+        msg_update_text_fmt("%dm：列表无WSPR频率", wspr_hop_band_m(band_sel));
         return;
     }
     if (cfg_digital_load_at(band_freq[band_sel], CFG_DIG_TYPE_WSPR)) {
-        msg_update_text_fmt("%s%s", cfg_digital_label_get(), param_i_get(cfg_wspr_hop) ? ", until the next hop" : "");
+        msg_update_text_fmt("%s%s", cfg_digital_label_get(), param_i_get(cfg_wspr_hop) ? "，至下次跳变" : "");
         restart_cycle();
         tx_ok_update();
         if (bands_shown) {
@@ -1057,11 +1057,11 @@ static void restart_cycle(void) {
 static void band_cb(lv_event_t *e) {
     /* tx_player gives the old frequency back at the end of the beacon */
     if (atomic_load(&state) == ST_TX) {
-        msg_update_text_fmt("WSPR: wait for the end of the beacon");
+        msg_update_text_fmt("WSPR：请等待信标结束");
         return;
     }
     if (cfg_digital_load(lv_event_get_code(e) == EVENT_BAND_UP ? 1 : -1, CFG_DIG_TYPE_WSPR)) {
-        msg_update_text_fmt("%s%s", cfg_digital_label_get(), param_i_get(cfg_wspr_hop) ? ", until the next hop" : "");
+        msg_update_text_fmt("%s%s", cfg_digital_label_get(), param_i_get(cfg_wspr_hop) ? "，至下次跳变" : "");
         restart_cycle();     /* this cycle was on the old band */
         tx_ok_update();
         if (bands_shown) {
@@ -1076,7 +1076,7 @@ static void rotary_cb(int32_t diff) {
     f = f < 1410 ? 1410 : f > 1590 ? 1590 : f;
     param_i_set(cfg_wspr_tx_freq, f);
     freq_strip_set_offset(f);
-    msg_update_text_fmt("WSPR TX at %d Hz", f);
+    msg_update_text_fmt("WSPR发射 %d Hz", f);
 }
 
 static void key_cb(lv_event_t *e) {

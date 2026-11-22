@@ -931,13 +931,13 @@ static const char *cq_level_label(void);
 static const char *boot_label(void);
 static const char *activate_label(void);
 
-static button_data_t b_home   = {.type = BTN_TEXT, .label = "FIELD OPS"};
+static button_data_t b_home   = {.type = BTN_TEXT, .label = "野外通联"};
 static button_data_t b_reccq  = {.type = BTN_TEXT_FN, .label_fn = rec_cq_label, .press = rec_cq_cb};
-static button_data_t b_open   = {.type = BTN_TEXT, .label = "Select", .press = open_cb};
+static button_data_t b_open   = {.type = BTN_TEXT, .label = "选择", .press = open_cb};
 static button_data_t b_boot   = {.type = BTN_TEXT_FN, .label_fn = boot_label, .press = boot_cb};
 static button_data_t b_respot = {.type = BTN_TEXT_FN, .label_fn = respot_label, .press = respot_cb};
-static button_data_t b_exit   = {.type = BTN_TEXT, .label = "Radio", .press = exit_cb};
-static button_data_t b_back   = {.type = BTN_TEXT, .label = "Back", .press = back_cb};
+static button_data_t b_exit   = {.type = BTN_TEXT, .label = "电台", .press = exit_cb};
+static button_data_t b_back   = {.type = BTN_TEXT, .label = "返回", .press = back_cb};
 static button_data_t b_ref1   = {.type = BTN_TEXT, .label = "(1:2)", .press = page_cb};
 static button_data_t b_ref2   = {.type = BTN_TEXT, .label = "(2:2)", .press = page_cb};
 static button_data_t b_act1   = {.type = BTN_TEXT, .label = "(1:2)", .press = page_cb};
@@ -945,18 +945,18 @@ static button_data_t b_act2   = {.type = BTN_TEXT, .label = "(2:2)", .press = pa
 static button_data_t b_act    = {.type = BTN_TEXT_FN, .label_fn = activate_label, .press = activate_cb};
 static const char *spot_label(void);
 static button_data_t b_spot   = {.type = BTN_TEXT_FN, .label_fn = spot_label, .press = spot_cb};
-static button_data_t b_log    = {.type = BTN_TEXT, .label = "Log\nQSO", .press = log_cb};
-static button_data_t b_ref    = {.type = BTN_TEXT, .label = "Ref...", .press = ref_cb};
-static button_data_t b_update = {.type = BTN_TEXT, .label = "Update\nlist", .press = update_cb};
+static button_data_t b_log    = {.type = BTN_TEXT, .label = "记录\\nQSO", .press = log_cb};
+static button_data_t b_ref    = {.type = BTN_TEXT, .label = "参考...", .press = ref_cb};
+static button_data_t b_update = {.type = BTN_TEXT, .label = "更新\\n列表", .press = update_cb};
 static button_data_t b_cq     = {.type = BTN_TEXT, .label = "CQ", .press = cq_cb, .hold = cq_level_cb};
 static button_data_t b_cqlvl  = {.type = BTN_TEXT_FN, .label_fn = cq_level_label, .press = cq_level_cb};
-static button_data_t b_band   = {.type = BTN_TEXT, .label = "Bands", .press = bands_cb};
-static button_data_t b_book __attribute__((unused)) = {.type = BTN_TEXT, .label = "Log\nbook", .press = logbook_cb};
-static button_data_t b_bands  = {.type = BTN_TEXT, .label = "BANDS"};
-static button_data_t b_beacon = {.type = BTN_TEXT, .label = "Test\nbeacon", .press = beacon_cb};
-static button_data_t b_tune   = {.type = BTN_TEXT, .label = "Use\nband", .press = tune_cb};
-static button_data_t b_logpg  = {.type = BTN_TEXT, .label = "LOGBOOK"};
-static button_data_t b_qrz    = {.type = BTN_TEXT, .label = "Upload\nQRZ", .press = qrz_cb};
+static button_data_t b_band   = {.type = BTN_TEXT, .label = "波段", .press = bands_cb};
+static button_data_t b_book __attribute__((unused)) = {.type = BTN_TEXT, .label = "日志\\n本", .press = logbook_cb};
+static button_data_t b_bands  = {.type = BTN_TEXT, .label = "波段"};
+static button_data_t b_beacon = {.type = BTN_TEXT, .label = "测试\\n信标", .press = beacon_cb};
+static button_data_t b_tune   = {.type = BTN_TEXT, .label = "使用\\n波段", .press = tune_cb};
+static button_data_t b_logpg  = {.type = BTN_TEXT, .label = "日志本"};
+static button_data_t b_qrz    = {.type = BTN_TEXT, .label = "上传\\nQRZ", .press = qrz_cb};
 static button_data_t b_qrzprof = {.type = BTN_TEXT_FN, .label_fn = qrz_prof_label, .press = qrz_prof_cb};
 
 static buttons_page_t page_home  = {.items = {&b_home, &b_open, &b_boot, &b_respot, &b_exit}};
@@ -985,7 +985,7 @@ static const char *cq_level_label(void) {
 }
 
 static void cq_level_show(void) {
-    msg_update_text_fmt("CQ level %+d dB: MFK or VOL to change, press to finish", (int)param_i_get(cfg_voice_msg_gain));
+    msg_update_text_fmt("CQ电平 %+d dB：MFK或VOL调节，按下完成", (int)param_i_get(cfg_voice_msg_gain));
     buttons_refresh(&b_cqlvl);
 }
 
@@ -994,7 +994,7 @@ static void cq_level_cb(button_data_t *b) {
     if (cq_level_adj)
         cq_level_show();
     else
-        msg_update_text_fmt("CQ level %+d dB", (int)param_i_get(cfg_voice_msg_gain));
+        msg_update_text_fmt("CQ电平 %+d dB", (int)param_i_get(cfg_voice_msg_gain));
 }
 
 static void cq_level_change(int d) {
@@ -1180,7 +1180,7 @@ static void build_home(void) {
         lv_obj_set_style_text_align(n, LV_TEXT_ALIGN_CENTER, 0);
         lv_obj_set_style_text_align(s, LV_TEXT_ALIGN_CENTER, 0);
     }
-    lv_label_set_text(status, "MFK: choose, press to open.   GEN: back to the radio");
+    lv_label_set_text(status, "MFK：选择，按下打开。GEN：返回电台");
     buttons_load_page(&page_home);
 }
 
@@ -1201,7 +1201,7 @@ static void prog_info_update(void) {
         lv_label_set_text(info_name, st.ref.name);
     } else {
         lv_label_set_text(info_ref, "------");
-        lv_label_set_text(info_name, near_n == -1 && st.prog != 'G'       ? "No reference list"
+        lv_label_set_text(info_name, near_n == -1 && st.prog != 'G'       ? "无参考列表"
                                      : !have_pos                          ? "No position"
                                      : near_n == 0 && near_prog == 'G' && st.prog == 'G' ? "Ref...: type your tile"
                                      : near_n == 0 && near_prog == st.prog ? "None in the list: Update list"
@@ -1221,7 +1221,7 @@ static void prog_info_update(void) {
              have_pos && age > 60 ? " (old)" : "");
     lv_label_set_text(info_lines, buf);
     lv_obj_set_style_bg_color(info_dot, TC(err), 0);
-    lv_label_set_text(info_state, "NOT ACTIVE");
+    lv_label_set_text(info_state, "未激活");
 }
 
 static void build_ref(void) {
@@ -1258,7 +1258,7 @@ static void build_ref(void) {
         list_select(sel);
     }
     prog_info_update();
-    lv_label_set_text(status, updating ? (update_text[0] ? update_text : "Downloading the reference lists...")
+    lv_label_set_text(status, updating ? (update_text[0] ? update_text : "正在下载参考列表...")
                               : st.prog == 'G' ? (near_n == 0 && near_prog == 'G'
                                                       ? "4-character locator: Ref... your tile, or GPS"
                                                       : "MFK: a tile (km: to its edge).  Ref...: any tile")
@@ -1368,8 +1368,8 @@ static void build_act(void) {
         lv_obj_set_style_text_align(*vals[k], LV_TEXT_ALIGN_CENTER, 0);
     }
     act_update();
-    lv_label_set_text(status, is_cw() ? "CQ calls in CW.  Log QSO: call [rst sent [rst rcvd]]"
-                                      : "CQ sends your voice CQ (Rec CQ: page 2).  Log QSO: call [rst...]");
+    lv_label_set_text(status, is_cw() ? "CQ以CW呼叫。记录QSO：呼号 [rst发送 [rst接收]]"
+                                      : "CQ发送语音CQ（录音CQ：第2页）。记录QSO：呼号 [rst...]");
     buttons_load_page(&page_act1);
 }
 
@@ -1422,7 +1422,7 @@ static void bands_fill(void) {
 
     p = snprintf(line, sizeof(line), "RBN %s.  ", field_rbn_state());
     if (!n)
-        p += snprintf(line + p, sizeof(line) - p, "Nobody heard you in the last 10 min: Test beacon (CW)");
+        p += snprintf(line + p, sizeof(line) - p, "过去10分钟无人听到你：测试信标（CW）");
     else
         p += snprintf(line + p, sizeof(line) - p, "Heard by ");
     for (int k = 0; k < n && p < (int)sizeof(line); k++)
@@ -1660,11 +1660,11 @@ static bool activation_start(void) {
     if (st.active)
         return true;
     if (!st.have_ref || st.ref.type != st.prog) {
-        msg_update_text_fmt("Choose the %s reference first", prog_name());
+        msg_update_text_fmt("请先选择%s参考", prog_name());
         return false;
     }
     if (!my_call()[0]) {
-        msg_update_text_fmt("Set your callsign in Settings");
+        msg_update_text_fmt("请在设置中设置呼号");
         return false;
     }
     st.active = true;
@@ -1683,7 +1683,7 @@ static bool activation_start(void) {
     qsos_n = qsos_total = 0;
     st.screen = SCR_PROG;
     state_save();
-    msg_update_text_fmt("Activation started: %s", st.ref.ref);
+    msg_update_text_fmt("激活已开始：%s", st.ref.ref);
     refresh();
     qsy.spot_at = 0;
     if (prog_of(st.ref.type)->site) {
@@ -1704,7 +1704,7 @@ static void activation_end(void) {
         lv_timer_del(qsy_timer);
         qsy_timer = NULL;
     }
-    msg_update_text_fmt("Activation complete: %s, %d QSO%s, %d min", st.ref.ref, qsos_total, qsos_total == 1 ? "" : "s", s / 60);
+    msg_update_text_fmt("激活完成：%s，%d个QSO%s，%d分钟", st.ref.ref, qsos_total, qsos_total == 1 ? "" : "s", s / 60);
     /* ponytail: spotted is not saved, a restart mid-activation sends no QRT */
     if (spotted && prog_of(st.ref.type)->site && spot_job(true))
         spotted = false;
@@ -1721,7 +1721,7 @@ static void activate_cb(button_data_t *b) {
         end_armed    = true;
         end_armed_at = time(NULL);
         buttons_refresh(&b_act);
-        msg_update_text_fmt("Press End again to end the activation");
+        msg_update_text_fmt("再次按结束以结束激活");
         return;
     }
     activation_end();
@@ -1742,11 +1742,11 @@ static void spot_done(const char *line) {
 static void spot_to(bool cluster) {
     /* the screen's programme: a reference left from another one (no tower near, no list yet) is not spotted */
     if (!st.have_ref || st.ref.type != st.prog || !ref_text_ok(st.ref.ref)) {
-        msg_update_text_fmt("Choose the %s reference first", prog_name());
+        msg_update_text_fmt("请先选择%s参考", prog_name());
         return;
     }
     if (!my_call()[0]) {
-        msg_update_text_fmt("Set your callsign in Settings");
+        msg_update_text_fmt("请在设置中设置呼号");
         return;
     }
     if (!prog_of(st.ref.type)->site) {
@@ -1807,9 +1807,9 @@ static void rec_cq_cb(button_data_t *b) {
 
     snprintf(name, sizeof(name), "CQ %s", prog_name());
     if (msg_voice_rec_toggle(name))
-        msg_update_text_fmt("Recording \"%s\": speak, then Stop rec", name);
+        msg_update_text_fmt("正在录音“%s”：请讲话，然后停止录音", name);
     else if (dialog_msg_voice_get_state() == MSG_VOICE_OFF && msg_voice_exists(name))
-        msg_update_text_fmt("Saved \"%s\": CQ sends it in SSB", name);
+        msg_update_text_fmt("已保存“%s”：CQ将以SSB发送", name);
     buttons_refresh(b);
 }
 
@@ -2087,7 +2087,7 @@ static bool kbd_cancel(void) {
 
 static void log_cb(button_data_t *b) {
     if (!st.active) {
-        msg_update_text_fmt("Start the activation first");
+        msg_update_text_fmt("请先开始激活");
         return;
     }
     kbd_open = true;
@@ -2162,7 +2162,7 @@ static bool ref_ok_cb(void) {
 
 static void ref_cb(button_data_t *b) {
     if (st.active) {
-        msg_update_text_fmt("End the activation to change the reference");
+        msg_update_text_fmt("结束激活后才能更改参考");
         return;
     }
     kbd_open = true;
@@ -2231,9 +2231,9 @@ static void update_done(const char *line) {
 static void list_update(void) {
     if (job_start(update_done, HELPER " update --call %s", my_call()[0] ? my_call() : "unknown")) {
         updating = true;
-        msg_update_text_fmt("Downloading the reference lists: up to half an hour on a slow WiFi");
+        msg_update_text_fmt("正在下载参考列表：WiFi慢时最长半小时");
         if (dialog.run && st.screen == SCR_PROG && !st.active)
-            lv_label_set_text(status, "Downloading the reference lists...");
+            lv_label_set_text(status, "正在下载参考列表...");
         if (!update_timer)
             update_timer = lv_timer_create(update_timer_cb, 1000, NULL);
     }
@@ -2310,7 +2310,7 @@ static void tb_end(void) {
         msg_update_text_fmt("Test beacon not sent%s%s\nThe radio stays on %.4f MHz", tb.why[0] ? ": " : "", tb.why,
                             cparam_i_get(cfg_fg_freq) / 1e6);
     } else if (tb.why && tb.why[0])
-        msg_update_text_fmt("Test beacon stopped: %s", tb.why);
+        msg_update_text_fmt("测试信标已停止：%s", tb.why);
     else if (back)
         msg_update_text_fmt("Test beacon %s, back on %.3f MHz", tb.why ? "stopped" : "sent", tb.back_hz / 1e6);
     else
@@ -2335,7 +2335,7 @@ static void tb_listen_msg(void) {
     int32_t tx = radio_tx_freq();
 
     if (tx == tb.hz)
-        msg_update_text_fmt("Listen first: %s, %.3f MHz\nPress again to send: %i s", field_band_name(tb.band),
+        msg_update_text_fmt("先收听：%s，%.3f MHz\\n再按一次发送：%i秒", field_band_name(tb.band),
                             tb.hz / 1e6, tb.left);
     else
         msg_update_text_fmt("Listen: %s %.3f, TX %.3f\nPress again to send: %i s", field_band_name(tb.band),
@@ -2414,7 +2414,7 @@ void dialog_field_test_beacon(int band) {
         tx       = radio_tx_freq();
         tb.phase = TB_SETTLE;
         LV_LOG_USER("Test beacon: %s, sending on %i", field_band_name(band), (int)tx);
-        msg_update_text_fmt("Test beacon on %s, %.3f MHz", field_band_name(band), (tx < 0 ? -tx : tx) / 1e6);
+        msg_update_text_fmt("测试信标 %s，%.3f MHz", field_band_name(band), (tx < 0 ? -tx : tx) / 1e6);
         return;
     }
     if (tb.phase == TB_LISTEN) {    /* another band chosen meanwhile: it listens there instead, the way back kept */
@@ -2437,19 +2437,19 @@ void dialog_field_test_beacon(int band) {
     if (band < 0 || band >= FIELD_RBN_BANDS)
         return;
     if (!my_call()[0]) {
-        msg_update_text_fmt("Set your callsign in Settings");
+        msg_update_text_fmt("请在设置中设置呼号");
         return;
     }
     if (!is_cw()) {
-        msg_update_text_fmt("Test beacon: switch to CW first");
+        msg_update_text_fmt("测试信标：请先切换到CW");
         return;
     }
     if (cw_encoder_state() != CW_ENCODER_IDLE) {    /* MSG > CW sending, or a beacon in its pause or before its start */
-        msg_update_text_fmt("Test beacon: a CW message or beacon is on (MSG > CW)");
+        msg_update_text_fmt("测试信标：CW消息或信标已开启（MSG > CW）");
         return;
     }
     if (radio_get_state() != RADIO_RX) {
-        msg_update_text_fmt("Test beacon: the radio is transmitting");
+        msg_update_text_fmt("测试信标：电台正在发射");
         return;
     }
     if (radio_no_data()) {      /* none from the base (#152): before the dial moves, as QRSS3 */
@@ -2509,7 +2509,7 @@ void dialog_field_tune_band(int band) {
     if (band < 0 || band >= FIELD_RBN_BANDS)
         return;
     if (main_screen_freq_locked()) {
-        msg_update_text_fmt("The frequency is locked");
+        msg_update_text_fmt("频率已锁定");
         return;
     }
     /* During a test: the band to stay on. On the band tested the frequency is the test's, so the test took it for no
@@ -2538,13 +2538,13 @@ static void qrz_done(const char *line) {
     char reason[80] = "";
 
     if (sscanf(line, "ok %d %d %d %79[^\n]", &sent, &dup, &bad, reason) >= 2) {
-        msg_update_text_fmt("QRZ: %d sent, %d already there%s", sent, dup, bad ? ", some refused" : "");
+        msg_update_text_fmt("QRZ：已发送%d，已有%d%s", sent, dup, bad ? ", some refused" : "");
         if (bad)    /* QRZ took the others; the first reason it gave */
             msg_schedule_text_ms(6000, "QRZ refused %d: %s", bad, reason);
     }
     else if (!strcmp(line, "error no QRZ key")) {
         /* the message holds 127 characters: the notice goes in two steps */
-        msg_update_text_fmt("No QRZ profile: add it on the web page, Field Ops");
+        msg_update_text_fmt("无QRZ配置：请在网页野外通联页添加");
         msg_schedule_text_ms(8000, "Uploading needs a QRZ.com Logbook API key, which QRZ.com only gives with a paid "
                                    "QRZ.com subscription (XML level or higher).");
     } else
@@ -2553,11 +2553,11 @@ static void qrz_done(const char *line) {
 
 static void qrz_cb(button_data_t *b) {
     if (!st.log[0] || access(st.log, R_OK) != 0) {
-        msg_update_text_fmt("No log to upload");
+        msg_update_text_fmt("无日志可上传");
         return;
     }
     if (job_start(qrz_done, HELPER " qrz-upload '%s'", st.log))
-        msg_update_text_fmt("Uploading the log to QRZ...");
+        msg_update_text_fmt("正在上传日志到QRZ...");
 }
 
 /* The QRZ Logbook profiles (qrz.conf, written on the web page: call1/key1 .. call3/key3, active=N;
@@ -2650,11 +2650,11 @@ static void qrz_prof_cb(button_data_t *b) {
     qrz_conf_read(&c);
     for (int i = 0; i < QRZ_PROFILES; i++) n += c.key[i];
     if (n == 0) {
-        msg_update_text_fmt("No QRZ profile: add it on the web page, Field Ops");
+        msg_update_text_fmt("无QRZ配置：请在网页野外通联页添加");
         return;
     }
     if (n == 1) {
-        msg_update_text_fmt("Only one QRZ profile");
+        msg_update_text_fmt("仅一个QRZ配置");
         return;
     }
     for (int i = 1; i <= QRZ_PROFILES && !next; i++) {
@@ -2662,10 +2662,10 @@ static void qrz_prof_cb(button_data_t *b) {
         if (c.key[k]) next = k + 1;
     }
     if (!qrz_conf_set_active(next)) {
-        msg_update_text_fmt("QRZ profile not saved");
+        msg_update_text_fmt("QRZ配置未保存");
         return;
     }
-    msg_update_text_fmt("QRZ profile: %s", c.call[next - 1][0] ? c.call[next - 1] : "no callsign");
+    msg_update_text_fmt("QRZ配置：%s", c.call[next - 1][0] ? c.call[next - 1] : "无呼号");
     buttons_refresh(b);
 }
 
@@ -2811,7 +2811,7 @@ static void timer_cb(lv_timer_t *t) {
 
     localtime_r(&now, &tm);
     position(&lat, &lon, &src, &age);
-    lv_label_set_text(head_right, src[0] ? src : "NO POS");
+    lv_label_set_text(head_right, src[0] ? src : "无位置");
     /* The 12-hour clock (#54): the AM or PM in a small label after the big digits, which move left for it */
     const char *ampm;
     int         h    = clock_hour(tm.tm_hour, &ampm);

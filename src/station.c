@@ -111,7 +111,7 @@ void station_qth_edit(lv_obj_t *text) {
 
 bool station_qth_save(const char *qth) {
     if (!qth_grid_check(qth)) {
-        msg_update_text_fmt("Incorrect QTH Grid");
+        msg_update_text_fmt("QTH网格无效");
         return false;
     }
     params_str_set(&params.qth, qth);

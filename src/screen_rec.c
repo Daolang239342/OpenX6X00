@@ -382,7 +382,7 @@ static void timer_cb(lv_timer_t *t) {
 
         if (ms / 1000 != shown) {
             shown = ms / 1000;
-            lv_label_set_text_fmt(label, "REC %02d:%02d", shown / 60, shown % 60);
+            lv_label_set_text_fmt(label, "录制 %02d:%02d", shown / 60, shown % 60);
         }
 
         int low = __atomic_load_n(&low_min, __ATOMIC_RELAXED);
@@ -404,11 +404,11 @@ static void timer_cb(lv_timer_t *t) {
         } else if (error == 3) {
             msg_schedule_long_text_fmt("Cannot create the file on the SD card");
         } else if (error) {
-            msg_update_text_fmt("Screen rec error");
+            msg_update_text_fmt("屏幕录制出错");
         } else if (files > 1) {
-            msg_update_text_fmt("Saved %d files", files);
+            msg_update_text_fmt("已保存%d个文件", files);
         } else {
-            msg_update_text_fmt("Saved %s", strrchr(path, '/') + 1);
+            msg_update_text_fmt("已保存 %s", strrchr(path, '/') + 1);
         }
         lv_obj_add_flag(label, LV_OBJ_FLAG_HIDDEN);
         lv_timer_del(timer);
@@ -441,18 +441,18 @@ static bool start() {
     static const uint8_t split_min[] = { 60, 45, 30, 15, 5 };
 
     if (get_state() != IDLE || timer) {
-        msg_update_text_fmt("Saving previous recording");
+        msg_update_text_fmt("正在保存上次录制");
         return false;
     }
 
     mkdir(SCREEN_REC_DIR, 0755);
 
     if (!on_sd_card(SCREEN_REC_DIR)) {
-        msg_update_text_fmt("Screen rec: no SD card");
+        msg_update_text_fmt("屏幕录制：无SD卡");
         return false;
     }
     if (free_mb() < SCREEN_REC_MIN_MB) {
-        msg_update_text_fmt("SD card full");
+        msg_update_text_fmt("SD卡已满");
         return false;
     }
 
@@ -482,7 +482,7 @@ static bool start() {
     }
 
     if (!shadow || !queue[QUEUE - 1].px) {
-        msg_update_text_fmt("Out of memory");
+        msg_update_text_fmt("内存不足");
         return false;
     }
 
@@ -507,17 +507,17 @@ static bool start() {
         active = false;
         radio_set_rec_moni(false);
         set_state(IDLE);
-        msg_update_text_fmt("Screen rec error");
+        msg_update_text_fmt("屏幕录制出错");
         return false;
     }
     pthread_detach(th);
 
-    lv_label_set_text(label, "REC 00:00");
+    lv_label_set_text(label, "录制 00:00");
     lv_obj_clear_flag(label, LV_OBJ_FLAG_HIDDEN);
     lv_obj_invalidate(lv_scr_act());                /* redraw everything into the copy */
     lv_obj_invalidate(lv_layer_top());
     timer = lv_timer_create(timer_cb, 1000 / SCREEN_REC_FPS, NULL);
-    msg_update_text_fmt("Screen rec on");
+    msg_update_text_fmt("屏幕录制开启");
     return true;
 }
 

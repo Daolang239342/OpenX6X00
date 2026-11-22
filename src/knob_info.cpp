@@ -65,7 +65,7 @@ static Knob pick(const char *name, SubjectT<int32_t> &s, std::vector<std::string
 }
 
 static Knob on_off(const char *name, SubjectT<int32_t> &s) {
-    return pick(name, s, {"Off", "On"});
+    return pick(name, s, {"关闭", "On"});
 }
 
 /* The controls of the app knobs (RTTY, WEFAX) have none: those apps show their own */
@@ -91,15 +91,15 @@ static const std::map<int, Knob> knobs = {
     {CTRL_WF_3D_TILT, num("3D tilt", cfg_sm.p_wf_3d_tilt)},
     {CTRL_WF_3D_FLOOR, num("3D floor", cfg_sm.p_wf_3d_floor)},
     {CTRL_CLUSTER, {"Cluster", nullptr, [] { return std::string(cluster_column_move(0)); }}},
-    {CTRL_CLUSTER_ORDER, pick("Cluster order", cfg_sm.p_cluster_order, {"Freq", "Time"})},
-    {CTRL_CLUSTER_BANDS, pick("Cluster bands", cfg_sm.p_cluster_all_bands, {"Band", "All"})},
+    {CTRL_CLUSTER_ORDER, pick("Cluster order", cfg_sm.p_cluster_order, {"频率", "Time"})},
+    {CTRL_CLUSTER_BANDS, pick("Cluster bands", cfg_sm.p_cluster_all_bands, {"波段", "All"})},
     {CTRL_CLUSTER_MODES, {"Cluster modes", nullptr, [] {
         uint8_t m = cluster_filter()->modes;
         return std::string(m == CLUSTER_FM_ALL ? "All" : m == CLUSTER_FM_CW ? "CW" : m == CLUSTER_FM_SSB ? "SSB"
                            : m == CLUSTER_FM_DIG ? "DIG" : m == (CLUSTER_FM_CW | CLUSTER_FM_DIG) ? "CW+DIG" : "Some");
     }}},
 
-    {CTRL_AGC, pick("AGC", cfg_sm.cp_cur_agc, {"Off", "Slow", "Fast", "Auto"})},
+    {CTRL_AGC, pick("AGC", cfg_sm.cp_cur_agc, {"关闭", "Slow", "Fast", "Auto"})},
     {CTRL_PRE, on_off("PRE", cfg_sm.cp_cur_pre)},
     {CTRL_ATT, on_off("ATT", cfg_sm.cp_cur_att)},
     {CTRL_ATU, on_off("ATU", cfg_sm.p_atu_enabled)},
@@ -122,7 +122,7 @@ static const std::map<int, Knob> knobs = {
 
     {CTRL_KEY_SPEED, num("Key speed", cfg_sm.p_key_speed)},
     {CTRL_KEY_TRAIN, on_off("Key train", cfg_sm.p_key_train)},
-    {CTRL_KEY_MODE, pick("Key mode", cfg_sm.p_key_mode, {"Manual", "Auto-L", "Auto-R"})},
+    {CTRL_KEY_MODE, pick("Key mode", cfg_sm.p_key_mode, {"手动", "Auto-L", "Auto-R"})},
     {CTRL_IAMBIC_MODE, pick("Iambic mode", cfg_sm.p_iambic_mode, {"A", "B"})},
     {CTRL_KEY_TONE, num("Key tone", cfg_sm.p_key_tone)},
     {CTRL_KEY_VOL, num("Key vol", cfg_sm.p_key_vol)},

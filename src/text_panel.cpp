@@ -90,7 +90,7 @@ static void scope_tick(lv_timer_t *t) {
     if (!tuned) {
         lv_label_set_text(scope_off, "");
     } else if (fabsf(off) < 10.0f) {
-        lv_label_set_text(scope_off, "OK");
+        lv_label_set_text(scope_off, "确定");
         lv_obj_set_style_text_color(scope_off, TC(ok), 0);
     } else {
         lv_label_set_text_fmt(scope_off, "%+d Hz", (int)lroundf(off));

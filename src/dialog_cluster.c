@@ -93,16 +93,16 @@ static void link_write(void);
 static buttons_page_t btn_page_1, btn_page_2;
 
 static button_data_t btn_page = {
-    .type = BTN_TEXT, .label = "(CLUSTER\n1:2)", .press = button_next_page_cb, .next = &btn_page_2};
+    .type = BTN_TEXT, .label = "(集群\\n1:2)", .press = button_next_page_cb, .next = &btn_page_2};
 static button_data_t btn_page2 = {
-    .type = BTN_TEXT, .label = "(CLUSTER\n2:2)", .press = button_next_page_cb, .next = &btn_page_1};
-static button_data_t btn_server = {.type = BTN_TEXT, .label = "Server", .press = server_cb};
+    .type = BTN_TEXT, .label = "(集群\\n2:2)", .press = button_next_page_cb, .next = &btn_page_1};
+static button_data_t btn_server = {.type = BTN_TEXT, .label = "服务器", .press = server_cb};
 static button_data_t btn_band = {.type = BTN_TEXT_FN, .label_fn = band_label, .press = band_all_cb};
 static button_data_t btn_mode = {.type = BTN_TEXT_FN, .label_fn = mode_label, .press = mode_cb};
 static button_data_t btn_order = {.type = BTN_TEXT_FN, .label_fn = order_label, .press = order_cb};
 static button_data_t btn_link = {.type = BTN_TEXT_FN, .label_fn = link_label, .press = link_cb};
-static button_data_t btn_tune = {.type = BTN_TEXT, .label = "Tune", .press = tune_cb};
-static button_data_t btn_close = {.type = BTN_TEXT, .label = "Close", .press = close_cb};
+static button_data_t btn_tune = {.type = BTN_TEXT, .label = "调谐", .press = tune_cb};
+static button_data_t btn_close = {.type = BTN_TEXT, .label = "关闭", .press = close_cb};
 
 static buttons_page_t btn_page_1 = {
     .items = {&btn_page, &btn_band, &btn_tune, &btn_mode, &btn_close},
@@ -253,13 +253,13 @@ static void alert_show(const cluster_spot_t *s) {
     lv_obj_t *title = lv_label_create(alert_box);
     lv_obj_set_style_text_font(title, VF(18), 0);
     lv_obj_set_style_text_color(title, lv_color_hex(COLOR_ALERT_TEXT), 0);
-    lv_label_set_text(title, "CLUSTER ALERT");
+    lv_label_set_text(title, "集群告警");
     lv_obj_set_pos(title, 14, 8);
 
     lv_obj_t *hint = lv_label_create(alert_box);
     lv_obj_set_style_text_font(hint, VF(18), 0);
     lv_obj_set_style_text_color(hint, lv_color_hex(COLOR_DIM), 0);
-    lv_label_set_text(hint, "MFK: tune");
+    lv_label_set_text(hint, "MFK：调谐");
     lv_obj_align(hint, LV_ALIGN_TOP_RIGHT, -14, 8);
 
     lv_obj_t *line = lv_label_create(alert_box);
@@ -469,7 +469,7 @@ static void update_header(void) {
                           (vfo / 1000) % 1000, (vfo % 1000) / 10);
     bool conf_filtered = flt && (flt->modes != CLUSTER_FM_ALL || flt->max_age || flt->skip[0] || flt->spotter_dxcc[0]);
     if (view_mode || conf_filtered) {
-        static const char *const names[] = {"Filtered", "CW only", "SSB only", "", "DIG only"};
+        static const char *const names[] = {"已过滤", "CW only", "SSB only", "", "DIG only"};
         lv_label_set_text_fmt(head_right, "%s - %d/%d - %02d:%02dZ", names[view_mode], view_count,
                               scope_count, now_min / 60, now_min % 60);
     } else {
@@ -925,7 +925,7 @@ static void construct_cb(lv_obj_t *parent) {
     status_left = make_label(dialog.obj, VF(22), lv_color_hex(COLOR_DIM));
     lv_obj_set_pos(status_left, 18, DIALOG_H - STATUS_H - 4);
     lv_obj_set_width(status_left, 440);
-    lv_label_set_text(status_left, "MFK: browse - press: tune - VFO: follow");
+    lv_label_set_text(status_left, "MFK：浏览 - 按下：调谐 - VFO：跟随");
     status_right = make_label(dialog.obj, VF(22), lv_color_hex(COLOR_DIM));
     lv_obj_set_width(status_right, 320);
     lv_obj_set_style_text_align(status_right, LV_TEXT_ALIGN_RIGHT, 0);
@@ -966,7 +966,7 @@ static void band_all_cb(button_data_t *data) {
     follow_vfo = true;
     rebuild();
     update_header();
-    msg_update_text_fmt("Cluster: %s", all ? "all bands" : "current band");
+    msg_update_text_fmt("集群：%s", all ? "全部波段" : "当前波段");
 }
 
 /* The view shown: all bands, or the VFO's band by name */
@@ -987,7 +987,7 @@ static void order_cb(button_data_t *data) {
     buttons_refresh(data);
     follow_vfo = true;
     rebuild();
-    msg_update_text_fmt("Cluster: %s", by_time() ? "newest first" : "by frequency");
+    msg_update_text_fmt("集群：%s", by_time() ? "最新在前" : "按频率");
 }
 
 static const char *link_label(void) {
@@ -1000,17 +1000,17 @@ static void link_cb(button_data_t *data) {
     bool on = !cluster_config_enabled();
 
     if (!cluster_enabled_save(on)) {
-        msg_update_text_fmt("Cluster: can't save");
+        msg_update_text_fmt("集群：无法保存");
         return;
     }
     load_server();
     buttons_refresh(data);
     update_status();
-    msg_update_text_fmt("Cluster: %s", on ? "link on" : "link off");
+    msg_update_text_fmt("集群：%s", on ? "链路开" : "链路关");
 }
 
 static const char *mode_label(void) {
-    static const char *const label[] = {"Mode /\nAll", "Mode /\nCW", "Mode /\nSSB", "", "Mode /\nDIG"};
+    static const char *const label[] = {"模式/\\n全部", "Mode /\nCW", "Mode /\nSSB", "", "Mode /\nDIG"};
     return label[view_mode];
 }
 
@@ -1115,7 +1115,7 @@ static void open_popup(void) {
     lv_obj_t *head = lv_label_create(box);
     lv_obj_set_style_text_font(head, VF(22), 0);
     lv_obj_set_style_text_color(head, TC(text_head), 0);
-    lv_label_set_text(head, "CLUSTER SERVERS");
+    lv_label_set_text(head, "集群服务器");
     lv_obj_set_pos(head, 22, 9);
     lv_obj_t *count = lv_label_create(box);
     lv_obj_set_style_text_font(count, VF(22), 0);
@@ -1175,7 +1175,7 @@ static void open_popup(void) {
     lv_obj_set_style_text_color(hint, lv_color_hex(COLOR_DIM), 0);
     lv_label_set_long_mode(hint, LV_LABEL_LONG_WRAP);
     lv_obj_set_width(hint, POP_W - 44);
-    lv_label_set_text(hint, "MFK: choose - press: use - Server: close - add servers from the web page");
+    lv_label_set_text(hint, "MFK：选择 - 按下：使用 - 服务器：关闭 - 从网页添加服务器");
     lv_obj_set_pos(hint, 22, POP_HEAD_H + rows_h + 8);
 
     show_servers();

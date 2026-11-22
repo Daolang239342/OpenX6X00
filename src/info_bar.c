@@ -182,7 +182,7 @@ static void deck_atu_update(Subject *subj, void *user_data) {
 }
 
 static void deck_update(Subject *subj, void *user_data) {
-    static const char *const agc[] = {"AGC OFF", "AGC-S", "AGC-F", "AGC-A"};   /* radio_agc_t order */
+    static const char *const agc[] = {"AGC关", "AGC-S", "AGC-F", "AGC-A"};   /* radio_agc_t order */
     radio_agc_t a = cparam_i_get(cfg_cur_agc);
     int32_t     bw = cparam_i_get(cfg_cur_filter_bw), step = param_i_get(cfg_mode_freq_step);
     int32_t     half = 50000 / (params.waterfall_zoom.x ? LV_MAX(1, param_i_get(cfg_mode_zoom)) : 1);
@@ -208,7 +208,7 @@ static void deck_update(Subject *subj, void *user_data) {
     if (step < 1000) snprintf(st, sizeof(st), "%d Hz", (int)step);
     else if (step % 1000) snprintf(st, sizeof(st), "%d.%d kHz", (int)(step / 1000), (int)(step % 1000 / 100));
     else snprintf(st, sizeof(st), "%d kHz", (int)(step / 1000));
-    lv_label_set_text_fmt(deck_info, "BW %s   IF %+d   STEP %s", b, (int)param_i_get(cfg_band_if_shift), st);
+    lv_label_set_text_fmt(deck_info, "带宽 %s   中频 %+d   步进 %s", b, (int)param_i_get(cfg_band_if_shift), st);
     if (half % 1000) lv_label_set_text_fmt(deck_scope, "SCOPE \xC2\xB1%d.%dk", (int)(half / 1000), (int)(half % 1000 / 100));
     else lv_label_set_text_fmt(deck_scope, "SCOPE \xC2\xB1%dk", (int)(half / 1000));
 }

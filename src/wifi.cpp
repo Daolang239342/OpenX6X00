@@ -1148,7 +1148,7 @@ static int mask_prefix(const char *mask) {
 }
 
 const char *eth_check_field(int field, char *val) {
-    static const char *bad[ETH_FIELDS] = {"IP address is not valid", "Netmask is not valid (255.255.255.0 or /24)",
+    static const char *bad[ETH_FIELDS] = {"IP地址无效", "Netmask is not valid (255.255.255.0 or /24)",
                                           "Gateway is not valid", "DNS is not valid"};
     struct in_addr     a;
     char              *p = val;

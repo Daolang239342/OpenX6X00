@@ -659,7 +659,7 @@ static void tx_start(const char *text) {
     tx_job_t *job;
 
     if (state != RTTY_RX) {
-        msg_update_text_fmt("RTTY TX busy");
+        msg_update_text_fmt("RTTY发射忙");
         return;
     }
     job = calloc(1, sizeof(*job));

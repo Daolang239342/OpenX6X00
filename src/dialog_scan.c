@@ -46,7 +46,7 @@
 
 typedef enum { SRC_CHANNELS, SRC_AIRBAND, SRC_CB, SRC_SEGMENT, SRC_N } source_t;
 
-static const char *source_name[SRC_N] = {"Channels", "Airband", "CB", "Segment"};
+static const char *source_name[SRC_N] = {"信道", "Airband", "CB", "Segment"};
 
 static const struct { const char *name; float db; } stops[] = {
     {"Auto", NAN}, {"S3", S3}, {"S5", S5}, {"S7", S7}, {"S9", S9},
@@ -75,18 +75,18 @@ static void clear_cb(button_data_t *b);
 
 static buttons_page_t page_1, page_2;
 
-static button_data_t btn_p1     = {.type = BTN_TEXT, .label = "(SCAN 1:2)", .press = button_next_page_cb,
+static button_data_t btn_p1     = {.type = BTN_TEXT, .label = "(扫描 1:2)", .press = button_next_page_cb,
                                    .hold = button_prev_page_cb, .next = &page_2, .prev = &page_2};
-static button_data_t btn_source = {.type = BTN_TEXT, .label = "Source", .press = source_cb};
-static button_data_t btn_run    = {.type = BTN_TEXT, .label = "Start", .press = run_cb};
-static button_data_t btn_skip   = {.type = BTN_TEXT, .label = "Skip", .press = skip_cb};
-static button_data_t btn_lock   = {.type = BTN_TEXT, .label = "Lock\nout", .press = lock_cb};
-static button_data_t btn_p2     = {.type = BTN_TEXT, .label = "(SCAN 2:2)", .press = button_next_page_cb,
+static button_data_t btn_source = {.type = BTN_TEXT, .label = "来源", .press = source_cb};
+static button_data_t btn_run    = {.type = BTN_TEXT, .label = "开始", .press = run_cb};
+static button_data_t btn_skip   = {.type = BTN_TEXT, .label = "跳过", .press = skip_cb};
+static button_data_t btn_lock   = {.type = BTN_TEXT, .label = "锁定\\n排除", .press = lock_cb};
+static button_data_t btn_p2     = {.type = BTN_TEXT, .label = "(扫描 2:2)", .press = button_next_page_cb,
                                    .hold = button_prev_page_cb, .next = &page_1, .prev = &page_1};
-static button_data_t btn_stop   = {.type = BTN_TEXT, .label = "Stop at\nAuto", .press = stop_at_cb};
-static button_data_t btn_speed  = {.type = BTN_TEXT, .label = "Speed\nNormal", .press = speed_cb};
-static button_data_t btn_hang   = {.type = BTN_TEXT, .label = "Hang\n2 s", .press = hang_cb};
-static button_data_t btn_clear  = {.type = BTN_TEXT, .label = "Clear", .press = clear_cb};
+static button_data_t btn_stop   = {.type = BTN_TEXT, .label = "停止于\\n自动", .press = stop_at_cb};
+static button_data_t btn_speed  = {.type = BTN_TEXT, .label = "速度\\n正常", .press = speed_cb};
+static button_data_t btn_hang   = {.type = BTN_TEXT, .label = "驻留\\n2秒", .press = hang_cb};
+static button_data_t btn_clear  = {.type = BTN_TEXT, .label = "清除", .press = clear_cb};
 
 static buttons_page_t page_1 = {.items = {&btn_p1, &btn_source, &btn_run, &btn_skip, &btn_lock}};
 static buttons_page_t page_2 = {.items = {&btn_p2, &btn_stop, &btn_speed, &btn_hang, &btn_clear}};
@@ -190,7 +190,7 @@ static void fill(void) {
     float        db  = meter_get_db(), thr = scan_threshold(cur);
 
     static const char *state_name[] = {"STOPPED", "SCANNING", "BUSY", "PAUSED"};
-    lv_label_set_text(lbl_state, list_n ? state_name[st] : "NOTHING TO SCAN");
+    lv_label_set_text(lbl_state, list_n ? state_name[st] : "无可扫描内容");
     lv_obj_set_style_text_color(lbl_state, st == SCAN_HOLD ? TC(ok) : st == SCAN_SEEKING ? TC(accent) : TC(text_dim),
                                 0);
 
@@ -215,7 +215,7 @@ static void fill(void) {
     int locked = 0;
     for (int i = 0; i < list_n; i++) locked += scan_locked(i);
     s_text(thr, s, sizeof(s));
-    snprintf(buf, sizeof(buf), "%d to scan, pass %d.  Stops at %s%s", list_n, scan_passes() + 1,
+    snprintf(buf, sizeof(buf), "待扫描%d，第%d遍。停止于%s%s", list_n, scan_passes() + 1,
              isnan(stops[stop_i].db) ? "Auto: " : "", isnan(thr) ? "learning" : s);
     if (locked) snprintf(buf + strlen(buf), sizeof(buf) - strlen(buf), ".  %d locked out", locked);
     lv_label_set_text(lbl_info, buf);
@@ -239,9 +239,9 @@ static void fill(void) {
                               t, f / 1e6, list[h->idx].name, s, h->secs);
         lv_obj_set_style_text_color(hit_rows[k], k == 0 && st == SCAN_HOLD ? TC(ok) : TC(text), 0);
     }
-    lv_label_set_text(hits_head, scan_hits_n() ? "Heard  (latest first)" : "Heard: nothing yet");
+    lv_label_set_text(hits_head, scan_hits_n() ? "已听到（最新在前）" : "已听到：暂无");
 
-    lv_label_set_text_fmt(frame.head_left, "SCANNER   %s", source_name[source]);
+    lv_label_set_text_fmt(frame.head_left, "扫描器   %s", source_name[source]);
     lv_label_set_text_fmt(frame.head_right, "%s  %s  hang %d s", stops[stop_i].name, speeds[speed_i].name,
                           hangs_s[hang_i]);
 }
@@ -291,7 +291,7 @@ static void tune(int i) {
 /* Start, Resume, Skip, Lock out and the MFK retune: not while the radio is on the air (the timer does not either) */
 static bool on_air(void) {
     if (radio_get_state() == RADIO_RX) return false;
-    msg_update_text_fmt("Scanner: not while transmitting");
+    msg_update_text_fmt("扫描器：发射中不可用");
     return true;
 }
 

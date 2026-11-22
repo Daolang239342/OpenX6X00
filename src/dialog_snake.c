@@ -48,8 +48,8 @@ static void        exit_cb(button_data_t *b);
 static const char *pause_label(void);
 
 static button_data_t  b_pause   = {.type = BTN_TEXT_FN, .label_fn = pause_label, .press = pause_cb};
-static button_data_t  b_restart = {.type = BTN_TEXT, .label = "Restart", .press = restart_cb};
-static button_data_t  b_exit    = {.type = BTN_TEXT, .label = "Exit", .press = exit_cb};
+static button_data_t  b_restart = {.type = BTN_TEXT, .label = "重启", .press = restart_cb};
+static button_data_t  b_exit    = {.type = BTN_TEXT, .label = "退出", .press = exit_cb};
 static buttons_page_t page      = {.items = {&b_pause, &b_restart, NULL, NULL, &b_exit}};
 
 static dialog_t dialog = {

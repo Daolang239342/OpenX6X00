@@ -84,15 +84,15 @@ static void knob_bind_hold(button_data_t *d) {
     char &b = binds[d->ctrl];
     switch (b) {
         case ENCODER_BIND_NONE:
-            msg_update_text_fmt("Added to VOL encoder");
+            msg_update_text_fmt("已添加到VOL编码器");
             b = ENCODER_BIND_VOL;
             break;
         case ENCODER_BIND_VOL:
-            msg_update_text_fmt("Moved to MFK encoder");
+            msg_update_text_fmt("已移动到MFK编码器");
             b = ENCODER_BIND_MFK;
             break;
         case ENCODER_BIND_MFK:
-            msg_update_text_fmt("Removed from MFK encoder");
+            msg_update_text_fmt("已从MFK编码器移除");
             b = ENCODER_BIND_NONE;
             break;
         default:
@@ -131,7 +131,7 @@ static const char *on_off(int32_t v) {
 }
 
 static const char *agc_label() {
-    static const char *const names[] = {"Off", "Slow", "Fast", "Auto"};
+    static const char *const names[] = {"关闭", "Slow", "Fast", "Auto"};
     int32_t                  agc = cfg_sm.cp_cur_agc.get();
 
     return text("AGC:\n%s", agc >= 0 && agc <= radio_agc_auto ? names[agc] : "?");
@@ -263,7 +263,7 @@ static button_data_t btn_flt_bw = knob([] { return text("Filter BW:\n%i Hz", cfg
 /* MFK */
 static button_data_t btn_rit = knob([] { return text("RIT:\n%+i", cfg_sm.p_rit.get()); }, CTRL_RIT, &cfg_sm.p_rit);
 static button_data_t btn_xit = knob([] { return text("XIT:\n%+i", cfg_sm.p_xit.get()); }, CTRL_XIT, &cfg_sm.p_xit);
-static button_data_t btn_zoom = {.type = BTN_TEXT, .label = "Spectrum\nZoom", .press = knob_press,
+static button_data_t btn_zoom = {.type = BTN_TEXT, .label = "频谱\\n缩放", .press = knob_press,
                                  .hold = knob_bind_hold, .ctrl = CTRL_SPECTRUM_FACTOR, .encoder_allowed = true};
 static button_data_t btn_wf_ref = knob([] { return text("WF ref:\n%+i dB", cfg_sm.p_waterfall_ref.get()); },
                                        CTRL_WF_REF, &cfg_sm.p_waterfall_ref);
@@ -333,12 +333,12 @@ static button_data_t btn_ratio = knob([] { return text("Ratio:\n%0.1f", cfg_sm.p
                                       CTRL_KEY_RATIO, &cfg_sm.p_key_ratio);
 
 /* CW decoder */
-static button_data_t btn_cw_zap = {.type = BTN_TEXT, .label = "CW\nZAP", .press = controls_cw_zap};
+static button_data_t btn_cw_zap = {.type = BTN_TEXT, .label = "CW\\n加速", .press = controls_cw_zap};
 static button_data_t btn_cw_peak = knob_toggle([] { return text("CW peak:\n%s", on_off(cfg_sm.p_cw_peak_on.get())); },
                                                controls_toggle_cw_peak, CTRL_CW_PEAK_ON, &cfg_sm.p_cw_peak_on);
 static button_data_t btn_cw_peak_q = knob([] { return text("CW peak Q:\n%i", cfg_sm.p_cw_peak_q.get()); },
                                           CTRL_CW_PEAK_Q, &cfg_sm.p_cw_peak_q);
-static button_data_t btn_cw_log = {.type = BTN_TEXT, .label = "Log\nQSO",
+static button_data_t btn_cw_log = {.type = BTN_TEXT, .label = "记录\\nQSO",
                                    .press = [](button_data_t *) { cw_field_log_open(); }};
 static button_data_t btn_cw_decoder = knob_toggle(
     [] { return text("Decoder:\n%s", on_off(cfg_sm.p_cw_decoder.get())); },
@@ -393,13 +393,13 @@ static button_data_t btn_gps = {.type = BTN_TEXT, .label = "GPS", .press = app_p
                                 .ctrl = ACTION_APP_GPS};
 
 /* RTTY: two pages of their own */
-static button_data_t btn_rtty_rate = {.type = BTN_TEXT, .label = "Rate", .press = knob_press,
+static button_data_t btn_rtty_rate = {.type = BTN_TEXT, .label = "速率", .press = knob_press,
                                       .ctrl = CTRL_RTTY_RATE, .encoder_allowed = true};
-static button_data_t btn_rtty_shift = {.type = BTN_TEXT, .label = "Shift", .press = knob_press,
+static button_data_t btn_rtty_shift = {.type = BTN_TEXT, .label = "频偏", .press = knob_press,
                                        .ctrl = CTRL_RTTY_SHIFT, .encoder_allowed = true};
-static button_data_t btn_rtty_center = {.type = BTN_TEXT, .label = "Center", .press = knob_press,
+static button_data_t btn_rtty_center = {.type = BTN_TEXT, .label = "中心", .press = knob_press,
                                         .ctrl = CTRL_RTTY_CENTER, .encoder_allowed = true};
-static button_data_t btn_rtty_reverse = {.type = BTN_TEXT, .label = "Reverse", .press = knob_press,
+static button_data_t btn_rtty_reverse = {.type = BTN_TEXT, .label = "反转", .press = knob_press,
                                          .ctrl = CTRL_RTTY_REVERSE, .encoder_allowed = true};
 static button_data_t btn_rtty_p2 = {.type = BTN_TEXT, .label = "(RTTY 2:2)", .press = button_next_page_cb,
                                     .hold = button_prev_page_cb, .next = &buttons_page_rtty, .prev = &buttons_page_rtty};

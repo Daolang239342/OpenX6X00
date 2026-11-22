@@ -1,57 +1,35 @@
-# OpenX6X00: files git leaves out
+# 系统文件
+.DS_Store
+*.swp
+*.swo
 
-# Compiler and linker output
-*.o
-*.obj
-*.a
-*.lib
-*.la
-*.lo
-*.so
-*.so.*
-*.dll
-*.dylib
-*.elf
-*.exe
-*.out
-*.app
-*.hex
-*.i*86
-*.x86_64
-*.map
-*.ilk
-*.exp
-*.gch
-*.pch
+# 虚拟环境与构建依赖
+tools_zh/.venv/
+tools_zh/assets/NotoSansSC-Regular.otf
 
-# Debug symbols and stack usage
-*.dSYM/
-*.pdb
-*.idb
-*.su
+# 原版官方镜像（不提交）
+X6100/raw_build/
+X6200/raw_build/
 
-# Kernel module builds
-*.ko
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+# 中间产物 / 生成文件
+source/build-docker/
+source/build-host/
+tools_zh/candidates.json
+tools_zh/web_candidates.json
+tools_zh/candidates_uniq.txt
+tools_zh/web_candidates_uniq.txt
 
-# Build folders (radio build, PC tests) and editor settings
-build/
-_build/
-build_test/
-.vscode
-# PNG copies next to the panel images
-images/*.png
+# 两个 buildroot 树（第三方，体积大且非本仓库重点）
+buildroot-trees/
 
-# Local developer tools and tests, not part of the repository
-/tests/
+# 已下载的预置源码/二进制依赖（体积大）
+dl/
+dl-git/
+# 成品 SD 卡镜像（超过 GitHub 100MB 单文件限制，以 Release 附件发布）
+X6100/*.zip
+X6200/*.zip
+X6100/*.img
+X6200/*.img
+shots/
 __pycache__/
-
-# The PC build (host/build.sh), and in Docker (host/docker/run.sh)
-build-host/
-build-docker/
+*.pyc

@@ -7,15 +7,15 @@
 </div>
 
 <div class="dp-card">
-  <div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-file"/></svg></span><div><h3>Winlink<span class="eff">Takes effect: at once</span></h3><p>Pat and the modem on the radio: ARDOP (ardopcf), Mercury (x6x00-mercury) or XARA (xara)</p></div></div>
+  <div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-file"/></svg></span><div><h3>Winlink<span class="eff">生效方式：立即</span></h3><p>电台上的Pat和调制解调器：ARDOP（ardopcf）、Mercury（x6x00-mercury）或XARA（xara）</p></div></div>
   <div class="dp-row">
-    <div class="dp-lbl"><b>Enabled</b><span>Starts with the radio, also after a new card image</span></div>
-    <div class="dp-ctl"><label class="sw" title="Enabled"><input id="enabled" type="checkbox" role="switch" aria-label="Enabled"><i></i></label></div>
+    <div class="dp-lbl"><b>启用</b><span>随电台启动，换新卡镜像后亦然</span></div>
+    <div class="dp-ctl"><label class="sw" title="启用"><input id="enabled" type="checkbox" role="switch" aria-label="启用"><i></i></label></div>
   </div>
-  <div class="dp-row"><div class="dp-lbl"><b>Status</b></div><div class="dp-ctl" id="text">-</div></div>
+  <div class="dp-row"><div class="dp-lbl"><b>状态</b></div><div class="dp-ctl" id="text">-</div></div>
   <div class="dp-row">
-    <div class="dp-lbl"><b>Mailbox</b><span>Pat's own page, on port <span id="port">8080</span> of the radio: write and read your mail, choose a gateway and connect</span></div>
-    <div class="dp-ctl" id="mailbox"><a class="btn primary" id="open" target="_blank" rel="noopener" style="display:none">Open the mailbox</a><span id="nomailbox">-</span></div>
+    <div class="dp-lbl"><b>邮箱</b><span>Pat's own page, on port <span id="port">8080</span> of the radio: write and read your mail, choose a gateway and connect</span></div>
+    <div class="dp-ctl" id="mailbox"><a class="btn primary" id="open" target="_blank" rel="noopener" style="display:none">打开邮箱</a><span id="nomailbox">-</span></div>
   </div>
   <div class="dp-body" style="border-top:1px solid #1a283c">
     <div class="actions" style="margin-top:0"><span class="status" id="sstatus"></span></div>
@@ -23,79 +23,79 @@
 </div>
 
 <div class="dp-card" id="radio">
-  <div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-antenna"/></svg></span><div><h3>Before you connect</h3><p>The radio as Winlink will use it: anything in red keeps it from transmitting, or from being heard well</p></div></div>
+  <div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-antenna"/></svg></span><div><h3>连接之前</h3><p>电台使用Winlink的情况：红色项目会阻止发射或影响接收</p></div></div>
   <div id="radio-rows">
-  <div class="dp-row"><div class="dp-lbl"><b>Frequency</b><span id="r-freq-n"></span></div><div class="dp-ctl" id="r-freq">-</div></div>
-  <div class="dp-row"><div class="dp-lbl"><b>Mode</b><span id="r-mode-n"></span></div><div class="dp-ctl" id="r-mode">-</div></div>
-  <div class="dp-row"><div class="dp-lbl"><b>Filter</b><span id="r-filter-n"></span></div><div class="dp-ctl" id="r-filter">-</div></div>
-  <div class="dp-row"><div class="dp-lbl"><b>Power</b><span id="r-pwr-n"></span></div><div class="dp-ctl" id="r-pwr">-</div></div>
-  <div class="dp-row"><div class="dp-lbl"><b>Apps</b><span id="r-app-n"></span></div><div class="dp-ctl" id="r-app">-</div></div>
-  <div class="dp-row"><div class="dp-lbl"><b>SWR hold</b><span id="r-swr-n"></span></div><div class="dp-ctl" id="r-swr">-</div></div>
-  <div class="dp-row"><div class="dp-lbl"><b>Last no TX</b><span id="r-refused-n"></span></div><div class="dp-ctl" id="r-refused">-</div></div>
+  <div class="dp-row"><div class="dp-lbl"><b>频率</b><span id="r-freq-n"></span></div><div class="dp-ctl" id="r-freq">-</div></div>
+  <div class="dp-row"><div class="dp-lbl"><b>模式</b><span id="r-mode-n"></span></div><div class="dp-ctl" id="r-mode">-</div></div>
+  <div class="dp-row"><div class="dp-lbl"><b>滤波器</b><span id="r-filter-n"></span></div><div class="dp-ctl" id="r-filter">-</div></div>
+  <div class="dp-row"><div class="dp-lbl"><b>功率</b><span id="r-pwr-n"></span></div><div class="dp-ctl" id="r-pwr">-</div></div>
+  <div class="dp-row"><div class="dp-lbl"><b>应用</b><span id="r-app-n"></span></div><div class="dp-ctl" id="r-app">-</div></div>
+  <div class="dp-row"><div class="dp-lbl"><b>SWR保持</b><span id="r-swr-n"></span></div><div class="dp-ctl" id="r-swr">-</div></div>
+  <div class="dp-row"><div class="dp-lbl"><b>上次未发射</b><span id="r-refused-n"></span></div><div class="dp-ctl" id="r-refused">-</div></div>
   </div>
   <div class="dp-body" id="radio-none" style="color:var(--dim)">-</div>
 </div>
 
 <div class="dp-card" id="conn">
-  <div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-pulse"/></svg></span><div><h3>Connections</h3><p>What Pat and the modem are doing, and how the last connection went</p></div></div>
-  <div class="dp-row"><div class="dp-lbl"><b>Service</b><span>Pat and the modem running</span></div><div class="dp-ctl" id="c-service">-</div></div>
-  <div class="dp-row"><div class="dp-lbl"><b>Modem</b><span id="c-modem-n">ARDOP on the radio's audio</span></div><div class="dp-ctl" id="c-modem">-</div></div>
-  <div class="dp-row"><div class="dp-lbl"><b>Session</b><span id="c-browsers">Pat calling a gateway, or connected to one</span></div><div class="dp-ctl" id="c-session">-</div></div>
+  <div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-pulse"/></svg></span><div><h3>连接</h3><p>Pat和调制解调器的当前状态，以及上次连接情况</p></div></div>
+  <div class="dp-row"><div class="dp-lbl"><b>服务</b><span>Pat和调制解调器运行中</span></div><div class="dp-ctl" id="c-service">-</div></div>
+  <div class="dp-row"><div class="dp-lbl"><b>调制解调器</b><span id="c-modem-n">使用电台音频的ARDOP</span></div><div class="dp-ctl" id="c-modem">-</div></div>
+  <div class="dp-row"><div class="dp-lbl"><b>会话</b><span id="c-browsers">Pat正在呼叫网关，或已连接某个网关</span></div><div class="dp-ctl" id="c-session">-</div></div>
   <div class="dp-row">
-    <div class="dp-lbl"><b>Logs</b><span>Pat's, the modem's and the radio's, as one text file for a bug report, the passwords masked. Gateways and the subjects of your mail are in it</span></div>
-    <div class="dp-ctl"><a class="btn" id="logs" href="/api/winlink/logs" download>Download</a></div>
+    <div class="dp-lbl"><b>日志</b><span>Pat's, the modem's and the radio's, as one text file for a bug report, the passwords masked. Gateways and the subjects of your mail are in it</span></div>
+    <div class="dp-ctl"><a class="btn" id="logs" href="/api/winlink/logs" download>下载</a></div>
   </div>
   <div class="dp-body" style="border-top:1px solid #1a283c">
-    <b id="c-last-head">Last connection</b>
-    <div id="c-last-text" style="color:var(--dim)">None since Pat started</div>
+    <b id="c-last-head">上次连接</b>
+    <div id="c-last-text" style="color:var(--dim)">Pat启动后暂无</div>
     <div id="c-last-next" style="display:none"></div>
   </div>
 </div>
 
 <form class="dp-card" id="conf">
-  <div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-key"/></svg></span><div><h3>Station<span class="eff">Takes effect: Pat restarts with it</span></h3><p>Your Winlink account, the modem and what it may use. Pat's mailbox has its own Settings page for the rest</p></div></div>
+  <div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-key"/></svg></span><div><h3>台站<span class="eff">生效方式：Pat随之重启</span></h3><p>你的Winlink账户、调制解调器及其可用项。其余设置在Pat邮箱自带的设置页中</p></div></div>
   <div class="dp-row">
-    <div class="dp-lbl"><label for="mycall"><b>Callsign</b></label><span>Your Winlink account. Empty: the radio's callsign<span id="radiocall"></span></span></div>
+    <div class="dp-lbl"><label for="mycall"><b>呼号</b></label><span>你的Winlink账户。留空则使用电台呼号<span id="radiocall"></span></span></div>
     <div class="dp-ctl"><input id="mycall" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="15"></div>
   </div>
   <div class="dp-row">
-    <div class="dp-lbl"><label for="locator"><b>Locator</b></label><span>Sent to the gateway, and the distances in Pat's gateway list. Empty: the radio's QTH<span id="radioloc"></span></span></div>
+    <div class="dp-lbl"><label for="locator"><b>定位</b></label><span>发送给网关，并用于Pat网关列表中的距离。留空则使用电台QTH<span id="radioloc"></span></span></div>
     <div class="dp-ctl"><input id="locator" type="text" autocomplete="off" spellcheck="false" maxlength="6"></div>
   </div>
   <div class="dp-row">
-    <div class="dp-lbl"><label for="password"><b>Winlink password</b></label><span>Password: <b id="pw-state"></b>. A new one replaces it, also one set in Pat's own Settings; empty keeps it. Clear takes it away, also the one in Pat's own Settings. It stays on the radio and is never shown again</span></div>
-    <div class="dp-ctl"><input id="password" type="password" autocomplete="new-password" maxlength="64" placeholder="New password (empty = keep)"> <button type="button" id="pw-clear">Clear</button></div>
+    <div class="dp-lbl"><label for="password"><b>Winlink密码</b></label><span>Password: <b id="pw-state"></b>. A new one replaces it, also one set in Pat's own Settings; empty keeps it. Clear takes it away, also the one in Pat's own Settings. It stays on the radio and is never shown again</span></div>
+    <div class="dp-ctl"><input id="password" type="password" autocomplete="new-password" maxlength="64" placeholder="New password (empty = keep)"> <button type="button" id="pw-clear">清除</button></div>
   </div>
   <div class="dp-row">
-    <div class="dp-lbl"><label for="modem"><b>Modem</b></label><span>ARDOP: the gateways in Pat's list. Mercury: faster on a good path, but only with a station that runs Mercury 1.9.20 or later (station to station, or one of the few gateways that run it), dialled by hand in Pat as VARA HF. XARA: speaks VARA HF, so the VARA HF gateways in Pat's list answer it (Connect, VARA HF), at VARA's free speed unless you tick your VARA HF licence below. Mercury and XARA cost the radio more processor and heat. One runs at a time</span></div>
-    <div class="dp-ctl"><select id="modem"><option value="ardop">ARDOP</option><option value="mercury">Mercury (experimental)</option><option value="xara">XARA (experimental, VARA-compatible)</option></select></div>
+    <div class="dp-lbl"><label for="modem"><b>调制解调器</b></label><span>ARDOP: the gateways in Pat's list. Mercury: faster on a good path, but only with a station that runs Mercury 1.9.20 or later (station to station, or one of the few gateways that run it), dialled by hand in Pat as VARA HF. XARA: speaks VARA HF, so the VARA HF gateways in Pat's list answer it (Connect, VARA HF), at VARA's free speed unless you tick your VARA HF licence below. Mercury and XARA cost the radio more processor and heat. One runs at a time</span></div>
+    <div class="dp-ctl"><select id="modem"><option value="ardop">ARDOP</option><option value="mercury">Mercury（实验性）</option><option value="xara">XARA（实验性，兼容VARA）</option></select></div>
   </div>
   <div class="dp-row" id="row-bandwidth">
-    <div class="dp-lbl"><label for="bandwidth"><b>ARDOP bandwidth</b></label><span>The widest ARDOP may use, also with a gateway the list shows wider (Pat says so in its log). 500 Hz suits the radio's few watts and a crowded band; 200 Hz is the most robust, but a gateway fixed at 500 Hz or wider refuses it; 1000 and 2000 Hz are faster on a good path, with a gateway that runs them</span></div>
+    <div class="dp-lbl"><label for="bandwidth"><b>ARDOP带宽</b></label><span>The widest ARDOP may use, also with a gateway the list shows wider (Pat says so in its log). 500 Hz suits the radio's few watts and a crowded band; 200 Hz is the most robust, but a gateway fixed at 500 Hz or wider refuses it; 1000 and 2000 Hz are faster on a good path, with a gateway that runs them</span></div>
     <div class="dp-ctl"><select id="bandwidth"><option value="200">200 Hz</option><option value="500">500 Hz</option><option value="1000">1000 Hz</option><option value="2000">2000 Hz</option></select></div>
   </div>
   <div class="dp-row" id="row-mercury-bandwidth">
-    <div class="dp-lbl"><label for="mercury_bandwidth"><b>Mercury bandwidth</b></label><span>What Pat asks Mercury for, unless a connection names another. 2300 Hz uses all of Mercury's modes; 500 Hz keeps it within about 560 Hz, its most robust mode then a 500 Hz MFSK at half the speed (27 s a frame); 2750 Hz is 2300's modes for now. The narrower of the two stations' is used</span></div>
+    <div class="dp-lbl"><label for="mercury_bandwidth"><b>Mercury带宽</b></label><span>What Pat asks Mercury for, unless a connection names another. 2300 Hz uses all of Mercury's modes; 500 Hz keeps it within about 560 Hz, its most robust mode then a 500 Hz MFSK at half the speed (27 s a frame); 2750 Hz is 2300's modes for now. The narrower of the two stations' is used</span></div>
     <div class="dp-ctl"><select id="mercury_bandwidth"><option value="500">500 Hz</option><option value="2300">2300 Hz</option><option value="2750">2750 Hz</option></select></div>
   </div>
   <div class="dp-row" id="row-xara-bandwidth">
-    <div class="dp-lbl"><label for="xara_bandwidth"><b>XARA bandwidth</b></label><span>What Pat asks XARA for, unless a connection names another: VARA HF's 500, 2300 or 2750 Hz. Call a gateway at the bandwidth Pat's VARA HF list gives it; 2300 Hz is the usual one, 500 Hz keeps to about 520 Hz on a crowded band</span></div>
+    <div class="dp-lbl"><label for="xara_bandwidth"><b>XARA带宽</b></label><span>What Pat asks XARA for, unless a connection names another: VARA HF's 500, 2300 or 2750 Hz. Call a gateway at the bandwidth Pat's VARA HF list gives it; 2300 Hz is the usual one, 500 Hz keeps to about 520 Hz on a crowded band</span></div>
     <div class="dp-ctl"><select id="xara_bandwidth"><option value="500">500 Hz</option><option value="2300">2300 Hz</option><option value="2750">2750 Hz</option></select></div>
   </div>
   <div class="dp-row" id="row-vara-licence">
-    <div class="dp-lbl"><label for="vara_licence"><b>VARA HF licence</b></label><span>Tick only if you hold a VARA HF licence of your own; the radio does not check it. Off: VARA's free speed levels (1 to 4). On: XARA calls as a registered VARA station does, and the link may use every speed level</span></div>
-    <div class="dp-ctl"><label class="sw" title="VARA HF licence"><input id="vara_licence" type="checkbox" role="switch" aria-label="VARA HF licence"><i></i></label></div>
+    <div class="dp-lbl"><label for="vara_licence"><b>VARA HF许可</b></label><span>Tick only if you hold a VARA HF licence of your own; the radio does not check it. Off: VARA's free speed levels (1 to 4). On: XARA calls as a registered VARA station does, and the link may use every speed level</span></div>
+    <div class="dp-ctl"><label class="sw" title="VARA HF许可"><input id="vara_licence" type="checkbox" role="switch" aria-label="VARA HF许可"><i></i></label></div>
   </div>
   <div class="dp-body" style="border-top:1px solid #1a283c">
     <div class="actions" style="margin-top:0">
-      <button type="submit" class="primary">Save</button>
+      <button type="submit" class="primary">保存</button>
       <span class="status" id="status"></span>
     </div>
   </div>
 </form>
 
 <div class="dp-card">
-  <div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-lock"/></svg></span><div><h3>Good to know</h3><p>Before you turn it on</p></div></div>
+  <div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-lock"/></svg></span><div><h3>须知</h3><p>开启之前</p></div></div>
   <div class="dp-body">
     <ul style="margin:0;padding-left:18px;color:var(--dim);line-height:1.5">
       <li>The mailbox has no login of its own: anyone on the radio's network, and on your tailnet with Tailscale on, can read and send your mail and make the radio transmit. Turn Winlink off on a network you do not trust.</li>

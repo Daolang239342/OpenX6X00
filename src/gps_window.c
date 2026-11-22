@@ -77,7 +77,7 @@ static void report_cb(lv_event_t *e) {
     switch (g->fix.mode) {
         case MODE_3D:       lv_label_set_text(values[R_FIX], "3D");     break;
         case MODE_2D:       lv_label_set_text(values[R_FIX], "2D");     break;
-        case MODE_NO_FIX:   lv_label_set_text(values[R_FIX], "None");   break;
+        case MODE_NO_FIX:   lv_label_set_text(values[R_FIX], "无");   break;
         default:            break;
     }
 
@@ -85,13 +85,13 @@ static void report_cb(lv_event_t *e) {
         timespec_to_iso8601(g->fix.time, text, sizeof(text));
         lv_label_set_text(values[R_TIME], text);
     } else {
-        lv_label_set_text(values[R_TIME], "N/A");
+        lv_label_set_text(values[R_TIME], "不可用");
     }
 
     if (g->fix.mode < MODE_2D) {
-        lv_label_set_text(values[R_LAT], "N/A");
-        lv_label_set_text(values[R_LON], "N/A");
-        lv_label_set_text(values[R_GRID], "N/A");
+        lv_label_set_text(values[R_LAT], "不可用");
+        lv_label_set_text(values[R_LON], "不可用");
+        lv_label_set_text(values[R_GRID], "不可用");
         return;
     }
     coord_text(text, sizeof(text), g->fix.latitude, "N", "S");
@@ -119,7 +119,7 @@ static void add_row(lv_obj_t *win, int i) {
     lv_obj_set_pos(name, NAME_X, y);
 
     values[i] = lv_label_create(win);
-    lv_label_set_text(values[i], i == R_STATUS ? "" : "N/A");
+    lv_label_set_text(values[i], i == R_STATUS ? "" : "不可用");
     lv_obj_set_size(values[i], VALUE_W, ROW_H);
     lv_obj_set_pos(values[i], VALUE_X, y);
 }

@@ -33,12 +33,12 @@ static void key_edit_cb(button_data_t *data);
 static void key_drag_cb(button_data_t *data);
 static void key_drop_cb(button_data_t *data);
 
-static button_data_t btn_close  = { .type = BTN_TEXT, .label = "Close",  .press = key_close_cb };
-static button_data_t btn_add    = { .type = BTN_TEXT, .label = "Add",    .press = key_add_cb };
-static button_data_t btn_delete = { .type = BTN_TEXT, .label = "Delete", .press = key_delete_cb };
-static button_data_t btn_edit   = { .type = BTN_TEXT, .label = "Edit",   .press = key_edit_cb };
-static button_data_t btn_drag   = { .type = BTN_TEXT, .label = "Drag",   .press = key_drag_cb };
-static button_data_t btn_drop   = { .type = BTN_TEXT, .label = "Drop",   .press = key_drop_cb };
+static button_data_t btn_close  = { .type = BTN_TEXT, .label = "关闭",  .press = key_close_cb };
+static button_data_t btn_add    = { .type = BTN_TEXT, .label = "添加",    .press = key_add_cb };
+static button_data_t btn_delete = { .type = BTN_TEXT, .label = "删除", .press = key_delete_cb };
+static button_data_t btn_edit   = { .type = BTN_TEXT, .label = "编辑",   .press = key_edit_cb };
+static button_data_t btn_drag   = { .type = BTN_TEXT, .label = "拖动",   .press = key_drag_cb };
+static button_data_t btn_drop   = { .type = BTN_TEXT, .label = "放下",   .press = key_drop_cb };
 
 static buttons_page_t keys_page = {
     .items = { &btn_close, &btn_add, &btn_delete, &btn_edit, &btn_drag }
@@ -197,7 +197,7 @@ static bool tune(int16_t row, bool close) {
                       : main_screen_mode_locked()   ? "the app holds the mode"
                                                     : NULL;
     if (why) {
-        msg_update_text_fmt("Channel not tuned: %s", why);
+        msg_update_text_fmt("信道无法调谐：%s", why);
         return false;
     }
 
@@ -366,7 +366,7 @@ static void window_open_cb(lv_obj_t *parent) {
 
     lv_obj_t *title = lv_label_create(win.obj);
 
-    lv_label_set_text(title, "CHANNELS");
+    lv_label_set_text(title, "信道");
     lv_obj_align(title, LV_ALIGN_TOP_MID, 0, 12);
 
     make_table();

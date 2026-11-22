@@ -226,7 +226,7 @@ static bool password_ok(void) {
     /* A copy: the textarea goes with the window, the pointer into it would not */
     snprintf(typed, sizeof(typed), "%s", textarea_window_get());
     if (editing.password_validator && !editing.password_validator(typed)) {
-        msg_update_text_fmt("A WPA password has 8 to 63 characters");
+        msg_update_text_fmt("WPA密码应为8到63个字符");
         return false;
     }
     if (editing.known) {
@@ -271,7 +271,7 @@ static void power_press(button_data_t *b) {
     } else {
         wifi_power_on();
         list_start();
-        msg_update_text_fmt("Turning on");
+        msg_update_text_fmt("正在开启");
     }
 }
 
@@ -280,9 +280,9 @@ static void scan_press(button_data_t *b) {
         return;
     }
     if (wifi_scanning()) {
-        msg_update_text_fmt("Already scanning");
+        msg_update_text_fmt("已在扫描");
     } else {
-        msg_update_text_fmt("Start scan");
+        msg_update_text_fmt("开始扫描");
         wifi_start_scan();
     }
 }
@@ -343,7 +343,7 @@ static void forget_press(button_data_t *b) {
         return;
     }
     wifi_delete_connection(ap->uuid);
-    msg_update_text_fmt("Connection deleted");
+    msg_update_text_fmt("已删除连接");
 }
 
 static const char *power_label(void) {
@@ -393,8 +393,8 @@ static void address_cb(lv_timer_t *t) {
     if (got != (wifi_get_status() == WIFI_CONNECTED)) {
         return;
     }
-    lv_label_set_text(ip_val, got ? ip : "N/A");
-    lv_label_set_text(gw_val, got ? gw : "N/A");
+    lv_label_set_text(ip_val, got ? ip : "不可用");
+    lv_label_set_text(gw_val, got ? gw : "不可用");
     if (addr_timer) {
         lv_timer_del(addr_timer);
         addr_timer = NULL;

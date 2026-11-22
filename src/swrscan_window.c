@@ -448,7 +448,7 @@ static void run_cb(button_data_t *b) {
         mem_load(MEM_BACKUP_ID);
         lv_obj_invalidate(plot);    /* the line on the point being read goes: it stayed on until the next redraw */
     } else if (radio_get_state() != RADIO_RX) {
-        msg_update_text_fmt("SWR scan: not while transmitting or tuning");
+        msg_update_text_fmt("SWR扫描：发射或调谐中不可用");
     } else {
         mem_save(MEM_BACKUP_ID);
         reset_scan();
@@ -519,7 +519,7 @@ void dialog_swrscan_update(float vswr) {
 void dialog_swrscan_stop(int32_t freq) {
     if (!scanning) return;
     run_cb(NULL);
-    if (!radio_say_no_tx("Scan stopped", freq, true)) msg_update_text_fmt("Scan stopped");   /* fits whole (#121) */
+    if (!radio_say_no_tx("扫描已停止", freq, true)) msg_update_text_fmt("扫描已停止");   /* fits whole (#121) */
 }
 
 void dialog_swrscan_give_up(const char *why) {

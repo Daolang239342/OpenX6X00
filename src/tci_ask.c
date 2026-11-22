@@ -33,7 +33,7 @@
 
 enum { PICK_ONCE, PICK_ALWAYS, PICK_NO, PICKS };
 
-static const char *const pick_name[PICKS]   = {"Allow once", "Always", "No"};
+static const char *const pick_name[PICKS]   = {"允许一次", "Always", "No"};
 static const int         pick_answer[PICKS] = {TCI_ASK_ONCE, TCI_ASK_ALWAYS, TCI_ASK_NO};
 
 static lv_obj_t   *box, *hint, *btn[PICKS];
@@ -219,7 +219,7 @@ void tci_ask_show(uint32_t id, const char *who, int seconds) {
     lv_label_set_long_mode(obj, LV_LABEL_LONG_WRAP);
     lv_obj_set_style_text_font(obj, VF(26), 0);
     lv_obj_set_style_text_color(obj, TC(text), 0);
-    lv_label_set_text_fmt(obj, "%s wants to transmit", who);
+    lv_label_set_text_fmt(obj, "%s 请求发射", who);
 
     row = lv_obj_create(box);
     lv_obj_remove_style_all(row);

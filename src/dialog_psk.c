@@ -292,10 +292,10 @@ static button_data_t btn_p1 = {
     .next = &page_2, .prev = &page_6,
 };
 static button_data_t btn_text = {
-    .type = BTN_TEXT, .label = "Free\nText", .press = text_press_cb,
+    .type = BTN_TEXT, .label = "自由\\n文本", .press = text_press_cb,
 };
 static button_data_t btn_stop = {
-    .type = BTN_TEXT, .label = "Stop\nTX", .press = stop_press_cb,
+    .type = BTN_TEXT, .label = "停止\\n发射", .press = stop_press_cb,
 };
 static button_data_t btn_status = {
     .type = BTN_TEXT_FN, .label_fn = status_label_getter,
@@ -737,7 +737,7 @@ static void knob_release(bool say)
         knob_mark(knob, false);
         knob = KNOB_FINE;
         if (say)
-            msg_update_text_fmt("Knob: fine tuning");
+            msg_update_text_fmt("旋钮：微调");
     }
     sql_save();
 }
@@ -794,7 +794,7 @@ static void sql_hold_cb(button_data_t *b)
     }
     sql_dirty = true;
     sql_save();
-    msg_update_text_fmt("%s squelch %s", mode_name(), sql_thr ? "on" : "off");
+    msg_update_text_fmt("%s 静噪 %s", mode_name(), sql_thr ? "开" : "关");
     buttons_refresh(b);
 }
 
@@ -1385,7 +1385,7 @@ static void status_press_cb(button_data_t *b)
 {
     (void)b;
     restart_rx();
-    msg_update_text_fmt("%s RX resync", mode_name());
+    msg_update_text_fmt("%s RX重新同步", mode_name());
 }
 
 /* Hold: clear the text and the waterfall. */
@@ -1414,13 +1414,13 @@ static void macro_press(int idx)
 
     m = psk_macro_get(idx);
     if (!m) {
-        msg_update_text_fmt("Empty slot - hold to create a macro");
+        msg_update_text_fmt("空槽位 - 长按创建宏");
         return;
     }
 
     if (!psk_macro_expand(m->text, out, sizeof(out), &missing)) {
         if (missing && strcmp(missing, "<CALL>") == 0)
-            msg_update_text_fmt("#%06x No DX call - set it on page 2#", theme_hex(TC_err));
+            msg_update_text_fmt("#%06x 未设置DX呼号 - 请在第2页设置#", theme_hex(TC_err));
         else
             msg_update_text_fmt("#%06x %s is empty#", theme_hex(TC_err), missing ? missing : "?");
         return;
@@ -1446,16 +1446,16 @@ static bool editor_text_ok_cb(void)
     if (edit_idx >= 0) {
         if (empty) {
             psk_macro_delete(edit_idx);
-            msg_update_text_fmt("Macro deleted");
+            msg_update_text_fmt("已删除宏");
         } else {
             psk_macro_set(edit_idx, edit_name, t);
-            msg_update_text_fmt("Macro saved");
+            msg_update_text_fmt("已保存宏");
         }
     } else if (!empty) {
         if (psk_macro_add(edit_name, t) < 0)
-            msg_update_text_fmt("#%06x All %d macro slots are used#", theme_hex(TC_err), PSK_MACRO_MAX);
+            msg_update_text_fmt("#%06x 全部%d个宏槽位已用#", theme_hex(TC_err), PSK_MACRO_MAX);
         else
-            msg_update_text_fmt("Macro saved");
+            msg_update_text_fmt("已保存宏");
     }
 
     if (!psk_macros_save())
@@ -1525,7 +1525,7 @@ static void macro_hold(int idx)
 
     if (idx >= psk_macros_count()) {
         if (psk_macros_count() >= PSK_MACRO_MAX) {
-            msg_update_text_fmt("#%06x All %d macro slots are used#", theme_hex(TC_err), PSK_MACRO_MAX);
+            msg_update_text_fmt("#%06x 全部%d个宏槽位已用#", theme_hex(TC_err), PSK_MACRO_MAX);
             return;
         }
         idx = -1;       /* an empty slot: new macro, added at the end */
@@ -1571,7 +1571,7 @@ static void dx_press_cb(button_data_t *b)
 static void dx_hold_cb(button_data_t *b)
 {
     digi_qso_clear();
-    msg_update_text_fmt("QSO cleared");
+    msg_update_text_fmt("已清除QSO");
     buttons_refresh(b);
     refresh_btn(&btn_rst);
 }

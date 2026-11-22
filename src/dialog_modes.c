@@ -193,7 +193,7 @@ static void construct_cb(lv_obj_t *parent) {
     lv_obj_t *head = lv_label_create(box);
     lv_obj_set_style_text_font(head, &sony_22, 0);
     lv_obj_set_style_text_color(head, TC(text_head), 0);
-    lv_label_set_text(head, "DIGITAL MODES");
+    lv_label_set_text(head, "数字模式");
     lv_obj_set_pos(head, 22, 9);
 
     for (int i = 0; tiles && i < MODES_N; i++) {
@@ -222,7 +222,7 @@ static void construct_cb(lv_obj_t *parent) {
 
         lv_obj_t *note = lv_label_create(t);
         lv_obj_set_style_text_font(note, &sony_16, 0);
-        lv_label_set_text(note, i == last_used ? "last used" : modes[i].note);
+        lv_label_set_text(note, i == last_used ? "上次使用" : modes[i].note);
         lv_obj_align(note, LV_ALIGN_BOTTOM_MID, 0, -4);
     }
 
@@ -246,14 +246,14 @@ static void construct_cb(lv_obj_t *parent) {
         lv_obj_t *note = lv_label_create(row);
         lv_obj_set_style_text_font(note, &sony_22, 0);
         lv_obj_set_style_text_color(note, TC(text_dim), 0);
-        lv_label_set_text(note, i == last_used ? "last used" : modes[i].note);
+        lv_label_set_text(note, i == last_used ? "上次使用" : modes[i].note);
         lv_obj_align(note, LV_ALIGN_RIGHT_MID, -22, 0);
     }
 
     lv_obj_t *hint = lv_label_create(box);
     lv_obj_set_style_text_font(hint, &sony_20, 0);
     lv_obj_set_style_text_color(hint, TC(text_dim), 0);
-    lv_label_set_text(hint, "MFK: choose - press: open - Modes: close");
+    lv_label_set_text(hint, "MFK：选择 - 按下：打开 - 模式：关闭");
     lv_obj_set_pos(hint, 22, tiles ? HEAD_H + T_ROWS * T_H + (T_ROWS - 1) * T_GAP + 4 : HEAD_H + ROWS_N * ROW_H + 8);
 
     sel = last_used < 0 ? 0 : last_used;

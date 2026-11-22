@@ -694,7 +694,7 @@ static bool on_air_start(sstv_mode_t mode)
 
     sstv_tx_state = SSTV_TX_ON_AIR;
     step = STEP_NONE;
-    sstv_btn_tx.label = "Halt TX";
+    sstv_btn_tx.label = "停止发射";
     sstv_mode_button(true, on_air);
     status_text_show(true);
     snprintf(s, sizeof(s), "Preparing %s TX...", sstv_mode_info(on_air)->label);
@@ -909,12 +909,12 @@ static void menu_open(void)
     menu = list_new(7);
     snprintf(reply, sizeof(reply), target[0] ? "REPLY TO %s" : "REPLY TO...", target);
     snprintf(replay, sizeof(replay), target[0] ? "REPLAY TO %s" : "REPLAY TO...", target);
-    lv_table_set_cell_value(menu, 0, 0, "CALL CQ");
+    lv_table_set_cell_value(menu, 0, 0, "呼叫CQ");
     lv_table_set_cell_value(menu, 1, 0, reply);
     lv_table_set_cell_value(menu, 2, 0, replay);
-    lv_table_set_cell_value(menu, 3, 0, "TX IMAGE ONLY");
-    lv_table_set_cell_value(menu, 4, 0, "REPEAT LAST TX");
-    lv_table_set_cell_value(menu, 5, 0, "SET TARGET CALLSIGN");
+    lv_table_set_cell_value(menu, 3, 0, "仅发送图片");
+    lv_table_set_cell_value(menu, 4, 0, "重复上次发射");
+    lv_table_set_cell_value(menu, 5, 0, "设置目标呼号");
     lv_table_set_cell_value(menu, 6, 0, reply_mode_text());
     lv_obj_add_event_cb(menu, menu_look_cb, LV_EVENT_DRAW_PART_BEGIN, NULL);
     lv_obj_add_event_cb(menu, menu_moved_cb, LV_EVENT_VALUE_CHANGED, NULL);
@@ -1002,11 +1002,11 @@ static void pictures_open(void)
     pictures = list_new(1);
 
     if (!pic_count) {
-        lv_table_set_cell_value(pictures, 0, 0, "No TX pictures found");
+        lv_table_set_cell_value(pictures, 0, 0, "未找到发射图片");
         buttons_disabled(&sstv_btn_mode, false);
         sstv_focus_picture();
         sstv_status("No TX pictures found");
-        if (sstv_frame.status) lv_label_set_text(sstv_frame.status, "Put PNG pictures in " SSTV_TX_PICS_DIR);
+        if (sstv_frame.status) lv_label_set_text(sstv_frame.status, "将PNG图片放入 " SSTV_TX_PICS_DIR);
         return;
     }
     lv_table_set_row_cnt(pictures, pic_count);
@@ -1138,7 +1138,7 @@ static void texts_open(void)
     box_open("TX TEXT", HINT);
     texts = list_new(1);
     if (!text_count) {
-        lv_table_set_cell_value(texts, 0, 0, "No TX templates found");
+        lv_table_set_cell_value(texts, 0, 0, "未找到发射模板");
         sstv_focus_picture();
         return;
     }
@@ -1283,7 +1283,7 @@ void sstv_tx_button(void)
     auto_after = sstv_rx_stop_for_tx();
     sstv_tx_state = SSTV_TX_SETUP;
     step = STEP_MENU;
-    sstv_btn_tx.label = "Cancel TX";
+    sstv_btn_tx.label = "取消发射";
     rx_kept = sstv_mode;          /* the RX Mode, back after the setup */
     rx_kept_ok = true;
     const sstv_mode_info_t *saved = sstv_mode_info((sstv_mode_t)params.sstv_tx_mode.x);

@@ -159,20 +159,20 @@ body.app h2, body.app #intro, body.app #intro-away { display:none; }
 #lgrows .i .b { height: 24px; padding: 0 8px; margin-left: 6px; font-size: 11px; }
 </style>
 
-<h2><svg class="i"><use href="#i-sliders"/></svg>Panel</h2>
+<h2><svg class="i"><use href="#i-sliders"/></svg>面板</h2>
 % if get('funnel', False):
-<p class="sub" id="intro-away">The radio from away, through Tailscale Funnel: the spectrum and the waterfall, every switch and level, the audio both ways. Only a browser paired with the radio at home gets in; you remain the control operator of every transmission. The <a href="/remote">Screen</a> page shows the radio's own display.</p>
+<p class="sub" id="intro-away">The radio from away, through Tailscale Funnel: the spectrum and the waterfall, every switch and level, the audio both ways. Only a browser paired with the radio at home gets in; you remain the control operator of every transmission. The <a href="/remote">屏幕</a> page shows the radio's own display.</p>
 % else:
-<p class="sub" id="intro">The radio worked from the browser: the spectrum and the waterfall live, tap or drag to tune, pinch to zoom, every switch and level at hand, the DX spots, the audio both ways. Phone, tablet or PC, on the same network as the radio. The <a href="/remote">Screen</a> page shows the radio's own display instead. No login: anyone on the network can reach this page.</p>
+<p class="sub" id="intro">The radio worked from the browser: the spectrum and the waterfall live, tap or drag to tune, pinch to zoom, every switch and level at hand, the DX spots, the audio both ways. Phone, tablet or PC, on the same network as the radio. The <a href="/remote">屏幕</a> page shows the radio's own display instead. No login: anyone on the network can reach this page.</p>
 % end
 
 <div class="pn-bar">
   <button type="button" id="snd" aria-pressed="false">Sound</button>
   <button type="button" id="mic" aria-pressed="false" title="The browser's microphone transmits while PTT is held">Mic</button>
-  <button type="button" id="theme" title="Dark or light (for the sun)">Light</button>
-  <button type="button" id="pal" title="The waterfall's colours">Colours</button>
+  <button type="button" id="theme" title="深色或浅色（用于太阳图）">Light</button>
+  <button type="button" id="pal" title="The waterfall's colours">颜色</button>
   <button type="button" id="appmode" title="The panel alone, the height of the screen">App</button>
-  <button type="button" id="full">Fullscreen</button>
+  <button type="button" id="full">全屏</button>
   <span class="sesbar" id="ses" title="This browser's access to the radio, and who controls it"></span>
   <span class="health" id="hl" title="The page's links to the radio: link, spectrum, sound, microphone; this browser's access; who controls the radio"></span>
   <span class="status" id="st"></span>
@@ -185,19 +185,19 @@ body.app h2, body.app #intro, body.app #intro-away { display:none; }
         <span class="chip rx" id="c-trx">RX</span>
         <span class="chip" id="c-band">--</span>
         <span class="chip" id="c-vfo" title="VFO">A</span>
-        <span class="chip" id="c-bat" title="Battery">--%</span>
+        <span class="chip" id="c-bat" title="电池">--%</span>
       </div>
       <div class="freq" id="freq" title="Tap: type a frequency">-.---.---</div>
       <div class="smeter"><span>S</span><div class="bar" id="sbar"><i></i></div><span class="val" id="sval">--</span></div>
     </div>
     <div class="pn-pan" id="pan">
       <canvas id="cv"></canvas>
-      <div class="msg" id="msg">Connecting...</div>
+      <div class="msg" id="msg">连接中...</div>
     </div>
     <div class="pn-ctl">
       <div class="row r7">
-        <button class="b" id="b-bdn"><small>BAND</small>▼</button>
-        <button class="b" id="b-bup"><small>BAND</small>▲</button>
+        <button class="b" id="b-bdn"><small>波段</small>▼</button>
+        <button class="b" id="b-bup"><small>波段</small>▲</button>
         <button class="b" id="b-mode"><small>MODE</small><span>--</span></button>
         <button class="b" id="b-step"><small>STEP</small><span>--</span></button>
         <button class="b" id="b-zoom"><small>ZOOM</small><span>x1</span></button>
@@ -214,28 +214,28 @@ body.app h2, body.app #intro, body.app #intro-away { display:none; }
       </div>
       <div class="row r5">
         <button class="b lvl" data-lvl="vol"><i data-d="-1">−</i><span><small>VOL</small><span>--</span></span><i data-d="1">+</i></button>
-        <button class="b lvl" data-lvl="sql"><i data-d="-1">−</i><span><small>SQL</small><span>--</span></span><i data-d="1">+</i></button>
+        <button class="b lvl" data-lvl="sql"><i data-d="-1">−</i><span><small>静噪</small><span>--</span></span><i data-d="1">+</i></button>
         <button class="b lvl" data-lvl="rfg"><i data-d="-1">−</i><span><small>RF GAIN</small><span>--</span></span><i data-d="1">+</i></button>
         <button class="b lvl" data-lvl="pwr"><i data-d="-1">−</i><span><small>POWER</small><span>--</span></span><i data-d="1">+</i></button>
-        <button class="b" id="b-filter"><small>FILTER</small><span>--</span></button>
+        <button class="b" id="b-filter"><small>滤波器</small><span>--</span></button>
       </div>
       <div class="row r5">
         <button class="b" id="b-tune"><small>knob</small>◀ −</button>
         <button class="b" id="b-tunep"><small>knob</small>+ ▶</button>
-        <button class="b" id="b-atune"><small>ATU</small>TUNE</button>
-        <button class="b xtune" id="b-xtune" title="A low-power carrier for a tuner of its own at the antenna, at the radio's TUNE power and time limit (Settings &gt; TX Cal); press again to stop">TUNE<small>external tuner</small></button>
+        <button class="b" id="b-atune"><small>ATU</small>调谐</button>
+        <button class="b xtune" id="b-xtune" title="A low-power carrier for a tuner of its own at the antenna, at the radio's TUNE power and time limit (Settings &gt; TX Cal); press again to stop">调谐<small>external tuner</small></button>
         <button class="b ptt" id="pttbtn">PTT (hold)</button>
       </div>
     </div>
   </section>
   <aside class="pn-side">
     <div class="tabs" role="tablist">
-      <button type="button" role="tab" aria-selected="true" data-tab="spots">Spots</button>
+      <button type="button" role="tab" aria-selected="true" data-tab="spots">信号源</button>
       <button type="button" role="tab" aria-selected="false" data-tab="ft8">FT8</button>
       <button type="button" role="tab" aria-selected="false" data-tab="cw">CW</button>
-      <button type="button" role="tab" aria-selected="false" data-tab="log">Log</button>
-      <button type="button" role="tab" aria-selected="false" data-tab="keys">Keys</button>
-      <button type="button" role="tab" aria-selected="false" data-tab="screen">Screen</button>
+      <button type="button" role="tab" aria-selected="false" data-tab="log">日志</button>
+      <button type="button" role="tab" aria-selected="false" data-tab="keys">按键</button>
+      <button type="button" role="tab" aria-selected="false" data-tab="screen">屏幕</button>
     </div>
     <div class="tab" id="tab-ft8">
       <div class="ftbar">
@@ -245,9 +245,9 @@ body.app h2, body.app #intro, body.app #intro-away { display:none; }
         <button class="b tg" id="ft-txcall" title="TX Call: armed, the queued message goes out in its slot; off, the app only listens and decodes (a dry run)"><small>TX</small><span>off</span></button>
         <button class="b tg" id="ft-cq" title="Call CQ every slot of ours until a station answers, or CQ off">CQ</button>
         <button class="b tg" id="ft-auto" title="Answer by itself a station that calls you, and carry the QSO through; it never calls CQ on its own">AUTO</button>
-        <button class="b tg" id="ft-hold" title="Hold the TX offset: do not move onto the station answered">HOLD</button>
+        <button class="b tg" id="ft-hold" title="Hold the TX offset: do not move onto the station answered">保持</button>
         <button class="b" id="ft-stop" title="Stop the transmission, drop the queued message, CQ off, TX off: nothing transmits until armed again">STOP</button>
-        <button class="b" id="ft-clear" title="Clear this list (the radio's is not touched)">CLEAR</button>
+        <button class="b" id="ft-clear" title="Clear this list (the radio's is not touched)">清除</button>
         <button class="b wide" id="ft-order" aria-pressed="false" title="Where the newest decode comes in: at the bottom, as on the radio, or on top, under these buttons; this browser keeps the choice">Newest at the bottom</button>
       </div>
       <ol class="ftl" id="ftl" title="What the app does now and next">
@@ -262,13 +262,13 @@ body.app h2, body.app #intro, body.app #intro-away { display:none; }
       <p class="sub" style="margin:8px 0 0;font-size:12px">All of it runs on the radio: CQ and AUTO go on calling and answering when this page closes or loses its link. TX off makes a dry run: the app listens, decodes and queues, and nothing keys the transmitter. A tap on a CQ or a call queues one reply for the next slot of ours and arms TX.</p>
     </div>
     <div class="tab" id="tab-cw">
-      <div class="ftbar" style="grid-template-columns:1fr 1fr"><button class="b" id="cw-clear">CLEAR</button><button class="b" id="cw-log"><small>LOG</small><span>last call</span></button></div>
+      <div class="ftbar" style="grid-template-columns:1fr 1fr"><button class="b" id="cw-clear">清除</button><button class="b" id="cw-log"><small>日志</small><span>last call</span></button></div>
       <pre class="cwtext" id="cwtext"></pre>
       <p class="sub" style="margin:8px 0 0;font-size:12px">The radio's CW decoder (Settings > CW): its text as it comes, in CW mode.</p>
     </div>
     <div class="tab" id="tab-log">
-      <div class="logf"><input id="lg-call" placeholder="CALL" autocapitalize="characters" autocomplete="off"><input id="lg-rs" placeholder="RST s" value="59"><input id="lg-rr" placeholder="RST r" value="59"></div>
-      <div class="logf2"><input id="lg-name" placeholder="Name (optional)" autocomplete="off"><button class="b" id="lg-log" style="height:40px;padding:0 18px">LOG</button></div>
+      <div class="logf"><input id="lg-call" placeholder="呼叫" autocapitalize="characters" autocomplete="off"><input id="lg-rs" placeholder="RST s" value="59"><input id="lg-rr" placeholder="RST r" value="59"></div>
+      <div class="logf2"><input id="lg-name" placeholder="Name (optional)" autocomplete="off"><button class="b" id="lg-log" style="height:40px;padding:0 18px">日志</button></div>
       <p class="sub" style="margin:10px 0 0;font-size:12px">A QSO by hand (voice, CW, or PSK, Olivia, Contestia, JTTY, RTTY) on the radio's frequency, into the day's ADIF log on the radio (the web Logs page lists it). Its mode is the one of the app open on the radio, else the radio's; in USB-D or LSB-D with no app, away from FT8 and FT4, it has none: set it on the Logs page. FT8, FT4, FT2 and JS8 log their own QSOs. Each QSO is confirmed by the radio: one sent into a dropped connection is asked about when the link is back, and never logged twice.</p>
       <ul class="ft" id="lgrows"></ul>
     </div>

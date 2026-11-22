@@ -1,20 +1,20 @@
 % rebase('base.html', title='Backup')
-<h2><svg class="i"><use href="#i-archive"/></svg>Backup</h2>
+<h2><svg class="i"><use href="#i-archive"/></svg>备份</h2>
 <p class="sub">Save the radio settings to your computer, and put them back after flashing a new image.</p>
 
 <section class="dp-card">
-<div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-download"/></svg></span><div><h3>Download backup</h3><p>Tick the parts to save in the file</p></div></div>
+<div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-download"/></svg></span><div><h3>下载备份</h3><p>Tick the parts to save in the file</p></div></div>
 <div class="dp-body">
 <div class="grid checks" id="parts"></div>
 <div class="actions">
-  <button id="download" class="primary"><svg class="i"><use href="#i-download"/></svg>Download backup</button>
+  <button id="download" class="primary"><svg class="i"><use href="#i-download"/></svg>下载备份</button>
   <span class="status" id="status_download"></span>
 </div>
 </div>
 </section>
 
 <section class="dp-card">
-<div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-upload"/></svg></span><div><h3>Restore</h3><p>Puts a backup file back on the radio</p></div></div>
+<div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-upload"/></svg></span><div><h3>恢复</h3><p>Puts a backup file back on the radio</p></div></div>
 <div class="dp-body">
 <p>Choose a backup file. You can pick which parts to restore; the radio screen restarts (about 5 s) when settings are replaced.</p>
 <input type="file" id="file" accept=".tar,.gz,.tgz,application/gzip,application/x-tar">

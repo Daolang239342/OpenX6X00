@@ -51,7 +51,7 @@
 typedef enum { VIEW_COND, VIEW_BEACONS } view_t;
 typedef enum { FOLLOW_SWEEP, FOLLOW_BAND, FOLLOW_BEACON } follow_t;
 
-static const char *follow_name[] = {"Sweep", "Band", "Follow"};
+static const char *follow_name[] = {"扫描", "波段", "Follow"};
 
 static void construct_cb(lv_obj_t *parent);
 static void destruct_cb(void);
@@ -62,13 +62,13 @@ static void mode_cb(button_data_t *b);
 static void band_cb(button_data_t *b);
 
 static button_data_t btn_cond_page = {.type = BTN_TEXT, .label = "(PROP 1:1)"};
-static button_data_t btn_beacons   = {.type = BTN_TEXT, .label = "Beacons", .press = view_cb};
+static button_data_t btn_beacons   = {.type = BTN_TEXT, .label = "信标", .press = view_cb};
 static button_data_t btn_refresh   = {.type = BTN_TEXT, .label = "Refresh", .press = refresh_cb};
 
-static button_data_t btn_bcn_page  = {.type = BTN_TEXT, .label = "(BEACONS)"};
-static button_data_t btn_cond      = {.type = BTN_TEXT, .label = "Conditions", .press = view_cb};
-static button_data_t btn_mode      = {.type = BTN_TEXT, .label = "Sweep", .press = mode_cb};
-static button_data_t btn_band      = {.type = BTN_TEXT, .label = "Band\n20m", .press = band_cb};
+static button_data_t btn_bcn_page  = {.type = BTN_TEXT, .label = "(信标)"};
+static button_data_t btn_cond      = {.type = BTN_TEXT, .label = "传播条件", .press = view_cb};
+static button_data_t btn_mode      = {.type = BTN_TEXT, .label = "扫描", .press = mode_cb};
+static button_data_t btn_band      = {.type = BTN_TEXT, .label = "波段\\n20m", .press = band_cb};
 
 static buttons_page_t page_cond    = {.items = {&btn_cond_page, &btn_beacons, &btn_refresh}};
 static buttons_page_t page_beacons = {.items = {&btn_bcn_page, &btn_cond, &btn_mode, &btn_band}};
@@ -229,7 +229,7 @@ static void cond_build(lv_obj_t *body) {
     for (int i = 0; i < 3; i++, y += row) cond_lbl[i] = label(panel_cond, &sony_18, 4, y, PANEL_W - 8);
     lv_obj_set_style_text_color(cond_lbl[2], TC(text_dim), 0);
 
-    static const char *head[] = {"Band", "Day", "Night"};
+    static const char *head[] = {"波段", "Day", "Night"};
     lv_coord_t         col_x[] = {4, 120, 220}, col_w[] = {110, 90, 90};
 
     for (int c = 0; c < 3; c++) {
@@ -466,7 +466,7 @@ static void show_view(view_t v) {
         buttons_load_page(&page_cond);
         beacons_retune(now_ms());   /* the slot under way cut short: not scored at the next look */
         app_frame_bar(&frame, -1, 0);
-        lv_label_set_text(frame.head_left, have_qth ? "PROPAGATION" : "PROPAGATION   no QTH set");
+        lv_label_set_text(frame.head_left, have_qth ? "传播" : "传播   未设置QTH");
         conditions_refresh(false);
         cond_fill();
     }

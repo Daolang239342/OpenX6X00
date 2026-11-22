@@ -74,19 +74,19 @@ static void over_cb(void *arg) {
 
     switch (o->end) {
         case TUNE_END_LIMIT:
-            msg_update_text_fmt("TUNE over: %d s limit", o->limit_s);
+            msg_update_text_fmt("调谐结束：%d秒上限", o->limit_s);
             break;
         case TUNE_END_STOP:
-            msg_update_text_fmt("TUNE stopped%s", whys[o->why >= 0 && o->why <= WHY_ATU ? o->why : 0]);
+            msg_update_text_fmt("调谐已停止%s", whys[o->why >= 0 && o->why <= WHY_ATU ? o->why : 0]);
             break;
         case TUNE_END_CUT:
             if (!o->swr)    /* else "TX stopped: SWR 6.0" is on the screen already */
-                msg_update_text_fmt("TUNE stopped by the radio");
+                msg_update_text_fmt("调谐被电台停止");
             break;
         case TUNE_END_REFUSED:
             /* the radio refused the key: on the air, or the data stopped since the start's look (#152), whose
              * refusal in radio.c gave the pointer to Settings > Info already */
-            msg_update_text_fmt("No tune: %s", radio_no_data() ? "no data from the base" : "on the air");
+            msg_update_text_fmt("无法调谐：%s", radio_no_data() ? "基带无数据" : "正在发射");
             break;
     }
     buttons_mark(&btn_ext_tune, false);
@@ -146,7 +146,7 @@ const char *ext_tune_start(int who) {
     if ((no = ext_tune_refusal())) {
         /* The frequency first (#121), then the data (#152), each line whole on the screen; the Panel gets no as it is */
         if (!radio_say_no_tx("No tune", radio_tx_freq(), true) && !radio_say_no_data("No tune", true))
-            msg_update_text_fmt("No tune: %s", no);
+            msg_update_text_fmt("无法调谐：%s", no);
         return no;
     }
     tune_plan(&plan, cparam_i_get(cfg_cur_mode), app_offset(), param_f_get(cfg_tune_pwr), cfg_pwr_max_get(),
@@ -167,7 +167,7 @@ const char *ext_tune_start(int who) {
         if (atu_off) {
             param_i_set(cfg_atu_enabled, true);     /* nothing went out */
         }
-        msg_update_text_fmt("No tune: no thread for it");
+        msg_update_text_fmt("无法调谐：无线程");
         return "no thread for it";
     }
     pthread_detach(th);

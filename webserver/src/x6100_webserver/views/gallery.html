@@ -1,24 +1,24 @@
 % rebase('base.html', title='Gallery')
-<h2><svg class="i"><use href="#i-image"/></svg>Gallery</h2>
+<h2><svg class="i"><use href="#i-image"/></svg>图库</h2>
 <p class="sub">Screen recordings (AVI), RX audio recordings, screenshots, SSTV and WeFax pictures stored on the radio. Tap files to select them, then download them as a ZIP or delete them together. Screen recordings can be converted to MP4 in this browser.</p>
 <div class="card" id="httpsnote" hidden><span class="meta">In-browser conversion needs a secure page. Open <a id="httpslink" href="#">the HTTPS version of this page</a>: the radio uses a self-signed certificate, so the browser shows a warning once. Accept it (Advanced, then Proceed) and the option appears.</span></div>
 
 <div class="folders" id="folders"></div>
 
 <div id="folderview" hidden>
-  <div class="crumb"><a href="#">Gallery</a> › <span id="crumbname"></span></div>
+  <div class="crumb"><a href="#">图库</a> › <span id="crumbname"></span></div>
   <div class="card upload" id="upload" hidden>
-    <div class="drop" id="drop">Drop pictures here or <button class="primary" id="pickbtn"><svg class="i"><use href="#i-upload"/></svg>Choose files</button></div>
+    <div class="drop" id="drop">Drop pictures here or <button class="primary" id="pickbtn"><svg class="i"><use href="#i-upload"/></svg>选择文件</button></div>
     <input type="file" id="pickfiles" accept="image/*" multiple hidden>
     <p class="meta">PNG files up to 4 MB are sent as they are; JPEG and other pictures are converted to PNG in this browser. A file with the same name is kept: the new one gets -1, -2... at the end.</p>
     <div id="uploads"></div>
   </div>
   <div class="card selbar">
     <button id="selall">Select all</button>
-    <button id="selnone">None</button>
+    <button id="selnone">无</button>
     <span class="meta" id="selinfo"></span>
-    <button class="primary" id="selzip"><svg class="i"><use href="#i-download"/></svg>Download ZIP</button>
-    <button class="remove" id="seldel">Delete</button>
+    <button class="primary" id="selzip"><svg class="i"><use href="#i-download"/></svg>下载ZIP</button>
+    <button class="remove" id="seldel">删除</button>
     <span class="status" id="status_gallery"></span>
   </div>
   <div class="card" id="empty" hidden>This folder is empty.</div>

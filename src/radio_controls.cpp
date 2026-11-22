@@ -234,7 +234,7 @@ void controls_encoder_update(cfg_ctrl_t ctrl, int32_t diff, std::string &msg) {
         case CTRL_CLUSTER_MODES: {  /* the modes filter of Settings > Cluster, in five presets */
             static const uint8_t      presets[] = {CLUSTER_FM_ALL, CLUSTER_FM_CW, CLUSTER_FM_SSB, CLUSTER_FM_DIG,
                                                    CLUSTER_FM_CW | CLUSTER_FM_DIG};
-            static const char *const  names[]   = {"All", "CW", "SSB", "DIG", "CW+DIG"};
+            static const char *const  names[]   = {"全部", "CW", "SSB", "DIG", "CW+DIG"};
             const cluster_filter_t   *f         = cluster_filter();
             int                       cur       = 0;
 
@@ -251,7 +251,7 @@ void controls_encoder_update(cfg_ctrl_t ctrl, int32_t diff, std::string &msg) {
 
         case CTRL_AGC: {        /* Off, Slow, Fast, Auto, a step a detent; it stops at either end. The AGC key goes
                                  * round, but a knob turned on past Auto landed on Off, the loudest */
-            static const char *const names[] = {"Off", "Slow", "Fast", "Auto"};
+            static const char *const names[] = {"关闭", "Slow", "Fast", "Auto"};
 
             i = cfg_sm.cp_cur_agc.get();
             if (diff) {
@@ -289,7 +289,7 @@ void controls_encoder_update(cfg_ctrl_t ctrl, int32_t diff, std::string &msg) {
             if (if_shift_supported()) {
                 snprintf(buf, size, "IF shift: %i Hz", turn(cfg_sm.p_band_if_shift, diff, 100));
             } else {
-                msg_update_text_fmt("IF shift is not supported");
+                msg_update_text_fmt("不支持中频偏移");
             }
             break;
 

@@ -562,7 +562,7 @@ static void map_open(bool heard) {
     else
         map_obj = js8_map_create(dialog.obj, WIDTH, WF_HEIGHT, station_qth(), BOARD_DATA "/ft_log.adi", NULL, true, NULL);
     if (!map_obj) {
-        msg_update_text_fmt("Not enough memory for the map");
+        msg_update_text_fmt("内存不足，无法显示地图");
         return;
     }
     lv_obj_set_pos(map_obj, 13, 13);
@@ -958,17 +958,17 @@ static void time_sync_cb(button_data_t *btn) {
     int64_t         off, t;
 
     if (ftx_clock_synced(&err_ms)) {
-        msg_update_text_fmt("Clock in sync (NTP, within %d ms): no Time Sync needed", err_ms);
+        msg_update_text_fmt("时钟已同步（NTP，偏差%d ms内）：无需时间同步", err_ms);
         return;
     }
     if (gps_last_fix(&lat, &lon, &age) && age <= SYNC_GPS_AGE_S) {
-        msg_update_text_fmt("The GPS keeps the clock: no Time Sync needed");
+        msg_update_text_fmt("GPS保持时钟：无需时间同步");
         return;
     }
     clock_gettime(CLOCK_REALTIME, &now);
     off = ftx_slot_offset_ns(now.tv_sec, now.tv_nsec, ftx_slot_time(cur_proto()));
     if (llabs(off) < SYNC_ON_SLOT_NS) {
-        msg_update_text_fmt("Clock on the slot already (%+.2f s)", off / 1e9);
+        msg_update_text_fmt("已在时隙上（%+.2f s）", off / 1e9);
         return;
     }
     clock_gettime(CLOCK_REALTIME, &now);    /* the step on the time as it is now: nothing lost */
@@ -980,12 +980,12 @@ static void time_sync_cb(button_data_t *btn) {
         const char *why = strerror(errno);
 
         LV_LOG_ERROR("Can't set system time: %s\n", why);
-        msg_update_text_fmt("Time Sync: the clock can't be set (%s)", why);
+        msg_update_text_fmt("时间同步：无法设置时钟（%s）", why);
         return;
     }
     /* into the RTC too, in UTC as the kernel reads it at boot: kept across a power-off */
     sh_run("hwclock -w -u -f /dev/rtc1", NULL, NULL);
-    msg_update_text_fmt("Clock moved %+.2f s to the slot start", -off / 1e9);
+    msg_update_text_fmt("时钟已偏移 %+.2f s 至时隙起点", -off / 1e9);
 }
 
 static void map_cb(button_data_t *btn) {
@@ -1175,13 +1175,13 @@ static button_data_t button_tx_call = {.type = BTN_TEXT_FN, .label_fn = tx_call_
 static button_data_t button_page_2  = {.type = BTN_TEXT, .label = "(FT8 2:5)", .press = button_next_page_cb, .next = &page_3};
 static button_data_t button_hold    = {.type = BTN_TEXT_FN, .label_fn = hold_label, .press = hold_cb};
 static button_data_t button_auto    = {.type = BTN_TEXT_FN, .label_fn = auto_label, .press = auto_cb};
-static button_data_t button_force   = {.type = BTN_TEXT, .label = "Force QSO\nsave", .press = force_save_cb};
+static button_data_t button_force   = {.type = BTN_TEXT, .label = "强制QSO\\n保存", .press = force_save_cb};
 
 static button_data_t button_page_3  = {.type = BTN_TEXT, .label = "(FT8 3:5)", .press = button_next_page_cb, .next = &page_4};
-static button_data_t button_cq_mod  = {.type = BTN_TEXT, .label = "CQ\nModifier", .press = cq_modifier_cb};
-static button_data_t button_sync    = {.type = BTN_TEXT, .label = "Time\nSync", .press = time_sync_cb};
-static button_data_t button_log_map = {.type = BTN_TEXT, .label = "Log\nMap", .press = map_cb};
-static button_data_t button_live_map = {.type = BTN_TEXT, .label = "Live\nMap", .press = heard_map_cb};
+static button_data_t button_cq_mod  = {.type = BTN_TEXT, .label = "CQ\\n修饰符", .press = cq_modifier_cb};
+static button_data_t button_sync    = {.type = BTN_TEXT, .label = "时间\\n同步", .press = time_sync_cb};
+static button_data_t button_log_map = {.type = BTN_TEXT, .label = "记录\\n地图", .press = map_cb};
+static button_data_t button_live_map = {.type = BTN_TEXT, .label = "实时\\n地图", .press = heard_map_cb};
 
 static button_data_t button_page_4  = {.type = BTN_TEXT, .label = "(FT8 4:5)", .press = button_next_page_cb, .next = &page_5};
 static button_data_t button_freq    = {.type = BTN_TEXT_FN, .label_fn = freq_label, .press = freq_cb, .hold = freq_hold_cb};

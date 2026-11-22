@@ -876,7 +876,7 @@ static bool put_cmd(cmd_id_t id, int32_t a, int32_t b, bool tci) {
 /* ---- The state, read from any thread ------------------------------------------------ */
 
 static const char *const mode_names[] = {"lsb", "digl", "usb", "digu", "cw", "cwr", "am", "nfm", "sam", "wfm"};
-static const char *const agc_names[]  = {"off", "slow", "fast", "auto"};
+static const char *const agc_names[]  = {"关", "slow", "fast", "auto"};
 
 static void state_read(rstate_t *s) {
     s->freq  = cparam_i_get(cfg_fg_freq);

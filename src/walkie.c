@@ -341,13 +341,13 @@ static void exit_cb(button_data_t *d) {
 
 static buttons_page_t wlk_1, wlk_2, wlk_3, wlk_4;
 
-static button_data_t wlk_p1 = { .type = BTN_TEXT, .label = "(WLK 1:4)", .press = button_next_page_cb,
+static button_data_t wlk_p1 = { .type = BTN_TEXT, .label = "(对讲 1:4)", .press = button_next_page_cb,
                                 .hold = button_prev_page_cb, .next = &wlk_2, .prev = &wlk_4 };
-static button_data_t wlk_p2 = { .type = BTN_TEXT, .label = "(WLK 2:4)", .press = button_next_page_cb,
+static button_data_t wlk_p2 = { .type = BTN_TEXT, .label = "(对讲 2:4)", .press = button_next_page_cb,
                                 .hold = button_prev_page_cb, .next = &wlk_3, .prev = &wlk_1 };
-static button_data_t wlk_p3 = { .type = BTN_TEXT, .label = "(WLK 3:4)", .press = button_next_page_cb,
+static button_data_t wlk_p3 = { .type = BTN_TEXT, .label = "(对讲 3:4)", .press = button_next_page_cb,
                                 .hold = button_prev_page_cb, .next = &wlk_4, .prev = &wlk_2 };
-static button_data_t wlk_p4 = { .type = BTN_TEXT, .label = "(WLK 4:4)", .press = button_next_page_cb,
+static button_data_t wlk_p4 = { .type = BTN_TEXT, .label = "(对讲 4:4)", .press = button_next_page_cb,
                                 .hold = button_prev_page_cb, .next = &wlk_1, .prev = &wlk_3 };
 static button_data_t wlk_mem = { .type = BTN_TEXT, .label = "MEM\nVFO", .press = mem_toggle_cb };
 static button_data_t wlk_band_up = KEY_BTN("Band +", KEYPAD_BAND_UP, NULL);
@@ -360,16 +360,16 @@ static button_data_t wlk_pre = KEY_BTN("PRE", KEYPAD_PRE, key_hold_cb);         
 static button_data_t wlk_ab = KEY_BTN("A/B", KEYPAD_AB, key_hold_cb);           /* held: copy */
 static button_data_t wlk_step = KEY_BTN("Step", KEYPAD_FST, key_hold_cb);       /* held: FST held (Settings > Keys) */
 static button_data_t wlk_lock = KEY_BTN("Lock", KEYPAD_LOCK, NULL);             /* held would reset */
-static button_data_t wlk_exit = { .type = BTN_TEXT, .label = "Exit\nhold", .hold = exit_cb };
+static button_data_t wlk_exit = { .type = BTN_TEXT, .label = "退出\\n长按", .hold = exit_cb };
 
 
 static void levels_cb(button_data_t *d) {
     buttons_load_page(&buttons_page_vol_1);
 }
 
-static button_data_t wlk_levels = { .type = BTN_TEXT, .label = "Vol Sql\nRF Pwr", .press = levels_cb };
-static button_data_t wlk_store = { .type = BTN_TEXT, .label = "Store", .press = store_cb };
-static button_data_t wlk_clear = { .type = BTN_TEXT, .label = "Clear\nhold", .hold = clear_cb };
+static button_data_t wlk_levels = { .type = BTN_TEXT, .label = "音量静噪\\nRF功率", .press = levels_cb };
+static button_data_t wlk_store = { .type = BTN_TEXT, .label = "存储", .press = store_cb };
+static button_data_t wlk_clear = { .type = BTN_TEXT, .label = "清除\\n长按", .hold = clear_cb };
 
 static buttons_page_t wlk_1 = {{&wlk_p1, &wlk_mem, &wlk_band_up, &wlk_band_down, &btn_tx_pwr}};
 static buttons_page_t wlk_2 = {{&wlk_p2, &wlk_am, &wlk_ssb, &wlk_atu, &wlk_pre}};

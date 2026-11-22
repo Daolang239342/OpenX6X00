@@ -71,7 +71,7 @@ static void list_fill(void)
     if (!list) return;
     if (!count) {
         lv_table_set_row_cnt(list, 1);
-        lv_table_set_cell_value(list, 0, 0, "No saved pictures");
+        lv_table_set_cell_value(list, 0, 0, "无已保存图片");
     } else {
         lv_table_set_row_cnt(list, count);
         for (unsigned i = 0; i < count; ++i) lv_table_set_cell_value(list, i, 0, files[i]);

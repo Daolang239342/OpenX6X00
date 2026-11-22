@@ -53,12 +53,12 @@ static void delete_cb(button_data_t *b);
 static void play_cb(button_data_t *b);
 static void play_stop_cb(button_data_t *b);
 
-static button_data_t btn_rec       = { .type = BTN_TEXT, .label = "Rec",        .press = rec_cb };
-static button_data_t btn_rec_stop  = { .type = BTN_TEXT, .label = "Rec\nStop",  .press = rec_stop_cb };
-static button_data_t btn_rename    = { .type = BTN_TEXT, .label = "Rename",     .press = rename_cb };
-static button_data_t btn_delete    = { .type = BTN_TEXT, .label = "Delete",     .press = delete_cb };
-static button_data_t btn_play      = { .type = BTN_TEXT, .label = "Play",       .press = play_cb };
-static button_data_t btn_play_stop = { .type = BTN_TEXT, .label = "Play\nStop", .press = play_stop_cb };
+static button_data_t btn_rec       = { .type = BTN_TEXT, .label = "录音",        .press = rec_cb };
+static button_data_t btn_rec_stop  = { .type = BTN_TEXT, .label = "录音\\n停止",  .press = rec_stop_cb };
+static button_data_t btn_rename    = { .type = BTN_TEXT, .label = "重命名",     .press = rename_cb };
+static button_data_t btn_delete    = { .type = BTN_TEXT, .label = "删除",     .press = delete_cb };
+static button_data_t btn_play      = { .type = BTN_TEXT, .label = "播放",       .press = play_cb };
+static button_data_t btn_play_stop = { .type = BTN_TEXT, .label = "播放\\n停止", .press = play_stop_cb };
 
 static buttons_page_t page = { { &btn_rec, &btn_rename, &btn_delete, &btn_play } };
 
@@ -95,7 +95,7 @@ static void list_files() {
     }
     no_files = rows == 0;
     if (no_files)
-        lv_table_set_cell_value(files_list, rows++, 0, "No recordings yet: Rec starts one");
+        lv_table_set_cell_value(files_list, rows++, 0, "尚无录音：按录音开始");
     lv_table_set_row_cnt(files_list, rows);
 }
 

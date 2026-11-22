@@ -33,7 +33,7 @@ static const char *start_label(void);
 static const char *marks_label(void);
 
 static button_data_t btn_start = {.type = BTN_TEXT_FN, .label_fn = start_label, .press = start_cb};
-static button_data_t btn_clear = {.type = BTN_TEXT, .label = "Clear", .press = clear_cb};
+static button_data_t btn_clear = {.type = BTN_TEXT, .label = "清除", .press = clear_cb};
 static button_data_t btn_marks = {.type = BTN_TEXT_FN, .label_fn = marks_label, .press = marks_cb};
 
 static buttons_page_t page = {{&btn_start, &btn_clear, &btn_marks}};

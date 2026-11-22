@@ -90,10 +90,10 @@ static void *screenshot_thread(void *arg) {
     snprintf(path, sizeof(path), BOARD_DATA "/%s.png", when);
     f = fopen(path, "wb");
     if (!f) {
-        msg_update_text_fmt("Error write file");
+        msg_update_text_fmt("写入文件出错");
     } else {
         if (write_png(f, s)) {
-            msg_update_text_fmt("Saved %s", when);
+            msg_update_text_fmt("已保存 %s", when);
         }
         fclose(f);
     }

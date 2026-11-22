@@ -132,16 +132,16 @@ static void page_press(button_data_t *btn) {
 static button_data_t btn_p1        = { .type = BTN_TEXT, .label = "(SETTINGS\n1:3)", .press = page_press };
 static button_data_t btn_p2        = { .type = BTN_TEXT, .label = "(SETTINGS\n2:3)", .press = page_press };
 static button_data_t btn_p3        = { .type = BTN_TEXT, .label = "(SETTINGS\n3:3)", .press = page_press };
-static button_data_t btn_general   = { .type = BTN_TEXT, .label = "General", .press = tab_press };
-static button_data_t btn_display   = { .type = BTN_TEXT, .label = "Display", .press = tab_press };
-static button_data_t btn_audio     = { .type = BTN_TEXT, .label = "Audio", .press = tab_press };
-static button_data_t btn_wireless  = { .type = BTN_TEXT, .label = "Wireless", .press = tab_press };
-static button_data_t btn_bluetooth = { .type = BTN_TEXT, .label = "Bluetooth", .press = tab_press };
-static button_data_t btn_keys      = { .type = BTN_TEXT, .label = "Keys", .press = tab_press };
-static button_data_t btn_cluster   = { .type = BTN_TEXT, .label = "Cluster", .press = tab_press };
-static button_data_t btn_txcal     = { .type = BTN_TEXT, .label = "TX Cal", .press = tab_press };
-static button_data_t btn_info      = { .type = BTN_TEXT, .label = "Info", .press = tab_press };
-static button_data_t btn_walkie    = { .type = BTN_TEXT, .label = "Walkie", .press = tab_press };
+static button_data_t btn_general   = { .type = BTN_TEXT, .label = "通用", .press = tab_press };
+static button_data_t btn_display   = { .type = BTN_TEXT, .label = "显示", .press = tab_press };
+static button_data_t btn_audio     = { .type = BTN_TEXT, .label = "音频", .press = tab_press };
+static button_data_t btn_wireless  = { .type = BTN_TEXT, .label = "无线", .press = tab_press };
+static button_data_t btn_bluetooth = { .type = BTN_TEXT, .label = "蓝牙", .press = tab_press };
+static button_data_t btn_keys      = { .type = BTN_TEXT, .label = "按键", .press = tab_press };
+static button_data_t btn_cluster   = { .type = BTN_TEXT, .label = "DX集群", .press = tab_press };
+static button_data_t btn_txcal     = { .type = BTN_TEXT, .label = "TX校准", .press = tab_press };
+static button_data_t btn_info      = { .type = BTN_TEXT, .label = "信息", .press = tab_press };
+static button_data_t btn_walkie    = { .type = BTN_TEXT, .label = "对讲", .press = tab_press };
 
 static buttons_page_t btn_page   = {{&btn_p1, &btn_general, &btn_display, &btn_audio, &btn_wireless}};
 static buttons_page_t btn_page_2 = {{&btn_p2, &btn_bluetooth, &btn_keys, &btn_cluster, &btn_txcal}};
@@ -656,7 +656,7 @@ static void saver_speed_cb(lv_event_t *e) {
 static uint8_t make_backlight(uint8_t row) {
     lv_obj_t *obj;
 
-    wl_row_label(row, "Timeout, Brightness");
+    wl_row_label(row, "超时、亮度");
     obj = row_spin(row, 1, 2, SMALL_2, params.brightness_timeout, 5, 120, 3);
     lv_obj_add_event_cb(obj, bl_timeout_cb, LV_EVENT_VALUE_CHANGED, NULL);
 
@@ -672,21 +672,21 @@ static uint8_t make_backlight(uint8_t row) {
     lv_obj_add_event_cb(obj, bl_level_cb, LV_EVENT_VALUE_CHANGED, NULL);
     row++;
 
-    wl_row_label(row, "Buttons brightness");
+    wl_row_label(row, "按键亮度");
     row_choice(row, 1, 6, SMALL_6, " Always Off \n Always On \n Temporarily On ", params.brightness_buttons, bl_keys_cb, NULL);
     row++;
 
     /* The screensaver after so many minutes without use, until a key, a knob or TX */
-    wl_row_label(row, "Screensaver");
+    wl_row_label(row, "屏保");
     saver_dd = row_choice(row++, 1, 3, SMALL_3, " None \n Matrix rain ", params.screen_saver.x, saver_cb, NULL);
     if (params.screen_saver.x != SCREEN_SAVER_NONE) {
-        wl_row_label(row, "Screensaver (min)");
+        wl_row_label(row, "屏保（分钟）");
         obj = row_spin(row++, 1, 2, SMALL_2, params.screen_saver_min.x, 1, SCREEN_MIN_MAX, 3);
         lv_obj_add_event_cb(obj, saver_min_cb, LV_EVENT_VALUE_CHANGED, NULL);
     }
     if (params.screen_saver.x == SCREEN_SAVER_MATRIX) {
         /* how fast it falls (#200), taken at the next start of the rain */
-        wl_row_label(row, "Rain speed");
+        wl_row_label(row, "雨点速度");
         row_choice(row++, 1, 3, SMALL_3, " Normal \n Slow \n Very slow ", params.screen_saver_speed.x, saver_speed_cb,
                    NULL);
     }
@@ -694,12 +694,12 @@ static uint8_t make_backlight(uint8_t row) {
     /* The screen dark after so many minutes without use (0: never; a screensaver shows until then), or
      * always: the radio run from the knob or a browser, POWER shows the screen for a while. Two rows:
      * one label for both ran into the minutes */
-    wl_row_label(row, "Screen off (min)");
+    wl_row_label(row, "息屏（分钟）");
     obj = row_spin(row, 1, 2, SMALL_2, params.screen_off_min, 0, 120, 3);
     lv_obj_add_event_cb(obj, bl_blank_cb, LV_EVENT_VALUE_CHANGED, NULL);
     row++;
 
-    wl_row_label(row, "Screen always off");
+    wl_row_label(row, "始终息屏");
     row_switch(row, 4, 3, SMALL_3, params.screen_off_always, bl_always_cb, NULL);
     return row + 1;
 }
@@ -718,7 +718,7 @@ static void line_gain_cb(lv_event_t *e) {
 }
 
 static uint8_t make_line_gain(uint8_t row) {
-    wl_row_label(row, "Line-in, Line-out");
+    wl_row_label(row, "线路输入、输出");
     row_slider(row_cell(row, 1, 3, SMALL_3), params.line_in, 0, 36, SMALL_3 - 90, line_gain_cb, NULL, "%d", params.line_in);
     row_slider(row_cell(row, 4, 3, SMALL_3), params.line_out, 0, 36, SMALL_3 - 90, line_gain_cb, (void *)1, "%d", params.line_out);
     return row + 1;
@@ -740,7 +740,7 @@ static uint8_t make_audio_gain(uint8_t row) {
     float play = params.play_gain_db_f.x;
     float rec  = params.rec_gain_db_f.x;
 
-    wl_row_label(row, "Play, Rec gain");
+    wl_row_label(row, "播放、录音增益");
     /* rounded, not cut off: a codec level of -0.75 dB opens on -1 (as the TX Cal sliders, #67) */
     row_slider(row_cell(row, 1, 3, SMALL_3), lroundf(play), -10, 10, SMALL_3 - 95, play_rec_gain_cb, NULL, "%.1f", play);
     row_slider(row_cell(row, 4, 3, SMALL_3), lroundf(rec), -10, 10, SMALL_3 - 95, play_rec_gain_cb, (void *)1, "%.1f", rec);
@@ -751,7 +751,7 @@ static uint8_t make_audio_gain(uint8_t row) {
 static uint8_t make_mag(uint8_t row) {
     params_bool_t *p[] = {&params.mag_freq, &params.mag_info, &params.mag_alc};
 
-    wl_row_label(row, "Popups Freq/Info/TX");
+    wl_row_label(row, "弹出：频率/信息/TX");
     for (int i = 0; i < 3; i++) {
         bool_switch(row, 1 + 2 * i, 3, SMALL_2, p[i]);
     }
@@ -994,7 +994,7 @@ static void spectrum_show_cb(lv_event_t *e) {
 }
 
 static uint8_t make_spectrum_show(uint8_t row) {
-    wl_row_label(row, "Spectrum");
+    wl_row_label(row, "频谱");
     spectrum_show_sw = param_switch(row, 1, 3, SMALL_3, cfg_sm.p_spectrum_show);
     lv_obj_add_event_cb(spectrum_show_sw, spectrum_show_cb, LV_EVENT_VALUE_CHANGED, NULL);
     return row + 1;
@@ -1018,7 +1018,7 @@ static void wf_mode_cb(lv_event_t *e) {
 
 static uint8_t make_wf_mode(uint8_t row) {
     /* Centered: the VFO stays in the middle. Fixed: the span stays put, the VFO line moves */
-    wl_row_label(row, "Mode");
+    wl_row_label(row, "模式");
     wf_mode_dd = row_choice(row++, 1, 3, SMALL_3, " Centered \n Fixed ", cfg_sm.p_wf_mode.get(), int_choice_cb,
                             &cfg_sm.p_wf_mode);
     lv_obj_add_event_cb(wf_mode_dd, wf_mode_cb, LV_EVENT_VALUE_CHANGED, NULL);
@@ -1034,7 +1034,7 @@ static uint8_t make_wf_mode(uint8_t row) {
 
 /* Spectrum fill, peaks */
 static uint8_t make_spectrum_fill_peak(uint8_t row) {
-    wl_row_label(row, "Fill, peaks");
+    wl_row_label(row, "填充、峰值");
     preview_fade(bool_switch(row, 1, 3, SMALL_3, &params.spectrum_filled));
     preview_fade(bool_switch(row, 4, 3, SMALL_3, &params.spectrum_peak));
     return row + 1;
@@ -1071,7 +1071,7 @@ static param_slider_t grid_min_slider = {&cfg_sm.p_band_grid_min, S_MIN, S7, 1, 
 static param_slider_t grid_max_slider = {&cfg_sm.p_band_grid_max, S8, S9_40, 1, "%d"};
 
 static uint8_t make_auto_offset(uint8_t row) {
-    wl_row_label(row, "Auto level, offset");
+    wl_row_label(row, "自动电平、偏移");
     param_switch(row, 1, 3, SMALL_3, cfg_sm.p_auto_level_enabled);
     preview_fade(float_slider(row_cell(row, 4, 3, SMALL_3), cfg_sm.p_auto_level_offset.get(), -15.0f, 15.0f,
                               SMALL_3 - 120, &auto_offset_fs));
@@ -1079,7 +1079,7 @@ static uint8_t make_auto_offset(uint8_t row) {
 }
 
 static uint8_t make_grid_min_max(uint8_t row) {
-    wl_row_label(row, "Manual min, max");
+    wl_row_label(row, "手动最小、最大");
     preview_fade(param_slider(row_cell(row, 1, 3, SMALL_3), SMALL_3 - 120, &grid_min_slider));
     preview_fade(param_slider(row_cell(row, 4, 3, SMALL_3), SMALL_3 - 120, &grid_max_slider));
     return row + 1;
@@ -1087,7 +1087,7 @@ static uint8_t make_grid_min_max(uint8_t row) {
 
 /* Waterfall centre line and zoom */
 static uint8_t make_waterfall_line_zoom(uint8_t row) {
-    wl_row_label(row, "Line, zoom");
+    wl_row_label(row, "中线、缩放");
     preview_fade(bool_switch(row, 1, 3, SMALL_3, &params.waterfall_center_line));
     bool_switch(row, 4, 3, SMALL_3, &params.waterfall_zoom);
     return row + 1;
@@ -1099,7 +1099,7 @@ static void sp_mode_cb(lv_event_t *e) {
 }
 
 static uint8_t make_sp_mode(uint8_t row) {
-    wl_row_label(row, "Speaker mode");
+    wl_row_label(row, "扬声器模式");
     row_switch(row, 4, 3, SMALL_3, !params.spmode.x, sp_mode_cb, NULL);
     return row + 1;
 }
@@ -1112,7 +1112,7 @@ static param_slider_t tx_low_slider  = {&cfg_sm.p_tx_filter_low, 50, 400, 10, "%
 static param_slider_t tx_high_slider = {&cfg_sm.p_tx_filter_high, 2000, 4000, 10, "%d"};
 
 static uint8_t make_comp(uint8_t row) {
-    wl_row_label(row, "Compressor, makeup");
+    wl_row_label(row, "压缩器、补偿");
     float_slider(row_cell(row, 1, 3, SMALL_3), cfg_sm.p_comp_threshold_offset.get(), -15.0f, 15.0f, SMALL_3 - 120,
                  &comp_th_fs);
     float_slider(row_cell(row, 4, 3, SMALL_3), cfg_sm.p_comp_makeup_offset.get(), -15.0f, 15.0f, SMALL_3 - 120,
@@ -1121,10 +1121,10 @@ static uint8_t make_comp(uint8_t row) {
 }
 
 static uint8_t make_tx_filter(uint8_t row) {
-    wl_row_label(row, "Filter low");
+    wl_row_label(row, "低通滤波");
     param_slider(row_cell(row, 1, 3, SMALL_6), SMALL_6 - 150, &tx_low_slider);
     row++;
-    wl_row_label(row, "Filter high");
+    wl_row_label(row, "高通滤波");
     param_slider(row_cell(row, 1, 3, SMALL_6), SMALL_6 - 150, &tx_high_slider);
     return row + 1;
 }
@@ -1162,7 +1162,7 @@ static void dac_gain_follow(Subject *subj, void *slider) {
 static uint8_t make_iq_offsets(uint8_t row) {
     ParamInt *p[2] = {&cfg_sm.p_band_tx_i_offset, &cfg_sm.p_band_tx_q_offset};
 
-    wl_row_label(row, "IQ offsets");
+    wl_row_label(row, "IQ偏移");
     for (int i = 0; i < 2; i++) {
         int32_t   v = p[i]->get() / TX_OFFSET_SCALE;
         lv_obj_t *s = row_slider(row_cell(row, 1 + 3 * i, 3, SMALL_3), v, -10000 / TX_OFFSET_SCALE,
@@ -1176,7 +1176,7 @@ static uint8_t make_iq_offsets(uint8_t row) {
 static uint8_t make_band_gain(uint8_t row) {
     lv_obj_t *s;
 
-    wl_row_label(row, "Band output gain");
+    wl_row_label(row, "波段输出增益");
     s = float_slider(row_cell(row, 1, 3, SMALL_6), cfg_sm.p_band_dac_offset.get(), -6.0f, 6.0f, SMALL_6 - 120,
                      &dac_gain_fs);
     observers.emplace_back(cfg_sm.p_band_dac_offset.subscribe(dac_gain_follow, s));
@@ -1184,13 +1184,13 @@ static uint8_t make_band_gain(uint8_t row) {
 }
 
 static uint8_t make_codec_gain(uint8_t row) {
-    wl_row_label(row, "Codec gain");
+    wl_row_label(row, "编解码增益");
     float_slider(row_cell(row, 1, 3, SMALL_6), cfg_sm.p_output_gain.get(), -25.0f, 25.0f, SMALL_6 - 120, &codec_gain_fs);
     return row + 1;
 }
 
 static uint8_t make_cessb(uint8_t row) {
-    wl_row_label(row, "CESSB on, level");
+    wl_row_label(row, "CESSB开关、电平");
     param_switch(row, 1, 2, SMALL_2, cfg_sm.p_cessb_on);
     float_slider(row_cell(row, 3, 4, SMALL_4), cfg_sm.p_cessb_power_up.get(), 0.0f, 5.0f, SMALL_3 - 40, &cessb_fs);
     return row + 1;
@@ -1255,10 +1255,10 @@ static void bt_visible_timer_cb(lv_timer_t *t) {
 
     if (lv_tick_elaps(bt_visible_tick) < 3000) return;
     if (left > 0) {
-        lv_label_set_text_fmt(bt_visible_label, "Pairing %i:%02i", left / 60, left % 60);
+        lv_label_set_text_fmt(bt_visible_label, "配对 %i:%02i", left / 60, left % 60);
         lv_obj_add_state(bt_visible_sw, LV_STATE_CHECKED);
     } else {
-        lv_label_set_text(bt_visible_label, "Pairing (3 min)");
+        lv_label_set_text(bt_visible_label, "配对（3分钟）");
         lv_obj_clear_state(bt_visible_sw, LV_STATE_CHECKED);
     }
 }
@@ -1275,7 +1275,7 @@ static lv_obj_t * bt_switch_cell(uint8_t row, uint8_t col, bool state, lv_event_
 static uint8_t make_bt_power(uint8_t row) {
     lv_obj_t *obj = lv_label_create(grid);
 
-    lv_label_set_text(obj, "Bluetooth");
+    lv_label_set_text(obj, "蓝牙");
     lv_obj_set_grid_cell(obj, LV_GRID_ALIGN_START, 0, 1, LV_GRID_ALIGN_CENTER, row, 1);
     bt_switch_cell(row, 1, btcat_read("BTCAT_BT", true), bt_power_update_cb);
     return row + 1;
@@ -1305,21 +1305,21 @@ static void charger_cb(lv_event_t *e) {
 }
 
 static uint8_t make_charger(uint8_t row) {
-    wl_row_label(row, "Charger");
+    wl_row_label(row, "充电");
     row_choice(row, 1, 6, SMALL_6, " Off \n On \n Shadow", params.charger.x, charger_cb, &params.charger);
     return row + 1;
 }
 
 
 static uint8_t make_freq_accel(uint8_t row) {
-    wl_row_label(row, "Freq acceleration");
+    wl_row_label(row, "频率加速度");
     row_choice(row, 1, 6, SMALL_6, " None \n Lite \n Strong", params.freq_accel.x, uint8_choice_cb, &params.freq_accel);
     return row + 1;
 }
 
 /* Screen recordings: a new file after this long */
 static uint8_t make_screen_rec_split(uint8_t row) {
-    wl_row_label(row, "File length");
+    wl_row_label(row, "文件时长");
     row_choice(row, 1, 6, SMALL_6, " 1 hour \n 45 min \n 30 min \n 15 min \n 5 min ", params.screen_rec_split.x,
                uint8_choice_cb, &params.screen_rec_split);
     return row + 1;
@@ -1338,13 +1338,13 @@ static uint8_t make_theme(uint8_t row) {
             sel = i;
         }
     }
-    wl_row_label(row, "Theme");
+    wl_row_label(row, "主题");
     theme_dd = row_choice(row, 1, 6, SMALL_6, options.c_str(), sel, theme_update_cb, NULL);
     return row + 1;
 }
 
 static uint8_t make_font(uint8_t row) {
-    wl_row_label(row, "Font");
+    wl_row_label(row, "字体");
     font_dd = row_choice(row, 1, 6, SMALL_6, " Sony Sketch \n Roboto \n DejaVu", params.font.x, font_update_cb, &params.font);
     return row + 1;
 }
@@ -1937,7 +1937,7 @@ static int wifi_compare_aps(const void *a, const void *b) {
 }
 
 static void wifi_update() {
-    static const char *status_names[] = { "off", "starting", "disconnected", "connecting", "connected" };
+    static const char *status_names[] = { "关", "starting", "disconnected", "connecting", "connected" };
     wifi_status_t status = wifi_get_status();
     bool          on = status != WIFI_OFF && status != WIFI_STARTING;
     const char   *ssid = "";
@@ -1988,7 +1988,7 @@ static void wifi_update() {
         }
         lv_label_set_text(r->note, ap->known ? "saved" : "");
     }
-    lv_label_set_text(wf.status_ssid, wifi_eth_active() ? "Ethernet in use" : ssid);
+    lv_label_set_text(wf.status_ssid, wifi_eth_active() ? "正在使用有线网络" : ssid);
 
     char  ip[16] = "", gw[16] = "";
     char *ip_p = ip, *gw_p = gw;
@@ -2017,7 +2017,7 @@ static void wifi_update() {
 static void wifi_power_cb(lv_event_t *e) {
     if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
         wifi_power_on();
-        msg_update_text_fmt("Turning on");
+        msg_update_text_fmt("正在开启");
     } else {
         wifi_power_off();
     }
@@ -2048,7 +2048,7 @@ static bool wl_kbd_ok() {
     const char *password = textarea_window_get();
 
     if (wl_kbd_ap.password_validator && !wl_kbd_ap.password_validator(password)) {
-        msg_update_text_fmt("A WPA password has 8 to 63 characters");
+        msg_update_text_fmt("WPA密码应为8到63个字符");
         return false;
     }
     if (wl_kbd_ap.known) {
@@ -2073,9 +2073,9 @@ static void wifi_row_cb(lv_event_t *e) {
     std::vector<wl_item_t> items;
 
     if (ap.is_connected) {
-        items.push_back({"Disconnect", "", [] { wifi_disconnect(); }});
+        items.push_back({"断开", "", [] { wifi_disconnect(); }});
     } else {
-        items.push_back({"Connect", "", [ap] {
+        items.push_back({"连接", "", [ap] {
             if (wifi_ap_refusal(&ap)) {
                 msg_update_text_fmt("%s", wifi_ap_refusal(&ap));   /* WEP, enterprise, WPA3 only, hidden */
             } else if (ap.known) {
@@ -2088,12 +2088,12 @@ static void wifi_row_cb(lv_event_t *e) {
         }});
     }
     if (ap.known && ap.password_validator) {
-        items.push_back({"Change password", "", [ap] { wl_kbd_open(ap); }});
+        items.push_back({"修改密码", "", [ap] { wl_kbd_open(ap); }});
     }
     if (ap.known) {
-        items.push_back({"Delete", "", [ap] {
+        items.push_back({"删除", "", [ap] {
             wifi_delete_connection(ap.uuid);
-            msg_update_text_fmt("Connection deleted");
+            msg_update_text_fmt("已删除连接");
         }});
     }
     wl_menu_open(ap.ssid, items);
@@ -2102,11 +2102,11 @@ static void wifi_row_cb(lv_event_t *e) {
 static uint8_t make_wifi(uint8_t row) {
     lv_obj_t *obj;
 
-    wl_row_label(row, "WiFi/BT power");
+    wl_row_label(row, "WiFi/蓝牙电源");
     bt_switch_cell(row, 1, params.wifi_enabled.x, wifi_power_cb);
     row++;
 
-    wl_row_label(row, "Status");
+    wl_row_label(row, "状态");
     obj = lv_obj_create(grid);
     lv_obj_remove_style_all(obj);
     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
@@ -2119,13 +2119,13 @@ static uint8_t make_wifi(uint8_t row) {
     row++;
 
     obj = wl_label(grid, SF(22), theme_hex(TC_text_dim), 0);
-    lv_label_set_text(obj, "IP / Gateway");
+    lv_label_set_text(obj, "IP/网关");
     lv_obj_set_grid_cell(obj, LV_GRID_ALIGN_START, 0, 1, LV_GRID_ALIGN_CENTER, row, 1);
     wf.ip = wl_label(grid, SF(22), theme_hex(TC_text_dim), 0);
     lv_obj_set_grid_cell(wf.ip, LV_GRID_ALIGN_START, 1, 6, LV_GRID_ALIGN_CENTER, row, 1);
     row++;
 
-    wl_row_label(row, "Networks");
+    wl_row_label(row, "网络");
     wf.scan_btn = wl_button(row, "Scan", wifi_scan_cb);
     wf.scan_note = wl_note(row);
     row++;
@@ -2213,9 +2213,9 @@ static void bt_update_view() {
         }
         wl_pill(r->pill_2, d->connected ? "connected" : NULL, theme_hex(TC_ok_bg), theme_hex(TC_ok));
         if (!d->paired) {
-            lv_label_set_text(r->note, "press to pair");
+            lv_label_set_text(r->note, "按下以配对");
         } else if (!d->connected) {
-            lv_label_set_text(r->note, "not connected");
+            lv_label_set_text(r->note, "未连接");
         } else {
             lv_label_set_text(r->note, "");
         }
@@ -2344,9 +2344,9 @@ static void bt_row_cb(lv_event_t *e) {
     std::vector<wl_item_t> items;
 
     if (d.connected) {
-        items.push_back({"Disconnect", "", [d] { bt_dev_disconnect(d.addr); }});
+        items.push_back({"断开", "", [d] { bt_dev_disconnect(d.addr); }});
     } else if (d.audio || d.input) {
-        items.push_back({"Connect", "", [d] { bt_dev_connect(d.addr); }});
+        items.push_back({"连接", "", [d] { bt_dev_connect(d.addr); }});
     }
     if (d.audio) {
         bool on = bt_autoconn(d.addr);
@@ -2356,10 +2356,10 @@ static void bt_row_cb(lv_event_t *e) {
         }});
     }
     /* Forget asks once more, Cancel first */
-    items.push_back({"Forget", "", [d] {
+    items.push_back({"忘记", "", [d] {
         wl_menu_open(std::string("Forget ") + d.name + "?", {
-            {"Cancel", "", nullptr},
-            {"Forget", "pair again to use it", [d] { bt_dev_forget(d.addr); }},
+            {"取消", "", nullptr},
+            {"忘记", "pair again to use it", [d] { bt_dev_forget(d.addr); }},
         });
     }});
     wl_menu_open(std::string(d.name) + " - " + d.addr, items);
@@ -2406,14 +2406,14 @@ static void bt_mute_cb(lv_event_t *e) {
 static uint8_t make_bt_devices(uint8_t row) {
     lv_obj_t *obj;
 
-    wl_row_label(row, "Headphones, keyboards");
+    wl_row_label(row, "耳机、键盘");
     bt.scan_btn = wl_button(row, "Scan", bt_scan_cb);
     lv_label_set_text(wl_note(row), "16 s");
     row++;
 
     /* What the worker does, a keyboard's code to type included: the whole row */
     obj = wl_label(grid, SF(22), theme_hex(TC_text_dim), 0);   /* own colour: no leader dots */
-    lv_label_set_text(obj, "Activity");
+    lv_label_set_text(obj, "活动");
     lv_obj_set_grid_cell(obj, LV_GRID_ALIGN_START, 0, 1, LV_GRID_ALIGN_CENTER, row, 1);
     bt.scan_note = wl_label(grid, theme_shape.vision ? &sony_18 : &sony_20, theme_hex(TC_text), 0);
     lv_obj_set_grid_cell(bt.scan_note, LV_GRID_ALIGN_END, 1, 6, LV_GRID_ALIGN_CENTER, row, 1);
@@ -2438,11 +2438,11 @@ static uint8_t make_bt_devices(uint8_t row) {
 static uint8_t make_headphones(uint8_t row) {
     lv_obj_t *obj;
 
-    wl_row_label(row, "RX to headphones");
+    wl_row_label(row, "RX输出到耳机");
     bt.rx = bt_switch_cell(row, 1, false, bt_rx_cb);
     row++;
 
-    wl_row_label(row, "Volume");
+    wl_row_label(row, "音量");
     obj = lv_obj_create(grid);
     lv_obj_set_size(obj, SMALL_6, ROW_H);
     lv_obj_set_grid_cell(obj, LV_GRID_ALIGN_START, 1, 6, LV_GRID_ALIGN_CENTER, row, 1);
@@ -2452,9 +2452,9 @@ static uint8_t make_headphones(uint8_t row) {
     lv_obj_align(bt.vol, LV_ALIGN_LEFT_MID, 10, 0);
     row++;
 
-    wl_row_label(row, "Mute speaker");
+    wl_row_label(row, "静音扬声器");
     bt.mute = bt_switch_cell(row, 1, btaudio_mute_get(), bt_mute_cb);
-    lv_label_set_text(wl_note(row), "AF 0 while connected");
+    lv_label_set_text(wl_note(row), "连接时AF为0");
     row++;
     return row;
 }
@@ -2537,11 +2537,11 @@ static void rs_power_cb(lv_event_t *e) {
 static uint8_t make_remote(uint8_t row) {
     lv_obj_t *obj;
 
-    wl_row_label(row, "Browser remote");
+    wl_row_label(row, "浏览器遥控");
     rs.sw = bt_switch_cell(row, 1, remote_server_get_enabled(), rs_power_cb);
     row++;
 
-    wl_row_label(row, "Address / Viewer");
+    wl_row_label(row, "地址/观看者");
     obj = lv_obj_create(grid);
     lv_obj_remove_style_all(obj);
     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
@@ -2556,13 +2556,13 @@ static uint8_t make_remote(uint8_t row) {
     row++;
 
     /* A browser only watches until it is paired: the code appears here and on the screen */
-    wl_row_label(row, "Pairing");
+    wl_row_label(row, "配对");
     wl_button(row, "Pair code", rs_pair_cb);
     rs.pair = wl_note(row);
     lv_label_set_text(rs.pair, "a browser types the code to operate");
     row++;
 
-    wl_row_label(row, "Sessions");
+    wl_row_label(row, "会话");
     wl_button(row, "Forget all", rs_forget_cb);
     rs.sess = wl_note(row);
     lv_label_set_long_mode(rs.sess, LV_LABEL_LONG_DOT);
@@ -2584,7 +2584,7 @@ static void wv_update() {
     snprintf(port, sizeof(port), "TCP %d", tci_server_port());
     lv_label_set_text(wv.port, port);
     wl_pill(wv.pill, name ? "connected" : NULL, theme_hex(TC_ok_bg), theme_hex(TC_ok));
-    lv_label_set_text(wv.client, name ? name : "no client");
+    lv_label_set_text(wv.client, name ? name : "无客户端");
     lv_obj_set_style_text_color(wv.client, name ? TC(text) : TC(text_faint), 0);
     /* Not while the list is open: the knob moves the dropdown's selection before the press
      * confirms it, and putting it back to the setting every second turned a Listen only
@@ -2632,11 +2632,11 @@ static void wv_power_cb(lv_event_t *e) {
 static uint8_t make_tci(uint8_t row) {
     lv_obj_t *obj;
 
-    wl_row_label(row, "Server");
+    wl_row_label(row, "服务器");
     wv.sw = bt_switch_cell(row, 1, tci_server_get_enabled(), wv_power_cb);
     row++;
 
-    wl_row_label(row, "Port / Status");
+    wl_row_label(row, "端口/状态");
     obj = lv_obj_create(grid);
     lv_obj_remove_style_all(obj);
     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
@@ -2652,21 +2652,21 @@ static uint8_t make_tci(uint8_t row) {
     row++;
 
     /* What a client may do: tune and key as always, or only hear and follow */
-    wl_row_label(row, "Clients");
+    wl_row_label(row, "客户端");
     wv.trust = row_choice(row, 1, 3, SMALL_3, "Operate\nListen only", tci_server_get_trust_operate() ? 0 : 1, wv_trust_cb, NULL);
     obj = wl_note(row);
-    lv_label_set_text(obj, "listen only: tune and key refused");
+    lv_label_set_text(obj, "仅监听：拒绝调谐和键控");
     row++;
 
     /* A client on the network asks on the screen before it transmits: Allow once, Always, No */
-    wl_row_label(row, "Ask before TX");
+    wl_row_label(row, "发射前询问");
     wv.ask = bt_switch_cell(row, 1, tci_server_get_tx_confirm(), wv_ask_cb);
     obj = wl_note(row);
-    lv_label_set_text(obj, "not for programs on the radio");
+    lv_label_set_text(obj, "不适用于电台上的程序");
     row++;
 
     /* Those it was answered Always for: by their address */
-    wl_row_label(row, "Allowed");
+    wl_row_label(row, "允许");
     wl_button(row, "Forget all", wv_forget_cb);
     wv.allowed = wl_note(row);
     lv_label_set_long_mode(wv.allowed, LV_LABEL_LONG_DOT);
@@ -2733,7 +2733,7 @@ static bool eth_kbd_ok() {
 }
 
 static void eth_field_cb(lv_event_t *e) {
-    static const char *names[ETH_FIELDS] = {"IP address", "Netmask, 255.255.255.0 or /24", "Gateway (optional)", "DNS (optional)"};
+    static const char *names[ETH_FIELDS] = {"IP地址", "Netmask, 255.255.255.0 or /24", "Gateway (optional)", "DNS (optional)"};
 
     eth_kbd_field = (int)(intptr_t)lv_obj_get_user_data(lv_event_get_current_target(e));
     wl_kbd = true;
@@ -2762,14 +2762,14 @@ static void eth_apply_cb(lv_event_t *e) {
         lv_label_set_text(lv_obj_get_child(eth.fields[i], 0), cfg.field[i][0] ? cfg.field[i] : "-");
     }
     eth_apply(&cfg);
-    msg_update_text_fmt("Ethernet settings saved");
+    msg_update_text_fmt("有线网络设置已保存");
 }
 
 static uint8_t make_ethernet(uint8_t row) {
-    static const char *labels[ETH_FIELDS] = {"IP address", "Netmask", "Gateway", "DNS"};
+    static const char *labels[ETH_FIELDS] = {"IP地址", "Netmask", "Gateway", "DNS"};
     lv_obj_t *obj;
 
-    wl_row_label(row, "Status");
+    wl_row_label(row, "状态");
     obj = lv_obj_create(grid);
     lv_obj_remove_style_all(obj);
     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
@@ -2783,7 +2783,7 @@ static uint8_t make_ethernet(uint8_t row) {
 
     for (int i = 0; i < 2; i++) {
         obj = wl_label(grid, SF(22), theme_hex(TC_text_dim), 0);
-        lv_label_set_text(obj, i ? "Gateway in use" : "Address in use");
+        lv_label_set_text(obj, i ? "网关已占用" : "地址已占用");
         lv_obj_set_grid_cell(obj, LV_GRID_ALIGN_START, 0, 1, LV_GRID_ALIGN_CENTER, row, 1);
         obj = wl_label(grid, SF(22), theme_hex(TC_text_dim), 0);
         lv_obj_set_grid_cell(obj, LV_GRID_ALIGN_START, 1, 6, LV_GRID_ALIGN_CENTER, row, 1);
@@ -2791,7 +2791,7 @@ static uint8_t make_ethernet(uint8_t row) {
         row++;
     }
 
-    wl_row_label(row, "Mode");
+    wl_row_label(row, "模式");
     obj = lv_dropdown_create(grid);
     dialog_item(&dialog, obj);
     styles_dropdown_list(lv_dropdown_get_list(obj));
@@ -3100,7 +3100,7 @@ static uint8_t make_band_region(uint8_t row) {
 
     for (int i = BP_PLAN_AUTO + 1; i < BP_PLAN_COUNT; i++)
         options += std::string("\n") + band_plan_name(i);
-    wl_row_label(row, "Band plan");
+    wl_row_label(row, "波段计划");
     row_choice(row, 1, 1, SMALL_4, options.c_str(), cfg_sm.p_band_region.get(), int_choice_cb, &cfg_sm.p_band_region);
     return row + 1;
 }
@@ -3116,7 +3116,7 @@ static void guide_cb(lv_event_t *e) {
 }
 
 static uint8_t make_station(uint8_t row) {
-    wl_row_label(row, "First-start guide");
+    wl_row_label(row, "首次开机向导");
 
     lv_obj_t *obj = wl_button(row, "Start", guide_cb);   /* as wide as the callsign's, under it */
     lv_obj_set_size(obj, 150, ROW_H - 4);
@@ -3128,10 +3128,10 @@ static uint8_t make_station(uint8_t row) {
     /* The switches in the card's own second column: make_param_switch places them in the
      * seven-column template, past the end of this two-column one */
     /* A and B each on their own band: the VFO key brings the other one's band back */
-    wl_row_label(row, "Independent VFOs");
+    wl_row_label(row, "独立VFO");
     param_switch(row++, 1, 1, SMALL_3, cfg_sm.p_indep_vfo);
     /* The knob turned into another band plan segment: CW there, SSB in the phone part */
-    wl_row_label(row, "Mode from band plan");
+    wl_row_label(row, "按波段计划取模式");
     param_switch(row++, 1, 1, SMALL_3, cfg_sm.p_mode_from_plan);
     lv_obj_add_event_cb(grid, st_delete_cb, LV_EVENT_DELETE, NULL);
     return row;
@@ -3201,7 +3201,7 @@ extern "C" void smeter_warn_show(void) {   /* not static: the UI harness shows i
     l = lv_label_create(smeter_warn);
     lv_obj_set_style_text_font(l, &sony_18, 0);
     lv_obj_set_style_text_color(l, TC(err), 0);
-    lv_label_set_text(l, "S-METER CALIBRATION");
+    lv_label_set_text(l, "S表校准");
 
     l = lv_label_create(smeter_warn);
     lv_obj_set_width(l, lv_pct(100));
@@ -3212,7 +3212,7 @@ extern "C" void smeter_warn_show(void) {   /* not static: the UI harness shows i
     std::vector<BandInfo> parts = SettingsManager::smeter_parts(cfg_sm.p_band_smeter_cal.context_id());
     std::string           band  = parts.size() > 1 ? smeter_parts_names(parts) : "this band";
 
-    lv_label_set_text_fmt(l, "For %s only. Feed -73 dBm and set the reading to S9 on each band you use.",
+    lv_label_set_text_fmt(l, "仅 %s。输入-73 dBm，并将每个使用波段的读数调至S9。",
                           band.c_str());
 
     smeter_warn_timer = lv_timer_create(smeter_warn_close, 5000, NULL);
@@ -3312,7 +3312,7 @@ static uint8_t make_zone(uint8_t row) {
     for (size_t i = 0; i < clock_zones_n; i++) {
         options += std::string(i ? "\n " : " ") + clock_zones[i].label + " ";
     }
-    wl_row_label(row, "Zone");
+    wl_row_label(row, "时区");
     obj = row_choice(row, 1, 3, 270, options.c_str(), clock_zone_now(), zone_update_cb, NULL);
     lv_obj_set_style_text_font(obj, &sony_22, 0);   /* the long zone names fit at this size only */
     lv_obj_set_style_text_font(lv_dropdown_get_list(obj), SF(22), 0);
@@ -3335,7 +3335,7 @@ static void make_general_page() {
     row = make_dt_row(row, "Date", 0);
     row = make_dt_row(row, "Time", 3);
     row = make_zone(row);
-    wl_row_label(row, "12-hour clock");     /* the clock at the top right as 1:05 PM (#54) */
+    wl_row_label(row, "12小时制");     /* the clock at the top right as 1:05 PM (#54) */
     bool_switch(row++, 3, 1, 100, &params.clock_12h);    /* the 100 px column of col_datetime */
     card_end(row);
 
@@ -3357,9 +3357,9 @@ static void make_general_page() {
     /* Xiegu's WR12 on the HOST port: 54 MHz-1 GHz to receive; the band keys and the band plan follow it at once
      * (screen_main.c), and the radio drives the WR12 while it is on (wr12.c, radio.c, #134) */
     row = card_begin("WR12 RECEIVER");
-    wl_row_label(row, "WR12 on HOST");
+    wl_row_label(row, "HOST口WR12");
     param_switch(row, 1, 3, SMALL_3, cfg_sm.p_wr12);
-    lv_label_set_text(wl_note(row), "54 MHz-1 GHz, receive only");
+    lv_label_set_text(wl_note(row), "54 MHz-1 GHz，仅接收");
     card_end(row + 1);
 #endif
 
@@ -3375,9 +3375,9 @@ static void make_general_page() {
 
     /* The keyboard modes' text on the card, a file a day (digi_textlog.c, #55); past the limit the oldest day goes */
     row = card_begin("TEXT LOG");
-    wl_row_label(row, "Keyboard modes");
+    wl_row_label(row, "键盘模式");
     param_switch(row, 1, 3, SMALL_3, cfg_sm.p_textlog);
-    lv_label_set_text(wl_note(row), "PSK, Olivia, JTTY, RTTY: web Logs page");
+    lv_label_set_text(wl_note(row), "PSK、Olivia、JTTY、RTTY：网页日志页");
     row = make_param_slider(row + 1, "Size limit", &textlog_mb_slider);
     card_end(row);
 }
@@ -3503,7 +3503,7 @@ static void pd_timer_cb(lv_timer_t *t) {
             pd.dit   = got;
             pd.step  = 2;
             pd.ticks = 0;
-            lv_label_set_text(pd.learn_note, "Press DAH");
+            lv_label_set_text(pd.learn_note, "按划");
         } else if (got >= 0) {
             int src = got >> 16;
 
@@ -3529,7 +3529,7 @@ static void pd_learn_cb(lv_event_t *e) {
     pd.step  = 1;
     pd.ticks = 0;
     paddle_keyer_learn(true);
-    lv_label_set_text(pd.learn_note, "Press DIT");
+    lv_label_set_text(pd.learn_note, "按点");
 }
 
 static void pd_delete_cb(lv_event_t *e) {
@@ -3559,14 +3559,14 @@ static uint8_t make_paddle(uint8_t row) {
     pd.map[PADDLE_SRC_MIDI] = pd_value(row++, "MIDI notes");
     pd.map[PADDLE_SRC_SER]  = pd_value(row++, "Serial lines");
 
-    wl_row_label(row, "Learn dit and dah");
+    wl_row_label(row, "学习点和划");
     wl_button(row, "Start", pd_learn_cb);
     pd.learn_note = wl_note(row++);
 
     row = make_param_switch(row, "Swap dit and dah", cfg_sm.p_paddle_swap);   /* the timer shows the map again */
     row = make_param_switch(row, "Serial port (ttyUSB, ttyACM)", cfg_sm.p_paddle_serial);
 
-    lv_label_set_text(pd_value(row++, "Mode, speed, ratio"), "KEY buttons in CW");
+    lv_label_set_text(pd_value(row++, "模式、速度、比例"), "CW模式下按键");
 
     pd.step = 0;
     pd_update();
@@ -3684,7 +3684,7 @@ static void make_cluster_page() {
     grid_create();
     row = card_begin("CLUSTER FILTERS");
 
-    wl_row_label(row, "Modes");
+    wl_row_label(row, "模式");
     for (int i = 0; i < CF_MODES; i++) {
         cf.mode[i] = cf_toggle(row, 3 + i, cf_mode_name[i], f->modes & cf_mode_bit[i], cf.mode);
     }
@@ -3695,7 +3695,7 @@ static void make_cluster_page() {
     while (cf.band_n < 16 && cluster_band_name(cf.band_n)[0]) cf.band_n++;
     int band_rows = (cf.band_n + 5) / 6;
 
-    wl_row_label(row, "Bands (m)");
+    wl_row_label(row, "波段（米）");
     for (int b = 0; b < cf.band_n; b++) {
         const char *band = cluster_band_name(b);
         char        name[8];
@@ -3709,7 +3709,7 @@ static void make_cluster_page() {
     row += band_rows;
 
     /* Two on a row, two columns each: WWBOTA is wider than a mode */
-    wl_row_label(row, "Activity");
+    wl_row_label(row, "活动");
     for (int i = 0; i < CLUSTER_ACT_COUNT; i++) {
         cf.act[i] = cf_toggle(row + i / 2, 3 + i % 2 * 2, cluster_act_names[i], f->activity & (1u << i), cf.act);
         lv_obj_set_width(cf.act[i], SMALL_1 * 2 + SMALL_PAD);
@@ -3750,7 +3750,7 @@ static void swr_protect_cb(lv_event_t *e) {
     int32_t   val   = lv_slider_get_value(obj) * 5;
 
     if (val <= 10) {
-        lv_label_set_text(label, "Off");
+        lv_label_set_text(label, "关闭");
     } else {
         lv_label_set_text_fmt(label, "%i.%i", val / 10, val % 10);
     }
@@ -3761,7 +3761,7 @@ static uint8_t make_swr_protect(uint8_t row) {
     int32_t   val = cfg_sm.p_swr_protect.get();
     lv_obj_t *obj;
 
-    wl_row_label(row, "SWR protection");
+    wl_row_label(row, "SWR保护");
     obj = row_slider(row_cell(row, 4, 3, SMALL_3), val / 5, 2, 10, SMALL_3 - 120, swr_protect_cb, NULL, "%i", val);
     lv_event_send(obj, LV_EVENT_VALUE_CHANGED, NULL);   /* the label as 2.5 / Off */
 
@@ -3773,11 +3773,11 @@ static float_slider_t tune_pwr_fs     = {0.1f, [](float v) { cfg_sm.p_tune_pwr.s
 static param_slider_t tune_time_slider = {&cfg_sm.p_tune_time, TUNE_TIME_MIN_S, TUNE_TIME_MAX_S, 1, "%d"};
 
 static uint8_t make_ext_tune(uint8_t row) {
-    wl_row_label(row, "TUNE power, W");
+    wl_row_label(row, "TUNE功率，W");
     float_slider(row_cell(row, 4, 3, SMALL_3), cfg_sm.p_tune_pwr.get(), TUNE_PWR_MIN_W, TUNE_PWR_MAX_W, SMALL_3 - 120,
                  &tune_pwr_fs);
     row++;
-    wl_row_label(row, "TUNE time limit, s");
+    wl_row_label(row, "TUNE时限，秒");
     param_slider(row_cell(row, 4, 3, SMALL_3), SMALL_3 - 120, &tune_time_slider);   /* as wide as the power's */
     return row + 1;
 }
@@ -4043,42 +4043,42 @@ void settings_window_poweroff(void) {
 static uint8_t make_smeter_fe(uint8_t row) {
     int32_t rfg = cfg_sm.p_smeter_rfg.get();
 
-    wl_row_label(row, "Preamp");
+    wl_row_label(row, "前置放大");
     smc_sl[0] = param_slider(row_cell(row, 4, 3, SMALL_3), SMALL_3 - 134, &sm_pre_slider);
     lv_obj_add_event_cb(smc_sl[0], ptr_clear_cb, LV_EVENT_DELETE, &smc_sl[0]);
     row++;
 #ifdef BOARD_X6200
     /* The band's two figures, each following a band change: the one for the power the radio is on is the one in use
      * (#125) */
-    wl_row_label(row, "Attenuator on supply");
+    wl_row_label(row, "外接供电时衰减");
     smc_sl[1] = param_slider(row_cell(row, 4, 3, SMALL_3), SMALL_3 - 134, &sm_att_slider);
     lv_obj_add_event_cb(smc_sl[1], ptr_clear_cb, LV_EVENT_DELETE, &smc_sl[1]);
     observers.emplace_back(cfg_sm.p_band_smeter_att.subscribe(sm_att_follow, smc_sl[1]));
     row++;
-    wl_row_label(row, "Attenuator on battery");
+    wl_row_label(row, "电池供电时衰减");
     smc_sl[3] = param_slider(row_cell(row, 4, 3, SMALL_3), SMALL_3 - 134, &sm_att_bat_slider);
     lv_obj_add_event_cb(smc_sl[3], ptr_clear_cb, LV_EVENT_DELETE, &smc_sl[3]);
     observers.emplace_back(cfg_sm.p_band_smeter_att_bat.subscribe(sm_att_follow, smc_sl[3]));
     row++;
 #else
-    wl_row_label(row, "Attenuator");
+    wl_row_label(row, "衰减器");
     smc_sl[1] = param_slider(row_cell(row, 4, 3, SMALL_3), SMALL_3 - 134, &sm_att_slider);
     lv_obj_add_event_cb(smc_sl[1], ptr_clear_cb, LV_EVENT_DELETE, &smc_sl[1]);
     row++;
 #endif
-    wl_row_label(row, "RF gain, a step");
+    wl_row_label(row, "RF增益步进");
     smc_sl[2] = row_slider(row_cell(row, 4, 3, SMALL_3), rfg / 5, 0, 40, SMALL_3 - 134, sm_rfg_cb, NULL,
                            "%i.%02i dB", rfg / 100, rfg % 100);
     lv_obj_add_event_cb(smc_sl[2], ptr_clear_cb, LV_EVENT_DELETE, &smc_sl[2]);
     row++;
 
-    wl_row_label(row, "On a steady signal");
+    wl_row_label(row, "在稳定信号上");
     smc_btn = wl_button(row, smc_timer ? "Stop" : "Measure", smc_btn_cb);
     lv_obj_add_event_cb(smc_btn, ptr_clear_cb, LV_EVENT_DELETE, &smc_btn);
     row++;
     smc_note = upd_line(row);
     lv_obj_add_event_cb(smc_note, smc_delete_cb, LV_EVENT_DELETE, NULL);
-    lv_label_set_text(smc_note, "Steady carrier in, " SMC_MIN_S " to S9+20. PRE, ATT and RF gain are tried, then put back.");
+    lv_label_set_text(smc_note, "输入稳定载波，" SMC_MIN_S "调至S9+20。依次尝试PRE、ATT和RF增益，然后复原。");
     row++;
     return row;
 }
@@ -4100,12 +4100,12 @@ static void txr_note_show(void) {
     }
     switch (cfg_sm.p_tx_ranges.get()) {
         case TX_RANGES_KR:
-            lv_label_set_text(txr_note, "South Korea's ranges only, 160 to 6 m: the switch below goes no further");
+            lv_label_set_text(txr_note, "仅韩国频段，160至6米：下方开关不会越界");
             return;
         case TX_RANGES_OWN:
             break;
         default:
-            lv_label_set_text(txr_note, "Every region's amateur bands; past them only with the switch below");
+            lv_label_set_text(txr_note, "各区域的业余波段；只有开启下方开关才能越界");
             return;
     }
     /* What matters first: the line cut with ... keeps it */
@@ -4163,18 +4163,18 @@ static void txr_read_cb(lv_event_t *e) {
  * stay so. The note on a line of its own: beside the switch, VISION's type ran the label into it. The TX ranges
  * before it: South Korea's and the own list win over it (#247) */
 static uint8_t make_tx_bands(uint8_t row) {
-    wl_row_label(row, "TX ranges");
+    wl_row_label(row, "TX频段范围");
     row_choice(row, 1, 3, SMALL_3, "Ham bands\nSouth Korea\nOwn list", cfg_sm.p_tx_ranges.get(), txr_choice_cb, NULL);
     row++;
     txr_note = upd_line(row);
     lv_obj_add_event_cb(txr_note, ptr_clear_cb, LV_EVENT_DELETE, &txr_note);
     txr_note_show();
     row++;
-    wl_row_label(row, "Own list file");
+    wl_row_label(row, "自定义列表文件");
     wl_button(row, "Read again", txr_read_cb);
     row++;
     row = make_param_switch(row, "TX outside ham bands", cfg_sm.p_tx_outside_bands);
-    lv_label_set_text(upd_line(row), "Only if licensed outside the amateur bands: MARS, CAP");
+    lv_label_set_text(upd_line(row), "仅当在业余波段外持证：MARS、CAP");
     return row + 1;
 }
 
@@ -4247,7 +4247,7 @@ static void make_display_page() {
     row = make_auto_offset(row);
     row = make_grid_min_max(row);
     row = make_waterfall_line_zoom(row);
-    wl_row_label(row, "Smooth scroll");
+    wl_row_label(row, "平滑滚动");
     bool_switch(row++, 4, 3, SMALL_3, &params.waterfall_smooth_scroll);
     row = make_param_slider(row, "Speed", &wf_speed_slider);
     row = make_wf_3d(row);
@@ -4277,7 +4277,7 @@ static void make_display_page() {
 
     row = card_begin("INTERFACE");
     row = make_mag(row);
-    wl_row_label(row, "Icon menus");   /* APP, Modes and the rail as icons: the next time they open */
+    wl_row_label(row, "图标菜单");   /* APP, Modes and the rail as icons: the next time they open */
     bool_switch(row++, 1, 3, SMALL_3, &params.icon_menus);
     row = make_param_switch(row, "Knob info", cfg_sm.p_knob_info);
     /* The main screen's buttons and knob lines hidden after so long without a key, back at the next (screen_main.c) */
@@ -4289,7 +4289,7 @@ static void make_display_page() {
     row = make_param_choice(row, "Decoder text", " Large \n Compact ", cfg_sm.p_digi_text_compact);
     /* FT8/FT4 table: distance, country or both, from SP2KMO's upstream 3074180e.
      * Four columns: "Country + km" ran over the arrow at three. */
-    wl_row_label(row, "FT8/FT4 info");
+    wl_row_label(row, "FT8/FT4信息");
     row_choice(row++, 1, 4, SMALL_4, " km \n mi \n Country \n Country + km \n Country + mi ", cfg_sm.p_ft8_info.get(),
                int_choice_cb, &cfg_sm.p_ft8_info);
     card_end(row);
@@ -4389,12 +4389,12 @@ static bool nn_valid(const char *s) {
 
 static void nn_done_cb(const char *out, int status, void *user) {
     if (status != 0) {
-        msg_update_text_fmt("Network name not set");
+        msg_update_text_fmt("未设置网络名称");
     } else {
         char name[NN_MAX + 1];
 
         nn_load(name, sizeof(name));
-        msg_update_text_fmt("Reachable as %s.local", name);
+        msg_update_text_fmt("可通过 %s.local 访问", name);
     }
     if ((intptr_t)user == wl_gen && wl_tab && strcmp(wl_tab, "Wireless") == 0) {
         make_wireless_page();
@@ -4407,7 +4407,7 @@ static bool nn_kbd_ok() {
 
     snprintf(val, sizeof(val), "%s", textarea_window_get());
     if (!nn_valid(val)) {
-        msg_update_text_fmt("Letters, digits and '-', up to 32");
+        msg_update_text_fmt("字母、数字和“-”，最多32位");
         return false;
     }
     snprintf(cmd, sizeof(cmd), "/usr/sbin/x6100-hostname set %s", val);
@@ -4436,12 +4436,12 @@ static uint8_t make_network_name(uint8_t row) {
     /* The card uses col_station: a label and one control, as the Station card */
     nn_load(name, sizeof(name));
     snprintf(local, sizeof(local), "%s.local", name);
-    wl_row_label(row, "Name");
+    wl_row_label(row, "名称");
     obj = wl_button(row, name, nn_edit_cb);
     lv_obj_set_size(obj, 150, ROW_H - 4);
     lv_obj_set_grid_cell(obj, LV_GRID_ALIGN_START, 1, 1, LV_GRID_ALIGN_CENTER, row, 1);
     row++;
-    wl_row_label(row, "Reachable as");
+    wl_row_label(row, "可通过以下访问");
     obj = wl_label(grid, SF(22), theme_hex(TC_text_value), 0);
     lv_label_set_text(obj, local);
     lv_obj_set_grid_cell(obj, LV_GRID_ALIGN_START, 1, 1, LV_GRID_ALIGN_CENTER, row, 1);
@@ -4547,14 +4547,14 @@ static const char *ts_funnel_update(const ts_status_t *st, bool running) {
     if (st->funnel_on && !remote_server_get_enabled())
         lv_label_set_text(ts.fnote, "BROWSER REMOTE is off (General): turn it on");
     else
-        lv_label_set_text(ts.fnote, running || st->funnel_on ? "the Panel alone; pair browsers at home"
+        lv_label_set_text(ts.fnote, running || st->funnel_on ? "仅Panel；在家中配对浏览器"
                                                              : "needs Tailscale connected");
     if (on && st->pub[0])
         lv_label_set_text(ts.pub, st->pub);
     else if (st->funnel_on && st->funnel_text[0])
         lv_label_set_text(ts.pub, st->funnel_text);
     else if (st->funnel_on)
-        lv_label_set_text(ts.pub, "Waiting for Tailscale...");
+        lv_label_set_text(ts.pub, "等待Tailscale...");
     else
         lv_label_set_text(ts.pub, "-");
     return enable ? st->funnel_url : NULL;
@@ -4590,7 +4590,7 @@ static void ts_update() {
     if (code) {
         lv_obj_clear_flag(ts.qr, LV_OBJ_FLAG_HIDDEN);
         lv_obj_clear_flag(ts.qr_note, LV_OBJ_FLAG_HIDDEN);
-        lv_label_set_text(ts.qr_note, login ? "Scan with a phone and log in to Tailscale, or open the link on the web "
+        lv_label_set_text(ts.qr_note, login ? "用手机扫码登录Tailscale，或打开网页上的链接："
                                               "page: Remote > Tailscale"
                                             : "Scan with a phone and allow Funnel for your tailnet in Tailscale's admin "
                                               "console, or open the link on the web page: Remote > Tailscale");
@@ -4613,7 +4613,7 @@ static void ts_update() {
     else lv_obj_add_state(ts.logout, LV_STATE_DISABLED);
     if (ts.armed && lv_tick_elaps(ts.armed) > TS_ARM_MS) {
         ts.armed = 0;
-        lv_label_set_text(ts.logout_note, "asks for a new login");
+        lv_label_set_text(ts.logout_note, "需要重新登录");
     }
 }
 
@@ -4624,7 +4624,7 @@ static void ts_done_cb(const char *out, int status, void *user) {
     if (status != 0) {
         const char *e = strstr(out, "error ");
 
-        msg_update_text_fmt("Tailscale: %s", e ? e + 6 : "the helper failed");
+        msg_update_text_fmt("Tailscale：%s", e ? e + 6 : "辅助进程失败");
     }
     if ((intptr_t)user == wl_gen) {
         ts_update();
@@ -4638,7 +4638,7 @@ static void ts_switch_cb(lv_event_t *e) {
         return;
     }
     ts_busy(true);          /* one command at a time: off and on at once lost the on */
-    lv_label_set_text(ts.text, on ? "Starting Tailscale..." : "Stopping Tailscale...");
+    lv_label_set_text(ts.text, on ? "正在启动Tailscale..." : "正在停止Tailscale...");
     sh_run(on ? TS_CTL " on" : TS_CTL " off", ts_done_cb, (void *)(intptr_t)wl_gen);
 }
 
@@ -4650,7 +4650,7 @@ static void ts_funnel_cb(lv_event_t *e) {
         return;
     }
     ts_busy(true);
-    lv_label_set_text(ts.pub, on ? "Turning Funnel on..." : "Turning Funnel off...");
+    lv_label_set_text(ts.pub, on ? "正在开启Funnel..." : "正在关闭Funnel...");
     sh_run(on ? TS_CTL " funnel on" : TS_CTL " funnel off", ts_done_cb, (void *)(intptr_t)wl_gen);
 }
 
@@ -4661,13 +4661,13 @@ static void ts_logout_cb(lv_event_t *e) {
     }
     if (!ts.armed || lv_tick_elaps(ts.armed) > TS_ARM_MS) {
         ts.armed = lv_tick_get() | 1;
-        lv_label_set_text(ts.logout_note, "press again to log out");
+        lv_label_set_text(ts.logout_note, "再次按下退出登录");
         return;
     }
     ts.armed = 0;
-    lv_label_set_text(ts.logout_note, "asks for a new login");
+    lv_label_set_text(ts.logout_note, "需要重新登录");
     ts_busy(true);
-    lv_label_set_text(ts.text, "Logging out...");
+    lv_label_set_text(ts.text, "正在注销...");
     sh_run(TS_CTL " logout", ts_done_cb, (void *)(intptr_t)wl_gen);
 }
 
@@ -4677,14 +4677,14 @@ static uint8_t make_tailscale(uint8_t row) {
     ts.sw = bt_switch_cell(row, 1, false, ts_switch_cb);
     row++;
 
-    wl_row_label(row, "Status");
+    wl_row_label(row, "状态");
     ts.text = wl_label(grid, SF(22), theme_hex(TC_text_value), 0);
     lv_obj_set_size(ts.text, SMALL_6, lv_font_get_line_height(SF(22)));   /* one line, then dots */
     lv_label_set_long_mode(ts.text, LV_LABEL_LONG_DOT);
     lv_obj_set_grid_cell(ts.text, LV_GRID_ALIGN_START, 1, 6, LV_GRID_ALIGN_CENTER, row, 1);
     row++;
 
-    wl_row_label(row, "Address");
+    wl_row_label(row, "地址");
     ts.addr = wl_label(grid, SF(22), theme_hex(TC_text_dim), 0);
     lv_obj_set_size(ts.addr, SMALL_6, lv_font_get_line_height(SF(22)));
     lv_label_set_long_mode(ts.addr, LV_LABEL_LONG_DOT);
@@ -4695,10 +4695,10 @@ static uint8_t make_tailscale(uint8_t row) {
     wl_row_label(row, "Funnel");
     ts.fsw = bt_switch_cell(row, 1, false, ts_funnel_cb);
     ts.fnote = wl_note(row);
-    lv_label_set_text(ts.fnote, "the Panel alone; pair browsers at home");
+    lv_label_set_text(ts.fnote, "仅Panel；在家中配对浏览器");
     row++;
 
-    wl_row_label(row, "Public");
+    wl_row_label(row, "公开");
     ts.pub = wl_label(grid, SF(22), theme_hex(TC_text_value), 0);
     lv_obj_set_width(ts.pub, SMALL_6);
     lv_label_set_long_mode(ts.pub, LV_LABEL_LONG_WRAP);     /* the address whole: it is typed from here */
@@ -4722,17 +4722,17 @@ static uint8_t make_tailscale(uint8_t row) {
     lv_obj_set_style_outline_width(ts.qr, 3, LV_STATE_FOCUSED);
     lv_obj_set_style_outline_pad(ts.qr, 2, LV_STATE_FOCUSED);
     ts.qr_note = wl_note(row);
-    lv_label_set_text(ts.qr_note, "Scan with a phone and log in to Tailscale, or open the link on the web page: "
+    lv_label_set_text(ts.qr_note, "用手机扫码登录Tailscale，或打开网页上的链接："
                                   "Remote > Tailscale");
     lv_obj_add_flag(ts.qr, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(ts.qr_note, LV_OBJ_FLAG_HIDDEN);
     row_dsc[row] = LV_GRID_CONTENT;
     row++;
 
-    wl_row_label(row, "Login");
+    wl_row_label(row, "登录");
     ts.logout = wl_button(row, "Log out", ts_logout_cb);
     ts.logout_note = wl_note(row);
-    lv_label_set_text(ts.logout_note, "asks for a new login");
+    lv_label_set_text(ts.logout_note, "需要重新登录");
     return row + 1;
 }
 
@@ -4814,11 +4814,11 @@ static void bt_cat_update() {
         fclose(f);
     }
     if (n < 0) {
-        lv_label_set_text(bt.cat, "bridge not running");
+        lv_label_set_text(bt.cat, "网桥未运行");
     } else if (n == 0) {
-        lv_label_set_text(bt.cat, "none connected");
+        lv_label_set_text(bt.cat, "无连接");
     } else {
-        lv_label_set_text_fmt(bt.cat, "%i connected", n);
+        lv_label_set_text_fmt(bt.cat, "已连接 %i 个", n);
     }
 }
 
@@ -4882,7 +4882,7 @@ static void make_bluetooth_page() {
 
     row = card_begin("BLUETOOTH CAT");
     bt.cat = bt_value_row(row++, "Clients", NULL);
-    lv_label_set_text(bt_value_row(row++, "Port", NULL), "SPP, channel 1");
+    lv_label_set_text(bt_value_row(row++, "端口", NULL), "SPP，通道1");
     card_end(row);
 
     lv_obj_add_event_cb(grid, bt_page_delete_cb, LV_EVENT_DELETE, NULL);
@@ -5124,7 +5124,7 @@ static uint8_t make_update(uint8_t row) {
     FILE *f = fopen("/var/lib/x6100-update/pending.json", "r");
     char  s[96], note[160], t[240];
 
-    wl_row_label(row, "Update");
+    wl_row_label(row, "更新");
     upd_btn = wl_button(row, "Check", upd_btn_cb);
     lv_obj_add_event_cb(upd_btn, ptr_clear_cb, LV_EVENT_DELETE, &upd_btn);
     upd_latest[0] = 0;
@@ -5154,7 +5154,7 @@ static uint8_t make_broadcast_list(uint8_t row) {
     struct stat st;
     FILE *f;
 
-    wl_row_label(row, "Broadcast list");
+    wl_row_label(row, "广播列表");
     lv_obj_set_height(wl_button(row, "Update", bc_btn_cb), UPD_ROW_H - 2);
     row_dsc[row] = UPD_ROW_H;
     row++;
@@ -5210,7 +5210,7 @@ static bool mfk_down(void) {
 
 static void fr_timer_cb(lv_timer_t *t) {
     if (!mfk_down()) {
-        if (fr_held) lv_label_set_text(fr_count, "Released: reset cancelled");
+        if (fr_held) lv_label_set_text(fr_count, "已松开：取消重置");
         fr_held  = 0;
         fr_armed = true;
         return;
@@ -5218,10 +5218,10 @@ static void fr_timer_cb(lv_timer_t *t) {
     if (!fr_armed) return;
     fr_held += 100;
     if (fr_held < 3000) {
-        lv_label_set_text_fmt(fr_count, "Keep holding: %u s", (unsigned)((3000 - fr_held + 999) / 1000));
+        lv_label_set_text_fmt(fr_count, "继续按住：%u 秒", (unsigned)((3000 - fr_held + 999) / 1000));
         return;
     }
-    lv_label_set_text(fr_count, "Resetting...");
+    lv_label_set_text(fr_count, "正在重置...");
     lv_refr_now(NULL);
     database_keep_drop();   /* the settings' last good copy too, before the reset's sync: nothing brings them back */
     factory_reset_dir(BOARD_DATA);
@@ -5265,26 +5265,26 @@ static void fr_btn_cb(lv_event_t *e) {
     lv_obj_clear_flag(fr_panel, LV_OBJ_FLAG_SCROLLABLE);
 
     lv_obj_t *obj = wl_label(fr_panel, SF(22), theme_hex(TC_text_head), 0);
-    lv_label_set_text(obj, "Factory reset");
+    lv_label_set_text(obj, "恢复出厂设置");
 
     obj = wl_label(fr_panel, SF(18), theme_hex(TC_text_value), 0);
     lv_obj_set_width(obj, lv_pct(100));
     lv_label_set_long_mode(obj, LV_LABEL_LONG_WRAP);
-    lv_label_set_text(obj, "Back to defaults: all settings with the band memory and the CW messages, app frequencies, "
+    lv_label_set_text(obj, "恢复默认：所有设置，包括波段记忆、CW消息、应用频率，"
                            "DX cluster, FT8 UDP, PSK squelch, TCI server, time zone, headphone volume, Bluetooth CAT.");
     obj = wl_label(fr_panel, SF(18), theme_hex(TC_text_dim), 0);
     lv_obj_set_width(obj, lv_pct(100));
     lv_label_set_long_mode(obj, LV_LABEL_LONG_WRAP);
-    lv_label_set_text(obj, "Kept: logs (ADIF, QSO, field), memory channels, PSK/Olivia macros, JS8 texts, voice messages, "
+    lv_label_set_text(obj, "保留：日志（ADIF、QSO、野外），存储信道，PSK/Olivia宏，JS8文本，语音消息，"
                            "pictures, recordings, themes, CW trainer progress, Bluetooth pairings.");
     obj = wl_label(fr_panel, SF(18), theme_hex(TC_text_dim), 0);
     lv_obj_set_width(obj, lv_pct(100));
     lv_label_set_long_mode(obj, LV_LABEL_LONG_WRAP);
-    lv_label_set_text(obj, "Then the screen goes dark for a few seconds while the radio software restarts.");
+    lv_label_set_text(obj, "随后屏幕变黑几秒，电台软件会重新启动。");
 
     lv_obj_set_flex_grow(wl_label(fr_panel, SF(16), theme_hex(TC_text_dim), 0), 1);   /* spacer */
     fr_count = wl_label(fr_panel, SF(22), theme_hex(TC_text_head), 0);
-    lv_label_set_text(fr_count, "Hold MFK down 3 s to reset - ESC: cancel");
+    lv_label_set_text(fr_count, "按住MFK 3秒重置 - ESC：取消");
 
     fr_held  = 0;
     fr_armed = false;
@@ -5297,7 +5297,7 @@ static void fr_btn_cb(lv_event_t *e) {
 }
 
 static uint8_t make_factory_reset(uint8_t row) {
-    wl_row_label(row, "Factory reset");
+    wl_row_label(row, "恢复出厂设置");
     fr_btn = wl_button(row, "Reset...", fr_btn_cb);
     lv_obj_add_event_cb(fr_btn, ptr_clear_cb, LV_EVENT_DELETE, &fr_btn);
     return row + 1;

@@ -65,12 +65,12 @@ static void pwr_cb(button_data_t *data);
 static const char *rec_label(void);
 static const char *pwr_label(void);
 
-static button_data_t btn_freq    = {.type = BTN_TEXT, .label = "Freq.", .press = freq_cb};
+static button_data_t btn_freq    = {.type = BTN_TEXT, .label = "频率", .press = freq_cb};
 static button_data_t btn_rec     = {.type = BTN_TEXT_FN, .label_fn = rec_label, .press = rec_cb};
-static button_data_t btn_send    = {.type = BTN_TEXT, .label = "Send", .press = send_cb};
+static button_data_t btn_send    = {.type = BTN_TEXT, .label = "发送", .press = send_cb};
 static button_data_t btn_discard = {.type = BTN_TEXT, .label = "Discard", .press = discard_cb};
-static button_data_t btn_close   = {.type = BTN_TEXT, .label = "Close", .press = close_btn_cb};
-static button_data_t btn_close2  = {.type = BTN_TEXT, .label = "Close", .press = close_btn_cb};
+static button_data_t btn_close   = {.type = BTN_TEXT, .label = "关闭", .press = close_btn_cb};
+static button_data_t btn_close2  = {.type = BTN_TEXT, .label = "关闭", .press = close_btn_cb};
 static button_data_t btn_pwr     = {.type = BTN_TEXT_FN, .label_fn = pwr_label, .press = pwr_cb};  /* RADE's own */
 
 static buttons_page_t page_1, page_2;
@@ -206,7 +206,7 @@ static void rec_end(void)
     freedv_tx_stop();
     radio_set_play_mode(AUDIO_PLAY_OFF);
     atomic_store(&state, ST_READY);
-    lv_label_set_text(frame.head_right, "READY");
+    lv_label_set_text(frame.head_right, "就绪");
     buttons_update();
 }
 
@@ -260,7 +260,7 @@ static void show_tx_state(void)
         tx_join();
         atomic_store(&state, ST_READY);
         freedv_tx_rewind();
-        lv_label_set_text(frame.head_right, "READY");
+        lv_label_set_text(frame.head_right, "就绪");
         buttons_update();
         if (!atomic_load(&tx_sent))
             msg_update_text_fmt("RADE: not sent");
@@ -419,7 +419,7 @@ static void rec_cb(button_data_t *data)
         break;
     default:
         if (!freedv_tx_available()) {
-            msg_update_text_fmt("RADE: not built into this image");
+            msg_update_text_fmt("RADE：本镜像未内置");
             return;
         }
         if (radio_get_state() != RADIO_RX) {
@@ -452,7 +452,7 @@ static void send_cb(button_data_t *data)
 
     (void)data;
     if (atomic_load(&state) != ST_READY) {
-        msg_update_text_fmt("RADE: Rec first");
+        msg_update_text_fmt("RADE：请先录音");
         return;
     }
     freedv_tx_get_stats(&t);
@@ -461,7 +461,7 @@ static void send_cb(button_data_t *data)
         return;
     }
     if (!params.callsign.x[0]) {
-        msg_update_text_fmt("RADE: set your callsign first (APP > Callsign)");
+        msg_update_text_fmt("RADE：请先设置呼号（应用 > 呼号）");
         return;
     }
     freedv_tx_rewind();

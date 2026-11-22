@@ -3,11 +3,11 @@
 <p class="sub">SSH on the radio takes keys only: password logins are off, since every radio came with the same root password. Add the public key of each computer you log in from; <code>ssh root@<span class="host">x6100.local</span></code> then logs in with it.</p>
 
 <section class="dp-card">
-  <div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-key"/></svg></span><div><h3>Keys<span class="eff">Takes effect: at the next login</span></h3><p id="count">Root's keys</p></div></div>
+  <div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-key"/></svg></span><div><h3>按键<span class="eff">Takes effect: at the next login</span></h3><p id="count">Root's keys</p></div></div>
   <div class="dp-body tbl">
     <div class="table-wrap">
       <table id="keys">
-        <thead><tr><th>Type</th><th>Comment</th><th>Fingerprint</th><th></th></tr></thead>
+        <thead><tr><th>Type</th><th>备注</th><th>指纹</th><th></th></tr></thead>
         <tbody></tbody>
       </table>
     </div>
@@ -17,21 +17,21 @@
 </section>
 
 <form class="dp-card" id="addform">
-  <div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-plus"/></svg></span><div><h3>Add a key</h3><p>The public half: the one line of the <code>.pub</code> file</p></div></div>
+  <div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-plus"/></svg></span><div><h3>添加密钥</h3><p>The public half: the one line of the <code>.pub</code> file</p></div></div>
   <div class="dp-body">
     <textarea id="key" rows="3" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="Public key"
       placeholder="ssh-ed25519 AAAA... you@computer"
       style="width:100%;resize:vertical;background:#0b1422;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px 11px;font:13px/1.4 ui-monospace,monospace;word-break:break-all"></textarea>
     <p style="margin:10px 0 0;color:var(--dim);font-size:13px">No key yet? On your computer, <code>ssh-keygen -t ed25519</code> makes one; paste the line of <code>~/.ssh/id_ed25519.pub</code> here (on Windows, in PowerShell, <code>cat ~\.ssh\id_ed25519.pub | clip</code> copies it). Taken: ssh-ed25519, ecdsa-sha2-nistp256, -nistp384 and -nistp521, and ssh-rsa of <span id="rsamin">3072</span> bits or more, one key at a time, with no options before it. Step by step for Windows, a Mac, Linux and PuTTY: <a href="https://github.com/Guru-RF/OpenX6X00/blob/main/docs/MANUAL.md#ssh">the manual</a>.</p>
     <div class="actions">
-      <button type="submit" class="primary">Add</button>
+      <button type="submit" class="primary">添加</button>
       <span class="status" id="astatus"></span>
     </div>
   </div>
 </form>
 
 <div class="dp-card">
-  <div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-lock"/></svg></span><div><h3>Good to know</h3><p>Where the keys are kept</p></div></div>
+  <div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-lock"/></svg></span><div><h3>须知</h3><p>Where the keys are kept</p></div></div>
   <div class="dp-body">
     <ul style="margin:0;padding-left:18px;color:var(--dim);line-height:1.5">
       <li>The keys are root's, in <code>/root/.ssh/authorized_keys</code>. A copy goes to <code>backups/backup.tgz</code> on the DATA partition after each change here and at every clean power-off, so a new card image takes them back.</li>

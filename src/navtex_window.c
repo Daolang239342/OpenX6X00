@@ -85,12 +85,12 @@ static const char *page1_label(void);
 static const char *page2_label(void);
 
 static button_data_t btn_page   = {.type = BTN_TEXT_FN, .label_fn = page1_label, .press = page_cb};
-static button_data_t btn_freq   = {.type = BTN_TEXT, .label = "Freq.", .press = freq_cb};
+static button_data_t btn_freq   = {.type = BTN_TEXT, .label = "频率", .press = freq_cb};
 static button_data_t btn_mode   = {.type = BTN_TEXT_FN, .label_fn = mode_label, .press = mode_cb};
-static button_data_t btn_clear  = {.type = BTN_TEXT, .label = "Clear", .press = clear_btn_cb};
-static button_data_t btn_close  = {.type = BTN_TEXT, .label = "Close", .press = close_btn_cb};
+static button_data_t btn_clear  = {.type = BTN_TEXT, .label = "清除", .press = clear_btn_cb};
+static button_data_t btn_close  = {.type = BTN_TEXT, .label = "关闭", .press = close_btn_cb};
 static button_data_t btn_page_2 = {.type = BTN_TEXT_FN, .label_fn = page2_label, .press = page_cb};
-static button_data_t btn_save   = {.type = BTN_TEXT, .label = "Save", .press = save_cb};
+static button_data_t btn_save   = {.type = BTN_TEXT, .label = "保存", .press = save_cb};
 
 static buttons_page_t page_1 = {.items = {&btn_page, &btn_freq, &btn_mode, &btn_clear, &btn_close}};
 static buttons_page_t page_2 = {.items = {&btn_page_2, &btn_save, NULL, NULL, NULL}};
@@ -625,7 +625,7 @@ static void save_cb(button_data_t *data)
     int    rows = dsc_list ? (int)lv_obj_get_child_cnt(dsc_list) : 0;
 
     if (dsc_mode ? !rows : !screen_len) {
-        msg_update_text_fmt("Nothing to save");
+        msg_update_text_fmt("无内容可保存");
         return;
     }
     mkdir(NAVTEX_SAVE_DIR, 0755);
@@ -640,12 +640,12 @@ static void save_cb(button_data_t *data)
     }
     if (!f || !ok) {
         if (f) fclose(f);
-        msg_update_text_fmt("NAVTEX: save failed");
+        msg_update_text_fmt("NAVTEX：保存失败");
         return;
     }
     fclose(f);
     clear_btn_cb(data);
-    msg_update_text_fmt("Saved %s", name + sizeof(NAVTEX_SAVE_DIR));
+    msg_update_text_fmt("已保存 %s", name + sizeof(NAVTEX_SAVE_DIR));
 }
 
 /* The mode's list of stations / channels */

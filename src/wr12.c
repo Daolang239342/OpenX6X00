@@ -88,7 +88,7 @@
 typedef enum { ANS_OK, ANS_ERROR, ANS_NONE, ANS_GONE } answer_t;
 typedef enum { DRAINED, DRAIN_GONE, DRAIN_ENDLESS } drain_t;
 
-static const char *const answer_words[] = {"OK", "ERROR", "no answer", "the port went"};
+static const char *const answer_words[] = {"确定", "ERROR", "no answer", "the port went"};
 
 /* The set-up, in order; all of it answered OK or it is done again */
 static const char *const setup[] = {

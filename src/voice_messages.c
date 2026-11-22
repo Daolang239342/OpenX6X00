@@ -176,9 +176,9 @@ static button_data_t btn_auto = {.type = BTN_TEXT_FN, .label_fn = auto_label, .p
 
 static button_data_t btn_p2 = {.type = BTN_TEXT, .label = "(MSG 2:2)", .press = button_next_page_cb};
 static button_data_t btn_interval = {.type = BTN_TEXT_FN, .label_fn = interval_label, .press = interval_cb};
-static button_data_t btn_rename = {.type = BTN_TEXT, .label = "Rename", .press = rename_cb};
-static button_data_t btn_close = {.type = BTN_TEXT, .label = "Close", .press = close_cb};
-static button_data_t btn_delete = {.type = BTN_TEXT, .label = "Delete", .press = delete_cb};
+static button_data_t btn_rename = {.type = BTN_TEXT, .label = "重命名", .press = rename_cb};
+static button_data_t btn_close = {.type = BTN_TEXT, .label = "关闭", .press = close_cb};
+static button_data_t btn_delete = {.type = BTN_TEXT, .label = "删除", .press = delete_cb};
 
 static buttons_page_t page_1 = {{&btn_p1, &btn_rec, &btn_listen, &btn_tx, &btn_auto}};
 static buttons_page_t page_2 = {{&btn_p2, &btn_interval, &btn_rename, &btn_delete, &btn_close}};
@@ -212,7 +212,7 @@ static void show_list(void) {
     char text[16];
     lv_table_set_row_cnt(list, count > 0 ? count : 1);
     if (count == 0) {
-        lv_table_set_cell_value(list, 0, 0, "No messages yet: press Rec");
+        lv_table_set_cell_value(list, 0, 0, "尚无消息：按录音");
         lv_table_set_cell_value(list, 0, 1, "");
     }
     for (int i = 0; i < count; i++) {
@@ -580,7 +580,7 @@ static void update_status(void) {
         }
         lv_bar_set_value(bar, pausing ? 0 : pct, LV_ANIM_OFF);
         if (!job_loop)
-            lv_label_set_text(info_lbl, "Single transmission");
+            lv_label_set_text(info_lbl, "单次发射");
         else if (pausing)
             lv_label_set_text_fmt(info_lbl, "Next call in %i s\nInterval %i s", pause_left, interval_s());
         else
@@ -590,8 +590,8 @@ static void update_status(void) {
         set_state("LISTEN", theme_hex(TC_ok_bg), theme_hex(TC_ok));
         lv_obj_set_style_bg_color(bar, TC(ok_bar), LV_PART_INDICATOR);
         lv_bar_set_value(bar, pct, LV_ANIM_OFF);
-        lv_label_set_text(info_lbl, "Playing on the speaker only");
-        lv_label_set_text(hint, "Listen: stop");
+        lv_label_set_text(info_lbl, "仅在扬声器播放");
+        lv_label_set_text(hint, "收听：停止");
     } else {
         set_state("READY", theme_hex(TC_chip), theme_hex(TC_text_head));
         lv_bar_set_value(bar, 0, LV_ANIM_OFF);
@@ -868,7 +868,7 @@ static void window_open(lv_obj_t *parent) {
 
     lv_obj_t *head = label(dialog.obj, &sony_20, COLOR_HEAD);
     lv_label_set_recolor(head, true);
-    lv_label_set_text_fmt(head, "VOICE KEYER (TX) - #%06x %s#", theme_hex(TC_text), info_params_mode_label_get());
+    lv_label_set_text_fmt(head, "语音键控（发射）- #%06x %s#", theme_hex(TC_text), info_params_mode_label_get());
     lv_obj_set_pos(head, 16, 10);
     head_right = label(dialog.obj, &sony_20, COLOR_HEAD);
     lv_obj_set_width(head_right, 250);

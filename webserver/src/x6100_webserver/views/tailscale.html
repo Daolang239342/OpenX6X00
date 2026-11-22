@@ -3,12 +3,12 @@
 <p class="sub">Tailscale puts the radio on your own private network, your tailnet. With Tailscale on a laptop or a phone you reach the radio from anywhere as if you were at home: these pages, the Panel and the Screen page, and TCI. Nothing is opened on your router. When you turn it on, the radio downloads Tailscale once from Tailscale's site (37 MB) and asks you to log in with your Tailscale account. Tailscale's log upload is off.</p>
 
 <div class="dp-card">
-  <div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-lock"/></svg></span><div><h3>Tailscale<span class="eff">Takes effect: at once</span></h3><p id="ver">On the radio, in userspace mode</p></div></div>
+  <div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-lock"/></svg></span><div><h3>Tailscale<span class="eff">生效方式：立即</span></h3><p id="ver">On the radio, in userspace mode</p></div></div>
   <div class="dp-row">
-    <div class="dp-lbl"><b>Enabled</b><span>Starts with the radio, also after a new card image</span></div>
-    <div class="dp-ctl"><label class="sw" title="Enabled"><input id="enabled" type="checkbox" role="switch" aria-label="Enabled"><i></i></label></div>
+    <div class="dp-lbl"><b>启用</b><span>随电台启动，换新卡镜像后亦然</span></div>
+    <div class="dp-ctl"><label class="sw" title="启用"><input id="enabled" type="checkbox" role="switch" aria-label="启用"><i></i></label></div>
   </div>
-  <div class="dp-row"><div class="dp-lbl"><b>Status</b></div><div class="dp-ctl" id="text">-</div></div>
+  <div class="dp-row"><div class="dp-lbl"><b>状态</b></div><div class="dp-ctl" id="text">-</div></div>
   <div class="dp-row" id="loginrow" style="display:none">
     <div class="dp-lbl"><b>Log in</b><span>Opens Tailscale's login in a new tab. The radio's screen shows the same link as a code for a phone (Settings > Wireless)</span></div>
     <div class="dp-ctl"><a class="btn primary" id="login" target="_blank" rel="noopener">Log in to Tailscale</a></div>
@@ -31,7 +31,7 @@
     <div class="dp-lbl"><b>Funnel</b><span>Only the Panel and the Screen page, and only for browsers paired at home. Needs Tailscale connected</span></div>
     <div class="dp-ctl"><label class="sw" title="Funnel"><input id="funnel" type="checkbox" role="switch" aria-label="Funnel"><i></i></label></div>
   </div>
-  <div class="dp-row"><div class="dp-lbl"><b>Status</b></div><div class="dp-ctl" id="ftext">Off</div></div>
+  <div class="dp-row"><div class="dp-lbl"><b>状态</b></div><div class="dp-ctl" id="ftext">Off</div></div>
   <div class="dp-row" id="allowrow" style="display:none">
     <div class="dp-lbl"><b>Allow Funnel</b><span>Your tailnet does not allow it yet: HTTPS certificates and Funnel are turned on in Tailscale's admin console. The radio's screen shows the same link as a code (Settings > Wireless)</span></div>
     <div class="dp-ctl"><a class="btn primary" id="allow" target="_blank" rel="noopener noreferrer">Allow in Tailscale</a></div>
@@ -54,7 +54,7 @@
 </div>
 
 <div class="dp-card">
-  <div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-key"/></svg></span><div><h3>Good to know</h3><p>Before you turn it on</p></div></div>
+  <div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-key"/></svg></span><div><h3>须知</h3><p>开启之前</p></div></div>
   <div class="dp-body">
     <ul style="margin:0;padding-left:18px;color:var(--dim);line-height:1.5">
       <li>Everyone on your tailnet reaches the radio as if they were on its own network: these pages have no login, TCI clients need none, and SSH takes the keys added on System &gt; SSH. Share the radio's machine in Tailscale only with people you would let in at home.</li>

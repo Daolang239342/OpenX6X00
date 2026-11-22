@@ -43,22 +43,22 @@ static const struct {
     open_t         what;
     press_action_t action;
 } apps[] = {
-    {"Modes", "FT8, JS8, PSK, SSTV", "modes", OPEN_APP, ACTION_APP_MODES},
-    {"Cluster", "DX spots", "cluster", OPEN_APP, ACTION_APP_CLUSTER},
-    {"Field Ops", "SOTA, POTA, WWFF", "field", OPEN_APP, ACTION_APP_FIELD},
-    {"Bands", "Band activity", "bands", OPEN_APP, ACTION_APP_BANDS},
-    {"Propagation", "Conditions, beacons", "prop", OPEN_APP, ACTION_APP_PROPAGATION},
-    {"Channels", "Memory channels", "channels", OPEN_APP, ACTION_APP_CHANNELS},
-    {"Scanner", "Stops on activity", "scan", OPEN_APP, ACTION_APP_SCAN},
-    {"SWR Scan", "Sweep, transmits", "swr", OPEN_APP, ACTION_APP_SWRSCAN},
-    {"Recorder", "RX audio", "recorder", OPEN_APP, ACTION_APP_RECORDER},
-    {"CW Trainer", "Learn CW", "trainer", OPEN_APP, ACTION_APP_CWTRAINER},
-    {"CW Keyboard", "CW as you type", "text", OPEN_APP, ACTION_APP_CW_KBD},   /* the keyboard of RTTY, PSK */
+    {"模式", "FT8, JS8, PSK, SSTV", "modes", OPEN_APP, ACTION_APP_MODES},
+    {"DX集群", "DX spots", "cluster", OPEN_APP, ACTION_APP_CLUSTER},
+    {"野外通联", "SOTA, POTA, WWFF", "field", OPEN_APP, ACTION_APP_FIELD},
+    {"波段", "Band activity", "bands", OPEN_APP, ACTION_APP_BANDS},
+    {"传播", "Conditions, beacons", "prop", OPEN_APP, ACTION_APP_PROPAGATION},
+    {"信道", "Memory channels", "channels", OPEN_APP, ACTION_APP_CHANNELS},
+    {"扫描器", "Stops on activity", "scan", OPEN_APP, ACTION_APP_SCAN},
+    {"SWR扫描", "Sweep, transmits", "swr", OPEN_APP, ACTION_APP_SWRSCAN},
+    {"录音机", "RX audio", "recorder", OPEN_APP, ACTION_APP_RECORDER},
+    {"CW训练", "Learn CW", "trainer", OPEN_APP, ACTION_APP_CWTRAINER},
+    {"CW键盘", "CW as you type", "text", OPEN_APP, ACTION_APP_CW_KBD},   /* the keyboard of RTTY, PSK */
     {"GPS", "Position, time", "gps", OPEN_APP, ACTION_APP_GPS},
-    {"Screen Rec", "Screen and audio", "screenrec", OPEN_SCREEN_REC, 0},
-    {"Walkie", "Portrait screen", "walkie", OPEN_WALKIE, 0},
-    {"Birdie Cal", "Find birdies, antenna off", "birdie", OPEN_APP, ACTION_APP_BIRDIE},
-    {"Settings", "All settings", "settings", OPEN_APP, ACTION_APP_SETTINGS},
+    {"屏幕录制", "Screen and audio", "screenrec", OPEN_SCREEN_REC, 0},
+    {"对讲", "Portrait screen", "walkie", OPEN_WALKIE, 0},
+    {"自扰校准", "Find birdies, antenna off", "birdie", OPEN_APP, ACTION_APP_BIRDIE},
+    {"设置", "All settings", "settings", OPEN_APP, ACTION_APP_SETTINGS},
 };
 
 #define APPS_N ((int)(sizeof(apps) / sizeof(apps[0])))
@@ -185,7 +185,7 @@ static void construct_cb(lv_obj_t *parent) {
     lv_obj_t *head = lv_label_create(box);
     lv_obj_set_style_text_font(head, &sony_22, 0);
     lv_obj_set_style_text_color(head, TC(text_head), 0);
-    lv_label_set_text(head, "APPS");
+    lv_label_set_text(head, "应用");
     lv_obj_set_pos(head, 22, 9);
 
     for (int i = 0; i < APPS_N; i++) {
@@ -226,7 +226,7 @@ static void construct_cb(lv_obj_t *parent) {
     lv_obj_t *hint = lv_label_create(box);
     lv_obj_set_style_text_font(hint, &sony_20, 0);
     lv_obj_set_style_text_color(hint, TC(text_dim), 0);
-    lv_label_set_text(hint, "MFK: choose - press: open - APP or ESC: close");
+    lv_label_set_text(hint, "MFK：选择 - 按下：打开 - APP或ESC：关闭");
     lv_obj_set_pos(hint, 22, HEAD_H + ROWS_N * TILE_H + (ROWS_N - 1) * GAP + 4);
 
     show_sel();

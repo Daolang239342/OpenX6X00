@@ -175,8 +175,8 @@ static button_data_t btn_p1 = {
     .type = BTN_TEXT, .label = "(JTTY 1:5)",
     .press = button_next_page_cb, .hold = button_prev_page_cb, .next = &page_2, .prev = &page_5,
 };
-static button_data_t btn_text = {.type = BTN_TEXT, .label = "Free\nText", .press = text_press_cb};
-static button_data_t btn_stop = {.type = BTN_TEXT, .label = "Stop\nTX", .press = stop_press_cb};
+static button_data_t btn_text = {.type = BTN_TEXT, .label = "自由\\n文本", .press = text_press_cb};
+static button_data_t btn_stop = {.type = BTN_TEXT, .label = "停止\\n发射", .press = stop_press_cb};
 static button_data_t btn_dx = {
     .type = BTN_TEXT_FN, .label_fn = dx_label_getter, .press = dx_press_cb, .hold = dx_hold_cb,
 };
@@ -230,7 +230,7 @@ static button_data_t btn_dial = {
     .type = BTN_TEXT_FN, .label_fn = dial_label_getter, .press = dial_press_cb, .hold = dial_hold_cb,
 };
 static button_data_t btn_tol = {.type = BTN_TEXT_FN, .label_fn = tol_label_getter, .press = tol_press_cb};
-static button_data_t btn_clear = {.type = BTN_TEXT, .label = "Clear", .press = clear_press_cb};
+static button_data_t btn_clear = {.type = BTN_TEXT, .label = "清除", .press = clear_press_cb};
 
 static buttons_page_t page_1 = {{&btn_p1, &btn_text, &btn_stop, &btn_dx, &btn_status}};
 static buttons_page_t page_2 = {{&btn_p2, &btn_f1, &btn_f2, &btn_f3, &btn_f4}};
@@ -573,7 +573,7 @@ static void knob_timer_cb(lv_timer_t *t)
     knob_timer = NULL;
     if (alive) {
         knob_release();
-        msg_update_text_fmt("Knob: fine tuning");
+        msg_update_text_fmt("旋钮：微调");
     }
 }
 
@@ -603,7 +603,7 @@ static void dial_press_cb(button_data_t *b)
 {
     if (knob_dial) {
         knob_release();
-        msg_update_text_fmt("Knob: fine tuning");
+        msg_update_text_fmt("旋钮：微调");
         return;
     }
     knob_dial = true;
@@ -611,7 +611,7 @@ static void dial_press_cb(button_data_t *b)
         buttons_mark(b, true);
     b->mark = true;
     knob_timer_restart();
-    msg_update_text_fmt("Knob: dial, 1 kHz steps");
+    msg_update_text_fmt("旋钮：拨盘，1 kHz步进");
 }
 
 /* Hold: back to the band's JTTY frequency */
@@ -841,8 +841,8 @@ static bool fkeys_save(void)
 static void fkeys_load(void)
 {
     static const char *const def[FKEYS][2] = {
-        {"CQ", "CQ %M CQ"}, {"Call 599", "%H %E"}, {"TU CQ", "%H TU CQ %M CQ"}, {"My call", "%M"},
-        {"His call", "%H"}, {"TU NOW", "TU NOW %H %E"}, {"AGN?", "%H AGN?"}, {"599 Nr", "%E"},
+        {"CQ", "CQ %M CQ"}, {"呼叫599", "%H %E"}, {"TU CQ", "%H TU CQ %M CQ"}, {"我的呼号", "%M"},
+        {"对方呼号", "%H"}, {"TU NOW", "TU NOW %H %E"}, {"AGN?", "%H AGN?"}, {"599 Nr", "%E"},
     };
     char  line[FKEY_NAME + JTTY_MSG_LEN + 8];
     FILE *f = fopen(JTTY_MACROS_PATH, "r");
@@ -883,13 +883,13 @@ static bool fkey_text_ok_cb(void)
             for (int i = edit_key; i < fkey_count - 1; i++)
                 fkey_set(i, fkey_name[i + 1], fkey_text[i + 1]);
             fkey_count--;
-            msg_update_text_fmt("Macro deleted");
+            msg_update_text_fmt("已删除宏");
         }
     } else {
         fkey_set(edit_key, edit_name, t);
         if (edit_key == fkey_count)
             fkey_count++;
-        msg_update_text_fmt("Macro saved");
+        msg_update_text_fmt("已保存宏");
     }
     if (!fkeys_save())
         msg_update_text_fmt("#%06x Could not write %s#", theme_hex(TC_err), JTTY_MACROS_PATH);
@@ -962,11 +962,11 @@ static void fkey(int n)
     }
     tpl = fkey_text[n - 1];
     if (strstr(tpl, "%H") && !(dx && *dx)) {
-        msg_update_text_fmt("#%06x No DX call - set it on page 1#", theme_hex(TC_err));
+        msg_update_text_fmt("#%06x 未设置DX呼号 - 请在第1页设置#", theme_hex(TC_err));
         return;
     }
     if (strstr(tpl, "%M") && !(my && *my)) {
-        msg_update_text_fmt("#%06x No callsign - set it in Settings#", theme_hex(TC_err));
+        msg_update_text_fmt("#%06x 未设置呼号 - 请在设置中设置#", theme_hex(TC_err));
         return;
     }
     snprintf(exch, sizeof(exch), "599 %03d", serial);
@@ -1070,7 +1070,7 @@ static void dx_press_cb(button_data_t *b)
 static void dx_hold_cb(button_data_t *b)
 {
     digi_qso_clear();
-    msg_update_text_fmt("QSO cleared");
+    msg_update_text_fmt("已清除QSO");
     buttons_refresh(b);
 }
 

@@ -154,8 +154,8 @@ static void redraw(void) {
     last_fgen  = flt->gen;
     last_order = by_time;
     last_all   = all;
-    lv_label_set_text_fmt(title, "Cluster %s - %s", all ? "All" : (cb >= 0 ? cluster_band_name(cb) : "--"),
-                          by_time ? "Time" : "Freq");
+    lv_label_set_text_fmt(title, "Cluster %s - %s", all ? "全部" : (cb >= 0 ? cluster_band_name(cb) : "--"),
+                          by_time ? "Time" : "频率");
     if (all || cb >= 0) {
         for (int i = 0; i < spots_n; i++) {
             if ((all || cluster_band_of(spots[i].freq_hz) == cb) && cluster_filter_pass(flt, &spots[i], now)) {
@@ -376,7 +376,7 @@ void cluster_column_init(lv_obj_t *parent, lv_coord_t y) {
     lv_obj_clear_flag(hl, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);
 
     title = cell(box, 0, COL_W - 2, 2, LV_TEXT_ALIGN_CENTER, ink(theme_hex(TC_text_head)), NF(22));
-    lv_label_set_text(title, "DX Cluster");
+    lv_label_set_text(title, "DX集群");
     lv_obj_clear_flag(title, LV_OBJ_FLAG_HIDDEN);
 
     /* Call, mode and age in smaller fonts with a gap between the fields: long

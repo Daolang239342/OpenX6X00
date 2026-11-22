@@ -207,10 +207,10 @@ static button_data_t btn_p1 = {
     .next = &page_2, .prev = &page_6,
 };
 static button_data_t btn_text = {
-    .type = BTN_TEXT, .label = "Free\nText", .press = text_press_cb,
+    .type = BTN_TEXT, .label = "自由\\n文本", .press = text_press_cb,
 };
 static button_data_t btn_stop = {
-    .type = BTN_TEXT, .label = "Stop\nTX", .press = stop_press_cb,
+    .type = BTN_TEXT, .label = "停止\\n发射", .press = stop_press_cb,
 };
 static button_data_t btn_mode = {
     .type = BTN_TEXT_FN, .label_fn = mode_label_getter,
@@ -229,7 +229,7 @@ static button_data_t btn_p2 = {
 /* One button for both directions: press up, hold down. The radio's
  * BAND keys do the same thing. */
 static button_data_t btn_band = {
-    .type = BTN_TEXT, .label = "Band up\nhold: down",
+    .type = BTN_TEXT, .label = "波段上\\n长按下",
     .press = band_up_cb, .hold = band_down_cb,
 };
 static button_data_t btn_dial = {
@@ -708,7 +708,7 @@ static void knob_release(bool say)
         btn_dial.mark = false;
         knob = KNOB_FINE;
         if (say)
-            msg_update_text_fmt("Knob: fine tuning");
+            msg_update_text_fmt("旋钮：微调");
     }
 }
 
@@ -873,7 +873,7 @@ static void dial_press_cb(button_data_t *b)
         buttons_mark(&btn_dial, true);
     btn_dial.mark = true;
     knob_timer_restart();
-    msg_update_text_fmt("Knob: dial, 1 kHz steps");
+    msg_update_text_fmt("旋钮：拨盘，1 kHz步进");
 }
 
 /* Hold: back to the band's Olivia frequency. */
@@ -1079,7 +1079,7 @@ static void stop_press_cb(button_data_t *b)
     (void)b;
     if (olivia_tx_is_on()) {
         olivia_tx_stop();
-        msg_update_text_fmt("%s: stopping after this block", family());
+        msg_update_text_fmt("%s：本块后停止", family());
     }
 }
 
@@ -1108,7 +1108,7 @@ static void status_press_cb(button_data_t *b)
 {
     (void)b;
     rebuild_rx();
-    msg_update_text_fmt("%s RX resync", family());
+    msg_update_text_fmt("%s RX重新同步", family());
 }
 
 /* Hold: clear the text and the waterfall. */
@@ -1132,13 +1132,13 @@ static void macro_press(int idx)
 
     m = olivia_macro_get(idx);
     if (!m) {
-        msg_update_text_fmt("Empty slot - hold to create a macro");
+        msg_update_text_fmt("空槽位 - 长按创建宏");
         return;
     }
 
     if (!olivia_macro_expand(m->text, out, sizeof(out), &missing)) {
         if (missing && strcmp(missing, "<CALL>") == 0)
-            msg_update_text_fmt("#%06x No DX call - set it on page 2#", theme_hex(TC_err));
+            msg_update_text_fmt("#%06x 未设置DX呼号 - 请在第2页设置#", theme_hex(TC_err));
         else
             msg_update_text_fmt("#%06x %s is empty#", theme_hex(TC_err), missing ? missing : "?");
         return;
@@ -1164,16 +1164,16 @@ static bool editor_text_ok_cb(void)
     if (edit_idx >= 0) {
         if (empty) {
             olivia_macro_delete(edit_idx);
-            msg_update_text_fmt("Macro deleted");
+            msg_update_text_fmt("已删除宏");
         } else {
             olivia_macro_set(edit_idx, edit_name, t);
-            msg_update_text_fmt("Macro saved");
+            msg_update_text_fmt("已保存宏");
         }
     } else if (!empty) {
         if (olivia_macro_add(edit_name, t) < 0)
-            msg_update_text_fmt("#%06x All %d macro slots are used#", theme_hex(TC_err), OLIVIA_MACRO_MAX);
+            msg_update_text_fmt("#%06x 全部%d个宏槽位已用#", theme_hex(TC_err), OLIVIA_MACRO_MAX);
         else
-            msg_update_text_fmt("Macro saved");
+            msg_update_text_fmt("已保存宏");
     }
 
     if (!olivia_macros_save())
@@ -1243,7 +1243,7 @@ static void macro_hold(int idx)
 
     if (idx >= olivia_macros_count()) {
         if (olivia_macros_count() >= OLIVIA_MACRO_MAX) {
-            msg_update_text_fmt("#%06x All %d macro slots are used#", theme_hex(TC_err), OLIVIA_MACRO_MAX);
+            msg_update_text_fmt("#%06x 全部%d个宏槽位已用#", theme_hex(TC_err), OLIVIA_MACRO_MAX);
             return;
         }
         idx = -1;       /* an empty slot: new macro, added at the end */
@@ -1289,7 +1289,7 @@ static void dx_press_cb(button_data_t *b)
 static void dx_hold_cb(button_data_t *b)
 {
     digi_qso_clear();
-    msg_update_text_fmt("QSO cleared");
+    msg_update_text_fmt("已清除QSO");
     buttons_refresh(b);
     refresh_btn(&btn_rst);
 }

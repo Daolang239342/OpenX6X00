@@ -198,15 +198,15 @@ static button_data_t btn_p3 = {.type = BTN_TEXT, .label = "(CWT 3:3)", .press = 
 static button_data_t btn_play  = {.type = BTN_TEXT_FN, .label_fn = play_label, .press = play_cb};
 static button_data_t btn_skip  = {.type = BTN_TEXT_FN, .label_fn = skip_label, .press = skip_cb};
 static button_data_t btn_mode  = {.type = BTN_TEXT_FN, .label_fn = mode_label, .press = mode_cb};
-static button_data_t btn_close = {.type = BTN_TEXT, .label = "Close", .press = close_cb};
+static button_data_t btn_close = {.type = BTN_TEXT, .label = "关闭", .press = close_cb};
 static button_data_t btn_lvl_u = {.type = BTN_TEXT_FN, .label_fn = level_up_label, .press = level_up_cb};
 static button_data_t btn_lvl_d = {.type = BTN_TEXT_FN, .label_fn = level_down_label, .press = level_down_cb};
 static button_data_t btn_group = {.type = BTN_TEXT_FN, .label_fn = group_label, .press = group_cb};
-static button_data_t btn_close2 = {.type = BTN_TEXT, .label = "Close", .press = close_cb};
+static button_data_t btn_close2 = {.type = BTN_TEXT, .label = "关闭", .press = close_cb};
 static button_data_t btn_stats = {.type = BTN_TEXT_FN, .label_fn = stats_label, .press = stats_cb};
 static button_data_t btn_reset = {.type = BTN_TEXT_FN, .label_fn = reset_label, .press = reset_cb};
-static button_data_t btn_clear = {.type = BTN_TEXT, .label = "Clear", .press = clear_cb};
-static button_data_t btn_close3 = {.type = BTN_TEXT, .label = "Close", .press = close_cb};
+static button_data_t btn_clear = {.type = BTN_TEXT, .label = "清除", .press = clear_cb};
+static button_data_t btn_close3 = {.type = BTN_TEXT, .label = "关闭", .press = close_cb};
 
 static buttons_page_t page_1 = {{&btn_p1, &btn_play, &btn_skip, &btn_mode, &btn_close}};
 static buttons_page_t page_2 = {{&btn_p2, &btn_lvl_u, &btn_lvl_d, &btn_group, &btn_close2}};
@@ -895,14 +895,14 @@ static void refresh_calls(void) {
     bool rev  = st == ST_RESULT;
     int  done = (st == ST_PLAYING || st == ST_LISTEN) ? call_no - 1 : call_no;
 
-    lv_label_set_text_fmt(head, "CW TRAINER - #%06x Calls#", theme_hex(TC_text));
+    lv_label_set_text_fmt(head, "CW训练 - #%06x 呼叫#", theme_hex(TC_text));
     snprintf(buf, sizeof(buf), "Call %i/%i - %i WPM", call_no, CALLS_RUN, call_no ? call_wpm : next_wpm);
     lv_label_set_text(head_right, buf);
 
     show(c_sent_cap, rev);
     show(c_key_cap, st == ST_LISTEN || rev);
     lv_obj_set_style_text_color(c_call, lv_color_hex(rev ? theme_hex(TC_text) : (st == ST_READY ? COLOR_HEAD : COLOR_NEW)), 0);
-    lv_label_set_text(c_call, rev ? target : (st == ST_PLAYING ? "Listen..." : (st == ST_LISTEN ? "Your turn" : "Press Start")));
+    lv_label_set_text(c_call, rev ? target : (st == ST_PLAYING ? "收听..." : (st == ST_LISTEN ? "轮到你" : "按开始")));
 
     /* Wrong characters in red once the call is revealed, each place against the callsign's own place. A place with
      * no character is a red "<?>", three characters wide: the places after it move to the right, each still in its
@@ -930,9 +930,9 @@ static void refresh_calls(void) {
     }
     lv_obj_set_style_text_color(c_res, lv_color_hex(last_ok ? COLOR_OK : COLOR_BAD), 0);
     lv_label_set_text(c_res, buf);
-    if (run_done && rev) lv_label_set_text(hint, "Start: a new run of 50 callsigns");
-    else if (rev && strchr(heard, CWT_NO_CHAR)) lv_label_set_text(hint, CWT_NO_CHAR_SHOWN " = not a character. Right: +1 WPM, wrong: -1 WPM.");
-    else lv_label_set_text(hint, "Key back the callsign with the paddle. Right: +1 WPM, wrong: -1 WPM.");
+    if (run_done && rev) lv_label_set_text(hint, "开始：新一组50个呼号");
+    else if (rev && strchr(heard, CWT_NO_CHAR)) lv_label_set_text(hint, CWT_NO_CHAR_SHOWN " = 不是字符。正确：+1 WPM，错误：-1 WPM。");
+    else lv_label_set_text(hint, "用电键回发呼号。正确：+1 WPM，错误：-1 WPM。");
 
     fmt_num(score, n1, sizeof(n1));
     lv_label_set_text(c_score, n1);
@@ -947,7 +947,7 @@ static void refresh_stats(void) {
     int  end = l + 3 > KOCH_N ? KOCH_N : l + 3;
     int  beg = end > HIST_N ? end - HIST_N : 0;
 
-    lv_label_set_text_fmt(head, "CW TRAINER - #%06x Stats#", theme_hex(TC_text));
+    lv_label_set_text_fmt(head, "CW训练 - #%06x 统计#", theme_hex(TC_text));
     snprintf(buf, sizeof(buf), "Level %i - %i WPM", l, (int)param_i_get(cfg_key_speed));
     lv_label_set_text(head_right, buf);
 
@@ -1041,18 +1041,18 @@ static void refresh_ui(void) {
         return;
     }
     if (mode == MODE_PRACTICE) {
-        lv_label_set_text_fmt(head, "CW TRAINER - #%06x Practice#", theme_hex(TC_text));
+        lv_label_set_text_fmt(head, "CW训练 - #%06x 练习#", theme_hex(TC_text));
         snprintf(buf, sizeof(buf), "%i WPM (keyer %i)", wpm_seen, wpm);
         lv_label_set_text(head_right, buf);
-        lv_label_set_text(text_lbl, text[0] ? text : "Key with the paddle: the text appears here");
+        lv_label_set_text(text_lbl, text[0] ? text : "用电键输入：文本显示于此");
         lv_obj_set_style_text_color(text_lbl, lv_color_hex(text[0] ? theme_hex(TC_text) : COLOR_DIM), 0);
         lv_obj_update_layout(box);
         lv_obj_scroll_to_y(box, LV_COORD_MAX, LV_ANIM_OFF);
-        lv_label_set_text(hint, "No transmission: key train is on. Clear: page 3");
+        lv_label_set_text(hint, "不发射：键位训练开启。清除：第3页");
         return;
     }
 
-    lv_label_set_text_fmt(head, "CW TRAINER - #%06x Learn (Koch)#", theme_hex(TC_text));
+    lv_label_set_text_fmt(head, "CW训练 - #%06x 学习（Koch）#", theme_hex(TC_text));
     snprintf(buf, sizeof(buf), "%i WPM - group %i", wpm, (int)param_i_get(cfg_cwt_group));
     lv_label_set_text(head_right, buf);
 
@@ -1061,27 +1061,27 @@ static void refresh_ui(void) {
     cwt_answer_shown(heard, shown, sizeof(shown));
     switch (st) {
         case ST_READY:
-            lv_label_set_text(big, "Press Play");
+            lv_label_set_text(big, "按播放");
             lv_obj_set_style_text_color(big, lv_color_hex(COLOR_HEAD), 0);
-            lv_label_set_text(hint, "Start: groups follow each other, key each one back with the paddle");
+            lv_label_set_text(hint, "开始：分组依次播放，用电键回发每组");
             break;
         case ST_PLAYING:
-            lv_label_set_text(big, "Listen...");
+            lv_label_set_text(big, "收听...");
             lv_obj_set_style_text_color(big, lv_color_hex(COLOR_NEW), 0);
-            lv_label_set_text(hint, "The radio keys the group (sidetone only)");
+            lv_label_set_text(hint, "电台发分组（仅侧音）");
             /* The group stays on screen while playing and answering, to memorise it */
             group_line(line1, "Sent:   ", theme_hex(TC_accent), target, target);
             lv_label_set_text(line2, "");
             break;
         case ST_LISTEN:
-            lv_label_set_text(big, heard[0] ? shown : "Your turn");
+            lv_label_set_text(big, heard[0] ? shown : "轮到你");
             lv_obj_set_style_text_color(big, lv_color_hex(heard[0] ? theme_hex(TC_text) : COLOR_NEW), 0);
-            lv_label_set_text(hint, "Key the group with the paddle. Replay: hear it again");
+            lv_label_set_text(hint, "用电键回发分组。重放：再听一次");
             group_line(line1, "Sent:   ", theme_hex(TC_accent), target, target);
             if (heard[0]) group_line(line2, "Heard: ", theme_hex(TC_text), shown, heard);
             break;
         case ST_RESULT:
-            lv_label_set_text(big, last_ok ? "OK" : "WRONG");
+            lv_label_set_text(big, last_ok ? "确定" : "错误");
             lv_obj_set_style_text_color(big, lv_color_hex(last_ok ? COLOR_OK : COLOR_BAD), 0);
             group_line(line1, "Sent:   ", theme_hex(TC_accent), target, target);
             group_line(line2, "Heard: ", last_ok ? COLOR_OK : COLOR_BAD, shown, heard);
@@ -1269,7 +1269,7 @@ static void construct_cb(lv_obj_t *parent) {
     lv_obj_set_flex_flow(row, LV_FLEX_FLOW_ROW);
     lv_obj_set_flex_align(row, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
     lv_obj_set_style_pad_column(row, 10, 0);
-    lv_label_set_text(label(row, &sony_22, theme_hex(TC_text_value)), "Next new character:");
+    lv_label_set_text(label(row, &sony_22, theme_hex(TC_text_value)), "下一个新字符：");
     st_next_c = label(row, &sony_30, COLOR_NEW);
     char tail[48];
     snprintf(tail, sizeof(tail), "(at %i%% on the current set)", PASS_PCT);
@@ -1280,13 +1280,13 @@ static void construct_cb(lv_obj_t *parent) {
     /* Calls: the callsign on the left, the score on the right */
     calls_cont = cont(box, CALLS_W - 26, BOX_H - 26);
     c_sent_cap = label(calls_cont, &sony_16, COLOR_DIM);
-    lv_label_set_text(c_sent_cap, "SENT");
+    lv_label_set_text(c_sent_cap, "已发");
     lv_obj_set_pos(c_sent_cap, 0, 0);
     c_call = label(calls_cont, &sony_44, theme_hex(TC_text));
     lv_obj_set_style_text_letter_space(c_call, 4, 0);
     lv_obj_set_pos(c_call, 0, 20);
     c_key_cap = label(calls_cont, &sony_16, COLOR_DIM);
-    lv_label_set_text(c_key_cap, "YOU KEYED");
+    lv_label_set_text(c_key_cap, "你键入了");
     lv_obj_set_pos(c_key_cap, 0, 84);
     c_keyed = label(calls_cont, &sony_44, theme_hex(TC_text));
     lv_obj_set_style_text_letter_space(c_keyed, 4, 0);
@@ -1297,7 +1297,7 @@ static void construct_cb(lv_obj_t *parent) {
     box_r = panel(dialog.obj, SCORE_X, SCORE_W);
     lv_obj_clear_flag(box_r, LV_OBJ_FLAG_SCROLLABLE);
     lv_obj_t *cap = label(box_r, &sony_16, COLOR_DIM);
-    lv_label_set_text(cap, "SCORE");
+    lv_label_set_text(cap, "成绩");
     lv_obj_set_pos(cap, 0, 0);
     c_score = label(box_r, &sony_40, COLOR_NEW);
     lv_obj_set_pos(c_score, 0, 20);

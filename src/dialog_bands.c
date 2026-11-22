@@ -41,8 +41,8 @@ static void beacon_cb(button_data_t *b);
 static void tune_cb(button_data_t *b);
 
 static button_data_t btn_page   = {.type = BTN_TEXT, .label = "(BANDS 1:1)"};
-static button_data_t btn_beacon = {.type = BTN_TEXT, .label = "Test\nbeacon", .press = beacon_cb};
-static button_data_t btn_tune   = {.type = BTN_TEXT, .label = "Use\nband", .press = tune_cb};
+static button_data_t btn_beacon = {.type = BTN_TEXT, .label = "测试\\n信标", .press = beacon_cb};
+static button_data_t btn_tune   = {.type = BTN_TEXT, .label = "使用\\n波段", .press = tune_cb};
 
 static buttons_page_t btn_page_1 = {.items = {&btn_page, &btn_beacon, &btn_tune}};
 
@@ -120,7 +120,7 @@ static void fill(void) {
 static void timer_cb(lv_timer_t *t) {
     static int ticks;
 
-    lv_label_set_text_fmt(frame.head_left, "BANDS   %.4f MHz", cparam_i_get(cfg_fg_freq) / 1e6);
+    lv_label_set_text_fmt(frame.head_left, "波段   %.4f MHz", cparam_i_get(cfg_fg_freq) / 1e6);
     lv_label_set_text_fmt(frame.head_right, "RBN %s", field_rbn_state());
     if (!t || ++ticks % 5 == 0)
         fill();

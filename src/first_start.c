@@ -186,31 +186,31 @@ static bool wifi_line(char *buf, size_t size) {
 
     if (wifi_eth_active()) {
         net_address(ip, sizeof(ip));
-        snprintf(buf, size, "Ethernet connected, %s: WiFi is not needed", ip);
+        snprintf(buf, size, "已连接有线网络，%s：无需WiFi", ip);
         return true;
     }
     switch (wifi_get_status()) {
         case WIFI_OFF:
-            snprintf(buf, size, "WiFi is off: Networks turns it on");
+            snprintf(buf, size, "WiFi已关闭：点“网络”开启");
             return false;
         case WIFI_STARTING:
-            snprintf(buf, size, "WiFi starting...");
+            snprintf(buf, size, "WiFi启动中...");
             return false;
         case WIFI_CONNECTING:
-            snprintf(buf, size, "Connecting...");
+            snprintf(buf, size, "连接中...");
             return false;
         case WIFI_CONNECTED:
             if (!wifi_network(name, sizeof(name))) {
-                snprintf(name, sizeof(name), "the network");
+                snprintf(name, sizeof(name), "该网络");
             }
             if (net_address(ip, sizeof(ip))) {
-                snprintf(buf, size, "Connected to %s, %s", name, ip);
+                snprintf(buf, size, "已连接 %s，%s", name, ip);
             } else {
-                snprintf(buf, size, "Connected to %s", name);
+                snprintf(buf, size, "已连接 %s", name);
             }
             return true;
         default:
-            snprintf(buf, size, "Not connected: Networks lists the networks in reach");
+            snprintf(buf, size, "未连接：点“网络”查看可用网络");
             return false;
     }
 }
@@ -309,10 +309,10 @@ static void build_wifi(void) {
     char line[96];
     bool ok = wifi_line(line, sizeof(line));
 
-    para(&sony_22, TC(text), "WiFi sets the clock, and the DX Cluster, the uploads and the web configurator need it. "
-                             "Networks opens the WiFi window: choose a network there, then ESC or GEN comes back here.");
+    para(&sony_22, TC(text), "WiFi用于校准时钟，DX集群、上传功能和网页配置器都需要它。"
+                             "点“网络”打开WiFi窗口：在那里选择网络，然后按ESC或GEN返回此处。");
     status = para(&sony_24, ok ? TC(ok) : TC(text_value), line);
-    button(row(NULL), "Networks", 220, networks_cb);
+    button(row(NULL), "网络", 220, networks_cb);
 }
 
 /* ---- step 2: callsign and locator ---- */
@@ -366,7 +366,7 @@ static void qth_cb(lv_event_t *e) {
 static void gps_use_cb(lv_event_t *e) {
     gps_locator(gps_grid);
     if (gps_grid[0] && station_qth_save(gps_grid)) {
-        msg_update_text_fmt("Locator %s from the GPS", gps_grid);
+        msg_update_text_fmt("GPS定位 %s", gps_grid);
         focus_back = 1;
         build();
     }
@@ -375,16 +375,15 @@ static void gps_use_cb(lv_event_t *e) {
 static void build_station(void) {
     char use[24];
 
-    para(&sony_22, TC(text), "FT8, JS8, WSPR, the CW messages and the DX Cluster need your callsign. The locator is "
-                             "where you are: the maps, the distances and the band plan go by it.");
-    button(row("Callsign"), params.callsign.x[0] ? params.callsign.x : "-", 220, callsign_cb);
-    button(row("Locator"), params.qth.x[0] ? params.qth.x : "-", 220, qth_cb);
+    para(&sony_22, TC(text), "FT8、JS8、WSPR、CW消息和DX集群需要你的呼号。定位是你的位置，地图、距离和波段计划都按它计算。");
+    button(row("呼号"), params.callsign.x[0] ? params.callsign.x : "-", 220, callsign_cb);
+    button(row("定位"), params.qth.x[0] ? params.qth.x : "-", 220, qth_cb);
     gps_locator(gps_grid);
     if (gps_grid[0]) {
-        snprintf(use, sizeof(use), "Use %s", gps_grid);
-        button(row("GPS fix"), use, 220, gps_use_cb);
+        snprintf(use, sizeof(use), "使用 %s", gps_grid);
+        button(row("GPS定位"), use, 220, gps_use_cb);
     } else {
-        para(&sony_20, TC(text_dim), "With a GPS that has a fix, its locator is offered here.");
+        para(&sony_20, TC(text_dim), "若GPS已定位，其网格定位会在此提供。");
     }
 }
 
@@ -501,16 +500,16 @@ static void build_time(void) {
     clock_date = text(r, &sony_22, TC(text_dim), "");
     clock_show();
     if (kept_shown) {
-        snprintf(line, sizeof(line), "Set by %s: right to the second, nothing to do here", kept_shown);
+        snprintf(line, sizeof(line), "由%s校准：精确到秒，无需处理", kept_shown);
     } else {
-        snprintf(line, sizeof(line), "Not set by NTP or a GPS: set it below, or join WiFi (step 1)");
+        snprintf(line, sizeof(line), "未由NTP或GPS校准：在下方设置，或连接WiFi（第1步）");
     }
     status = para(&sony_22, kept_shown ? TC(ok) : TC(warn), line);
 
     for (size_t i = 0; i < clock_zones_n && n < sizeof(options) - 64; i++) {
         n += snprintf(options + n, sizeof(options) - n, "%s%s", i ? "\n" : "", clock_zones[i].label);
     }
-    zone_dd = lv_dropdown_create(row("Time zone"));
+    zone_dd = lv_dropdown_create(row("时区"));
     item(zone_dd);
     styles_dropdown_list(lv_dropdown_get_list(zone_dd));
     lv_dropdown_set_options(zone_dd, options);
@@ -527,13 +526,12 @@ static void build_time(void) {
     memset(dt_spin, 0, sizeof(dt_spin));
     if (!kept_shown) {
         localtime_r(&now, &dt_tm);
-        r = row("Date, time");
+        r = row("日期、时间");
         dt_fields(r, 0);
         lv_obj_set_style_pad_left(text(r, &sony_22, TC(text_dim), ""), 12, 0);
         dt_fields(r, 3);
     } else {
-        para(&sony_20, TC(text_dim), "FT8, JS8 and WSPR need the clock right to a second or two. The logs and the "
-                                     "digital modes keep UTC; the screen's clock shows this time zone.");
+        para(&sony_20, TC(text_dim), "FT8、JS8和WSPR要求时钟精确到一两秒。日志和数字模式使用UTC；屏幕时钟显示本地时区。");
     }
 }
 
@@ -554,42 +552,42 @@ static void build_done(void) {
     bool        wifi = wifi_get_status() == WIFI_CONNECTED;
 
     if (wifi_eth_active()) {
-        summary("Network", TC(ok), "Ethernet connected");
+        summary("网络", TC(ok), "已连接有线网络");
     } else if (wifi) {
         if (!wifi_network(name, sizeof(name))) {
-            snprintf(name, sizeof(name), "a network");
+            snprintf(name, sizeof(name), "一个网络");
         }
-        snprintf(s, sizeof(s), "Connected to %s", name);
+        snprintf(s, sizeof(s), "已连接 %s", name);
         summary("WiFi", TC(ok), s);
     } else {
-        summary("WiFi", TC(warn), skipped[STEP_WIFI] ? "Skipped: Settings > Wireless joins a network later"
-                                                     : "Not connected: Settings > Wireless joins a network later");
+        summary("WiFi", TC(warn), skipped[STEP_WIFI] ? "已跳过：稍后可在设置 > 无线中连接网络"
+                                                      : "未连接：稍后可在设置 > 无线中连接网络");
     }
     if (params.callsign.x[0]) {
-        snprintf(s, sizeof(s), params.qth.x[0] ? "%s, locator %s" : "%s, no locator", params.callsign.x, params.qth.x);
-        summary("Station", TC(ok), s);
+        snprintf(s, sizeof(s), params.qth.x[0] ? "%s，定位 %s" : "%s，无定位", params.callsign.x, params.qth.x);
+        summary("台站", TC(ok), s);
     } else {
-        summary("Station", TC(warn), skipped[STEP_STATION] ? "Skipped: Settings > General > STATION has the callsign"
-                                                           : "No callsign: Settings > General > STATION has it");
+        summary("台站", TC(warn), skipped[STEP_STATION] ? "已跳过：设置 > 通用 > 台站中可填写呼号"
+                                                            : "无呼号：设置 > 通用 > 台站中填写");
     }
-    snprintf(s, sizeof(s), "%s, %s", kept ? (strcmp(kept, "NTP") ? "Kept by the GPS" : "Set by NTP")
-                                          : "Not set by NTP or a GPS", clock_zones[clock_zone_now()].label);
-    summary("Clock", kept ? TC(ok) : TC(text_value), s);
+    snprintf(s, sizeof(s), "%s, %s", kept ? (strcmp(kept, "NTP") ? "由GPS保持" : "由NTP设置")
+                                          : "未由NTP或GPS设置", clock_zones[clock_zone_now()].label);
+    summary("时钟", kept ? TC(ok) : TC(text_value), s);
 
     settings_network_name(name, sizeof(name));
     if (net_address(ip, sizeof(ip))) {
-        snprintf(s, sizeof(s), "http://%s.local or http://%s, in a browser on the same network", name, ip);
+        snprintf(s, sizeof(s), "http://%s.local 或 http://%s，在同一网络的浏览器中打开", name, ip);
     } else {
-        snprintf(s, sizeof(s), "http://%s.local, in a browser on the same network", name);
+        snprintf(s, sizeof(s), "http://%s.local，在同一网络的浏览器中打开", name);
     }
-    summary("Web configurator", TC(text_value), s);
-    summary("Manual", TC(text_value), "github.com/Guru-RF/OpenX6X00, and a PDF with each release");
-    summary("This guide", TC(text_dim), "Settings > General > STATION runs it again");
+    summary("网页配置器", TC(text_value), s);
+    summary("手册", TC(text_value), "github.com/Guru-RF/OpenX6X00，每个版本均附PDF手册");
+    summary("本向导", TC(text_dim), "设置 > 通用 > 台站可再次运行向导");
 }
 
 /* ---- the window ---- */
 
-static const char *const titles[STEPS] = {"WiFi", "Callsign and locator", "Clock and time zone", "Done"};
+static const char *const titles[STEPS] = {"WiFi", "呼号与定位", "时钟与时区", "完成"};
 
 static void build(void) {
     lv_obj_t *head;
@@ -616,7 +614,7 @@ static void build(void) {
     /* "FIRST START  1 / 3", the step's name under it */
     head = row(NULL);
     lv_obj_set_style_min_height(head, 0, 0);
-    lv_obj_t *l = text(head, &sony_20, TC(text_head), "FIRST START");
+    lv_obj_t *l = text(head, &sony_20, TC(text_head), "首次开机");
     lv_obj_set_style_text_letter_space(l, 3, 0);
     if (step < STEP_DONE) {
         lv_label_set_text_fmt(text(head, &sony_20, TC(text_dim), ""), "%i / 3", step + 1);
@@ -724,7 +722,7 @@ static void esc_pressed(void) {
     } else if (first_start_esc(&esc, lv_tick_get())) {
         dialog_destruct();
     } else {
-        msg_update_text_fmt("Skip the guide?\nPress ESC again to skip it");
+        msg_update_text_fmt("跳过向导？\\n再按一次ESC跳过");
     }
 }
 
@@ -786,7 +784,7 @@ static void destruct_cb(void) {
     if (!detour) {
         mark_done();
         if (!finished) {
-            msg_schedule_long_text_fmt("Settings > General > STATION\nruns the guide again");
+            msg_schedule_long_text_fmt("设置 > 通用 > 台站\\n可再次运行向导");
         }
     }
 }
@@ -794,28 +792,28 @@ static void destruct_cb(void) {
 /* ---- the bar ---- */
 
 static const char *back_label(void) {
-    return step > STEP_WIFI ? "Back" : "";
+    return step > STEP_WIFI ? "返回" : "";
 }
 
 static const char *act1_label(void) {
     switch (step) {
-        case STEP_WIFI:     return "Networks";
-        case STEP_STATION:  return "Callsign";
-        case STEP_TIME:     return "Time zone";
+        case STEP_WIFI:     return "网络";
+        case STEP_STATION:  return "呼号";
+        case STEP_TIME:     return "时区";
         default:            return "";
     }
 }
 
 static const char *act2_label(void) {
-    return step == STEP_STATION ? "Locator" : "";
+    return step == STEP_STATION ? "定位" : "";
 }
 
 static const char *skip_label(void) {
-    return step < STEP_DONE ? "Skip" : "";
+    return step < STEP_DONE ? "跳过" : "";
 }
 
 static const char *next_label(void) {
-    return step < STEP_DONE ? "Next" : "Done";
+    return step < STEP_DONE ? "下一步" : "完成";
 }
 
 static void back_press(button_data_t *b) {

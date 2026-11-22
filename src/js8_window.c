@@ -494,22 +494,22 @@ static buttons_page_t page_1, page_2, page_3, page_4, page_5, page_6, page_7;
 static button_data_t btn_p1     = PAGE_BUTTON("(JS8 1:7)", &page_2, &page_7);
 static button_data_t btn_cq     = {.type = BTN_TEXT_FN, .label_fn = cq_label_getter,
                                    .press = cq_cb, .hold = cq_hold_cb};
-static button_data_t btn_hb     = {.type = BTN_TEXT, .label = "Heart-\nbeat", .press = heartbeat_cb};
-static button_data_t btn_query  = {.type = BTN_TEXT, .label = "Query >", .press = query_cb};
-static button_data_t btn_hw_cpy = {.type = BTN_TEXT, .label = "HW CPY?", .press = hw_cpy_cb};
+static button_data_t btn_hb     = {.type = BTN_TEXT, .label = "心跳\\n", .press = heartbeat_cb};
+static button_data_t btn_query  = {.type = BTN_TEXT, .label = "查询 >", .press = query_cb};
+static button_data_t btn_hw_cpy = {.type = BTN_TEXT, .label = "抄收如何？", .press = hw_cpy_cb};
 static buttons_page_t page_1    = {{&btn_p1, &btn_cq, &btn_hb, &btn_query, &btn_hw_cpy}};
 
 /* 2: the list */
 static button_data_t btn_p2     = PAGE_BUTTON("(JS8 2:7)", &page_3, &page_1);
 static button_data_t btn_show   = {.type = BTN_TEXT_FN, .label_fn = show_label_getter, .press = show_cb};
-static button_data_t btn_reply  = {.type = BTN_TEXT, .label = "Reply", .press = reply_cb};
-static button_data_t btn_send   = {.type = BTN_TEXT, .label = "Send...", .press = send_cb};
-static button_data_t btn_clear  = {.type = BTN_TEXT, .label = "Clear", .press = clear_cb};
+static button_data_t btn_reply  = {.type = BTN_TEXT, .label = "回复", .press = reply_cb};
+static button_data_t btn_send   = {.type = BTN_TEXT, .label = "发送...", .press = send_cb};
+static button_data_t btn_clear  = {.type = BTN_TEXT, .label = "清除", .press = clear_cb};
 static buttons_page_t page_2    = {{&btn_p2, &btn_show, &btn_reply, &btn_send, &btn_clear}};
 
 /* 3 */
 static button_data_t btn_p3        = PAGE_BUTTON("(JS8 3:7)", &page_4, &page_2);
-static button_data_t btn_time_sync = {.type = BTN_TEXT, .label = "Time\nSync",
+static button_data_t btn_time_sync = {.type = BTN_TEXT, .label = "时间\\n同步",
                                       .press = time_sync_cb, .hold = time_sync_hold_cb};
 static button_data_t btn_hold      = {.type = BTN_TEXT_FN, .label_fn = hold_label_getter,
                                       .press = hold_cb};
@@ -527,14 +527,14 @@ static button_data_t btn_hbauto = {.type = BTN_TEXT_FN, .label_fn = hb_label_get
                                    .press = hb_cb, .hold = hb_hold_cb};
 static button_data_t btn_hbackk = {.type = BTN_TEXT_FN, .label_fn = hb_ack_label_getter,
                                    .press = hb_ack_cb};
-static button_data_t btn_texts  = {.type = BTN_TEXT, .label = "Settings...",
+static button_data_t btn_texts  = {.type = BTN_TEXT, .label = "设置...",
                                    .press = texts_cb};
 static buttons_page_t page_4    = {{&btn_p4, &btn_auto, &btn_hbauto, &btn_hbackk, &btn_texts}};
 
 /* 5 */
 static button_data_t btn_p5     = PAGE_BUTTON("(JS8 5:7)", &page_6, &page_4);
 static button_data_t btn_aprs   = {.type = BTN_TEXT, .label = "APRS >", .press = aprs_cb};
-static button_data_t btn_log    = {.type = BTN_TEXT, .label = "Log QSO", .press = log_cb};
+static button_data_t btn_log    = {.type = BTN_TEXT, .label = "记录QSO", .press = log_cb};
 static button_data_t btn_act    = {.type = BTN_TEXT_FN, .label_fn = act_label_getter,
                                    .press = act_cb, .hold = act_hold_cb};
 static button_data_t btn_prompt = {.type = BTN_TEXT_FN, .label_fn = prompt_label_getter, .press = prompt_cb};
@@ -542,7 +542,7 @@ static buttons_page_t page_5    = {{&btn_p5, &btn_aprs, &btn_log, &btn_act, &btn
 
 /* 6 */
 static button_data_t btn_p6     = PAGE_BUTTON("(JS8 6:7)", &page_7, &page_5);
-static button_data_t btn_alerts = {.type = BTN_TEXT, .label = "Alerts >", .press = alerts_cb};
+static button_data_t btn_alerts = {.type = BTN_TEXT, .label = "告警 >", .press = alerts_cb};
 static button_data_t btn_speed  = {.type = BTN_TEXT_FN, .label_fn = speed_label_getter,
                                    .press = speed_cb, .hold = speed_hold_cb};
 static button_data_t btn_decode = {.type = BTN_TEXT_FN, .label_fn = decode_label_getter, .press = decode_cb};
@@ -551,7 +551,7 @@ static buttons_page_t page_6    = {{&btn_p6, &btn_alerts, &btn_speed, &btn_decod
 
 /* 7 */
 static button_data_t btn_p7     = PAGE_BUTTON("(JS8 7:7)", &page_1, &page_6);
-static button_data_t btn_map    = {.type = BTN_TEXT, .label = "Map", .press = map_cb};
+static button_data_t btn_map    = {.type = BTN_TEXT, .label = "地图", .press = map_cb};
 static buttons_page_t page_7    = {{&btn_p7, &btn_dig_pwr, &btn_map, &btn_ext_tune}};
 
 static dialog_t dialog = {.run           = false,
@@ -1981,7 +1981,7 @@ static bool compose_ok_cb(void)
     case EDIT_GROUPS:
         js8_groups_normalise(typed, groups_text, sizeof(groups_text));
         save_texts(); /* JS8_TEXTS_PATH too */
-        msg_update_text_fmt(groups_text[0] ? "Groups: %s" : "No groups", groups_text);
+        msg_update_text_fmt(groups_text[0] ? "分组：%s" : "无分组", groups_text);
         edit_finish();
         return true;
     case EDIT_SAVED: {
@@ -1993,7 +1993,7 @@ static bool compose_ok_cb(void)
         save_saved();
         edit_finish();
         saved_open(saved_edit); /* back to the list, on that one */
-        msg_update_text_fmt(saved_msgs[saved_edit][0] ? "Saved message %d saved" : "Saved message %d cleared",
+        msg_update_text_fmt(saved_msgs[saved_edit][0] ? "已保存消息%d" : "已清除消息%d",
                             saved_edit + 1);
         return true;
     }
@@ -2082,7 +2082,7 @@ static void compose_open(const char *prefill)
 {
     if (composing) return; /* already open */
     if (params.callsign.x[0] == '\0') {
-        msg_update_text_fmt("Set your callsign first: Settings > General");
+        msg_update_text_fmt("请先在设置 > 通用中设置呼号");
         return;
     }
     composing = true; /* from here on ESC and the keys belong to the window */
@@ -2214,7 +2214,7 @@ static void band_cb(lv_event_t *ev)
         retuned();
         return;
     }
-    msg_update_text_fmt("End of the %s list", params.js8_ghostnet.x ? "GhostNet" : "JS8");
+    msg_update_text_fmt("已到 %s 列表末尾", params.js8_ghostnet.x ? "GhostNet" : "JS8");
 }
 
 /* ESC ends a knob setting first, then stops TX, and only then closes. */
@@ -2543,7 +2543,7 @@ static void show_cb(button_data_t *b) {
     const char *which = "no HB";
     if (show == SHOW_ALL) which = "all";
     else if (show == SHOW_DIRECTED) which = "directed";
-    msg_update_text_fmt("Messages (%s)", which);
+    msg_update_text_fmt("消息（%s）", which);
 }
 
 /* Everything heard so far goes: messages, stations, frames half put together, the waterfall. */
@@ -2564,7 +2564,7 @@ static void clear_cb(button_data_t *b) {
 /* Time Sync and its hold change JS8's timing, so neither may run while frames wait to go out. */
 static bool refuse_while_sending(void) {
     bool busy = js8_tx_busy(tx);
-    if (busy) msg_update_text_fmt("Not while sending - Stop TX first");
+    if (busy) msg_update_text_fmt("发送中不可操作 - 请先停止发射");
     return busy;
 }
 
@@ -2591,7 +2591,7 @@ static void time_sync_cb(button_data_t *b) {
     bool     ok = js8_sync_drift(sync_samples, SYNC_SAMPLES, now_wall_ms(), SYNC_WINDOW_MS, was, &want, &n_decodes,
                                  &n_stations);
     if (!ok) {
-        msg_update_text_fmt("Time Sync needs %d decodes in the last 2 min (have %u). Clock far off? Set it in "
+        msg_update_text_fmt("时间同步需要最近2分钟内%d次解码（现有%u）。时钟偏差过大？请在"
                             "SETTINGS first",
                             JS8_SYNC_MIN_DECODES, n_decodes);
         return;
@@ -2601,11 +2601,11 @@ static void time_sync_cb(button_data_t *b) {
     const char *what       = by_station ? "stations" : "decodes";
     double      step_s     = (want - was) / 1000.0;
     if (llabs(want - was) < 50) {
-        msg_update_text_fmt("JS8 time is on (within 0.05 s of %u %s)", count, what);
+        msg_update_text_fmt("JS8时间已启用（与%u %s偏差0.05秒内）", count, what);
         return;
     }
     js8_set_drift_ms(want);
-    msg_update_text_fmt("JS8 time moved %+.2f s (median of %u %s); drift now %+.2f s", step_s, count, what,
+    msg_update_text_fmt("JS8时间已调 %+.2f 秒（%u %s中位数）；当前漂移 %+.2f 秒", step_s, count, what,
                         want / 1000.0);
     char row[JS8_RX_TEXT_LEN];
     snprintf(row, sizeof(row), "JS8 time %+.2f s, drift %+.2f s", step_s, want / 1000.0);
@@ -2618,7 +2618,7 @@ static void time_sync_hold_cb(button_data_t *b) {
     if (press_closes_list() || refuse_while_sending()) return;
     bool had = js8_drift_ms() != 0;
     if (had) js8_set_drift_ms(0);
-    msg_update_text_fmt(had ? "Drift reset: JS8 back on the radio's clock" : "No drift: JS8 is on the radio's clock");
+    msg_update_text_fmt(had ? "漂移已重置：JS8回到电台时钟" : "无漂移：JS8使用电台时钟");
     if (had) drift_noted("drift reset");
 }
 
@@ -2626,7 +2626,7 @@ static void time_sync_hold_cb(button_data_t *b) {
 static bool need_station(char *call, float *hz) {
     int  db;
     bool found = selected_station(call, JS8_RX_CALL_LEN, hz, &db);
-    if (!found) msg_update_text_fmt("Select a station first (MFK)");
+    if (!found) msg_update_text_fmt("请先选择一个台站（MFK）");
     return found;
 }
 
@@ -2666,7 +2666,7 @@ static void stop_tx_cb(button_data_t *b) { /* also the first ESC, with b NULL */
     popup_guard(); /* any list closes, and TX stops all the same */
     bool busy = js8_tx_busy(tx);
     if (busy) js8_tx_stop(tx);
-    msg_update_text_fmt(busy ? "Stopping TX" : "Not sending");
+    msg_update_text_fmt(busy ? "正在停止发射" : "未发送");
     if (busy) auto_cq_stop("TX stopped");
 }
 
@@ -2735,7 +2735,7 @@ static void cq_adjust_end(void) { /* the knob setting ends */
     update_tx_bar(); /* back to what's being sent */
     if (auto_cq) { /* say how it goes on */
         unsigned minutes = params.js8_cq_interval.x;
-        msg_update_text_fmt("Auto CQ %u min after each CQ (press CQ to stop)", minutes);
+        msg_update_text_fmt("每次CQ后%u分钟自动CQ（按CQ停止）", minutes);
     }
 }
 
@@ -2778,14 +2778,14 @@ static void cq_hold_cb(button_data_t *b) {
         add_info_row("Auto CQ on"); /* in the list too */
     }
     cq_knob_start();
-    if (starting) msg_update_text_fmt("Auto CQ on: turn the knob to set the minutes, press CQ when done");
+    if (starting) msg_update_text_fmt("自动CQ开启：旋转旋钮设置分钟，完成后按CQ");
 }
 
 static void auto_cq_stop(const char *why) { /* says why, in the list too */
     if (auto_cq == false) return;
     auto_cq = cq_adjusting = false;
     redraw(&btn_cq);
-    msg_update_text_fmt("Auto CQ off: %s", why); /* on the message line */
+    msg_update_text_fmt("自动CQ关闭：%s", why); /* on the message line */
     add_info_row("Auto CQ off: %s", why); /* and in the list */
     update_tx_bar(); /* no knob hint left */
 }
@@ -2834,7 +2834,7 @@ static bool send_heartbeat(bool by_itself) {
         js8_heartbeat_text(params.callsign.x, station_qth(), hb, sizeof(hb));
         return tx_queue_at(hb, hb_free_offset(), by_itself);
     }
-    if (!by_itself) msg_update_text_fmt("No heartbeats in Turbo, as in desktop JS8Call");
+    if (!by_itself) msg_update_text_fmt("Turbo模式无心跳，与桌面JS8Call相同");
     return false;
 }
 
@@ -2860,7 +2860,7 @@ static void hold_cb(button_data_t *b) {
     if (press_closes_list()) return;
     bool stay = param_flip(&params.js8_hold_offset);
     buttons_refresh(b);
-    msg_update_text_fmt(stay ? "Replies stay on your offset" : "Replies move to their offset");
+    msg_update_text_fmt(stay ? "回复保持你的频偏" : "回复切到对方频偏");
 }
 
 static const char *stations_label_getter(void) { /* the view the press goes to */
@@ -2925,9 +2925,9 @@ static void query_pick_cb(lv_event_t *ev) {
         apply_hold(hz);
         tx_queue(text); /* the query goes out */
     } else if (which == JS8_Q_MY_GRID) {
-        msg_update_text_fmt("Set your grid first: Settings > General");
+        msg_update_text_fmt("请先在设置 > 通用中设置网格定位");
     } else {
-        msg_update_text_fmt("Nothing to send");
+        msg_update_text_fmt("无内容可发送");
     }
 }
 
@@ -2966,7 +2966,7 @@ static bool popup_guard(void) { /* true: a list was open, and now it's closed */
     bool open = any_popup();
     if (open) {
         popups_close_all();
-        msg_update_text_fmt("List closed"); /* press again for the button itself */
+        msg_update_text_fmt("列表已关闭"); /* press again for the button itself */
     }
     return open;
 }
@@ -3036,18 +3036,18 @@ typedef struct {
 } query_msg_item_t;
 
 static const query_msg_item_t query_msg_items[] = {
-    {.label = "Message...", .start = "%s MSG ", .hint = "Message for %s's inbox: type it and press Enter"},
-    {.label = "Message via them...",
+    {.label = "消息...", .start = "%s MSG ", .hint = "Message for %s's inbox: type it and press Enter"},
+    {.label = "经其转发消息...",
      .start = "%s MSG TO:",
      .hint  = "Left at %s for someone: type their call, a space, the message"},
-    {.label = "Any messages?", .now = "%s QUERY MSGS"},
-    {.label = "Fetch message #...",
+    {.label = "有消息吗？", .now = "%s QUERY MSGS"},
+    {.label = "获取消息 #...",
      .start = "%s QUERY MSG ",
      .hint  = "Type the number of the message %s holds for you"},
-    {.label = "Relay via them...",
+    {.label = "经其中继...",
      .start = "%s>",
      .hint  = "Passed on by %s: type the call it's for, a space, the message"},
-    {.label = "Can they reach...?",
+    {.label = "对方能通达...吗？",
      .start = "%s QUERY CALL ",
      .hint  = "Ask %s if they hear a station: type its call and ?"},
 };
@@ -3209,14 +3209,14 @@ static void save_saved(void) { /* after each edit */
     const char *tmp = JS8_SAVED_PATH ".tmp";
     FILE       *out = fopen(tmp, "w");
     if (out == NULL) {
-        msg_update_text_fmt("Can't write %s", JS8_SAVED_PATH);
+        msg_update_text_fmt("无法写入 %s", JS8_SAVED_PATH);
         return;
     }
     for (int slot = 0; slot < SAVED_N; slot++) fprintf(out, "%s\n", saved_msgs[slot]);
     fflush(out);
     fsync(fileno(out));
     fclose(out);
-    if (rename(tmp, JS8_SAVED_PATH)) msg_update_text_fmt("Can't write %s", JS8_SAVED_PATH);
+    if (rename(tmp, JS8_SAVED_PATH)) msg_update_text_fmt("无法写入 %s", JS8_SAVED_PATH);
 }
 
 /* Saved message `slot` into the keyboard: Enter saves it, ESC leaves it as it was. */
@@ -3230,7 +3230,7 @@ static void saved_edit_open(int slot) {
         return;
     }
     lv_group_set_editing(keyboard_group, true); /* keys to the keyboard */
-    msg_update_text_fmt("Message %d: Enter saves, empty clears. Macros: <CALL> <SNR> <TDELTA> <MYCALL> <MYGRID4> "
+    msg_update_text_fmt("消息%d：Enter保存，空则清除。宏：<CALL> <SNR> <TDELTA> <MYCALL> <MYGRID4> "
                         "<MYGRID12> <MYINFO> <MYSTATUS> <MYIDLE> <MYVERSION>",
                         slot + 1);
 }
@@ -3250,7 +3250,7 @@ static void saved_item_cb(lv_event_t *ev) {
     bool  selected = selected_station(who, sizeof(who), &hz, &db);
     /* Desktop sends it anyway with <CALL> left out; here it would go to nobody. */
     if (!selected && js8_macros_need_station(msg)) {
-        msg_update_text_fmt("Select a station first: message %d has <CALL>, <SNR> or <TDELTA>", slot + 1);
+        msg_update_text_fmt("请先选择台站：消息%d含 <CALL>、<SNR> 或 <TDELTA>", slot + 1);
         return;
     }
     char filled[2 * TX_TEXT_MAX];
@@ -3259,7 +3259,7 @@ static void saved_item_cb(lv_event_t *ev) {
     size_t len   = strlen(start);
     while (len > 0 && start[len - 1] == ' ') start[--len] = '\0';
     if (len == 0) {
-        msg_update_text_fmt("Nothing to send: message %d has only macros that are empty now", slot + 1);
+        msg_update_text_fmt("无内容可发送：消息%d只含当前为空的宏", slot + 1);
         return;
     }
     query_close(); /* the list goes, the message goes out */
@@ -3283,9 +3283,9 @@ static void saved_focus_cb(lv_event_t *ev) {
     char        filled[2 * TX_TEXT_MAX];
 
     if (msg[0] == '\0') {
-        msg_update_text_fmt("Message %d is empty: press or hold to write one", slot + 1);
+        msg_update_text_fmt("消息%d为空：按下或长按编写", slot + 1);
     } else if (sel_call[0] == '\0' && js8_macros_need_station(msg)) {
-        msg_update_text_fmt("%d: %s (select a station first)", slot + 1, msg);
+        msg_update_text_fmt("%d：%s（请先选择台站）", slot + 1, msg);
     } else {
         macros_fill(msg, true, filled, sizeof(filled));
         msg_update_text_fmt("%d: %s", slot + 1, filled);
@@ -3389,7 +3389,7 @@ static void auto_send(const js8_auto_result_t *res) {
     if (!tx_queue_at(res->text, hz, true)) return;
     js8_auto_sent(autop, res, t);
     if (res->deliver_id) deliver_start(res->deliver_id, res->deliver_group_call, res->text);
-    if (res->kind == JS8_REPLY_RELAY) msg_update_text_fmt("Relaying %s's message", res->to);
+    if (res->kind == JS8_REPLY_RELAY) msg_update_text_fmt("正在转发 %s 的消息", res->to);
     add_info_row("Auto: %s", res->text);
 }
 
@@ -3403,7 +3403,7 @@ static void hb_pause(const char *reason) {
     hb_adjusting = false; /* nor its knob setting */
     redraw(&btn_hbauto);
     redraw(&btn_hbackk);
-    msg_update_text_fmt("Heartbeats off: %s", reason);
+    msg_update_text_fmt("心跳已关闭：%s", reason);
     add_info_row("HB and HB ACK off: %s", reason);
     update_status(); /* no next heartbeat */
 }
@@ -3426,23 +3426,23 @@ static void offer_answer(const js8_auto_result_t *r) {
     if (r->kind == JS8_REPLY_RELAY) {
         char dest[JS8_RX_CALL_LEN]; /* who the relay is for: the text up to its '>' */
         snprintf(dest, sizeof(dest), "%.*s", (int)strcspn(r->text, ">"), r->text);
-        msg_update_text_fmt("%s asks you to relay to %s - select it and press Reply to pass it on", r->to, dest);
+        msg_update_text_fmt("%s 请你转发给 %s —— 选中并按回复转发", r->to, dest);
         add_info_row("%s: Reply passes on \"%s\" (AUTO does it by itself)", r->to, r->text);
     } else if (!strcmp(r->command, ">") || is_msg) {
-        if (is_msg) msg_update_text_fmt("Message from %s - select it and press Reply to send ACK", r->to);
-        else msg_update_text_fmt("Relayed message via %s - select it and press Reply to send ACK", r->to);
+        if (is_msg) msg_update_text_fmt("来自 %s 的消息 —— 选中并按回复发送ACK", r->to);
+        else msg_update_text_fmt("经 %s 转发的消息 —— 选中并按回复发送ACK", r->to);
         add_info_row("%s: Reply sends \"%s\" (AUTO sends it by itself)", r->to, r->text);
     } else if (r->deliver_id) {
-        msg_update_text_fmt("%s asks for the message held for them - select it and press Reply to send it", r->to);
+        msg_update_text_fmt("%s 索取为其保留的消息 —— 选中并按回复发送", r->to);
         add_info_row("%s asks for held message %d: Reply sends it", r->to, r->deliver_id);
     } else if (!strcmp(r->command, "HW CPY?")) {
-        msg_update_text_fmt("%s asks how you copy - select it and press Reply", r->to);
+        msg_update_text_fmt("%s 询问抄收情况 —— 选中并按回复", r->to);
         add_info_row("%s asked HW CPY?: Reply has \"%s\"", r->to, r->text);
     } else if (!strcmp(r->command, "MSG ID")) {
-        msg_update_text_fmt("%s holds a message for you - select it and press Reply to fetch it", r->to);
+        msg_update_text_fmt("%s 有一封给你的消息 —— 选中并按回复取回", r->to);
         add_info_row("%s holds a message for you: Reply sends \"%s\"", r->to, r->text);
     } else {
-        msg_update_text_fmt("%s asked %s - select it and press Reply to answer", r->to, r->command);
+        msg_update_text_fmt("%s 询问 %s —— 选中并按回复应答", r->to, r->command);
         add_info_row("%s asked %s: Reply sends \"%s\"", r->to, r->command, r->text);
     }
 }
@@ -3549,8 +3549,8 @@ static void auto_cb(button_data_t *b) {
     bool on = param_flip(&params.js8_auto);
     buttons_refresh(b);
     redraw(&btn_hbackk); /* idle or not */
-    if (on) msg_update_text_fmt("AUTO on: answers SNR? GRID? INFO? STATUS? HEARING? AGN?");
-    else msg_update_text_fmt("AUTO off: answers are offered on Reply");
+    if (on) msg_update_text_fmt("AUTO开启：自动应答 SNR? GRID? INFO? STATUS? HEARING? AGN?");
+    else msg_update_text_fmt("AUTO关闭：应答在回复中提供");
     update_status(); /* AUTO shows there */
 }
 
@@ -3580,7 +3580,7 @@ static void hb_adjust_end(void) { /* the knob setting ends */
         redraw(&btn_hbauto);
         update_tx_bar(); /* back to what's being sent */
         unsigned minutes = params.js8_hb_interval.x;
-        if (params.js8_hb.x) msg_update_text_fmt("HB every %u min", minutes);
+        if (params.js8_hb.x) msg_update_text_fmt("每%u分钟心跳", minutes);
     }
 }
 
@@ -3595,7 +3595,7 @@ static void hb_cb(button_data_t *b) {
     buttons_refresh(b);
     redraw(&btn_hbackk);
     if (on) hb_knob_start(b);
-    else msg_update_text_fmt("HB off");
+    else msg_update_text_fmt("心跳关闭");
     update_status(); /* the next heartbeat, or none */
 }
 
@@ -3613,7 +3613,7 @@ static void hb_ack_cb(button_data_t *b) {
     if (press_closes_list()) return;
     bool on = param_flip(&params.js8_hb_ack);
     buttons_refresh(b);
-    if (on && !(params.js8_auto.x && params.js8_hb.x)) msg_update_text_fmt("HB ACK acts only while AUTO and HB are on");
+    if (on && !(params.js8_auto.x && params.js8_hb.x)) msg_update_text_fmt("仅当AUTO与HB开启时HB ACK生效");
     update_status(); /* HB ACK shows there */
 }
 
@@ -3669,7 +3669,7 @@ static void save_texts(void) { /* the whole file, after any change */
     const char *path = JS8_TEXTS_PATH;
     FILE       *out  = fopen(path, "w");
     if (out == NULL) {
-        msg_update_text_fmt("Can't write %s", path);
+        msg_update_text_fmt("无法写入 %s", path);
         return;
     }
     fprintf(out, "INFO=%s\n", info_text);
@@ -3725,8 +3725,8 @@ static void texts_item_cb(lv_event_t *ev) {
     bool      on   = param_flip(&params.js8_relay);
     lv_obj_t *item = lv_event_get_target(ev);
     lv_label_set_text(lv_obj_get_child(item, 0), relay_item_text());
-    if (on) msg_update_text_fmt("Relay on: relays (>) are passed on and MSG TO: messages held, as desktop JS8Call");
-    else msg_update_text_fmt("Relay off: relays (>) and MSG TO: messages for others are ignored");
+    if (on) msg_update_text_fmt("中继开启：转发（>）继续传递，MSG TO:消息暂存，同桌面JS8Call");
+    else msg_update_text_fmt("中继关闭：忽略转发（>）和给别人的MSG TO:消息");
 }
 
 static void settings_key_cb(lv_event_t *ev) {
@@ -3770,7 +3770,7 @@ static void texts_cb(button_data_t *b) {
     settings_item(relay_item_text(), SETTINGS_ITEM_RELAY);
     settings_text_item("Groups", groups_text, "(none)", EDIT_GROUPS);
 
-    lv_obj_t *done = list_add_item(list, "Close");
+    lv_obj_t *done = list_add_item(list, "关闭");
     lv_obj_set_style_text_color(done, TC(action), LV_PART_MAIN);
     lv_obj_add_event_cb(done, settings_close_cb, LV_EVENT_CLICKED, NULL);
     lv_obj_add_event_cb(done, settings_key_cb, LV_EVENT_KEY, NULL);
@@ -3980,7 +3980,7 @@ static bool aprs_prepare(const char *typed, char *ready, size_t room) {
 
     const char *text = p3_skip_spaces(addr + 10);
     if (*text == '\0') {
-        msg_update_text_fmt("APRS: nothing to send to %s", to); /* addressee without the padding */
+        msg_update_text_fmt("APRS：没有发给 %s 的内容", to); /* addressee without the padding */
         return false;
     }
     bool gateway_acks = strcmp(to, "SMS") == 0 || strcmp(to, "EMAIL-2") == 0 || strcmp(to, "WLNK-1") == 0;
@@ -3992,7 +3992,7 @@ static bool aprs_prepare(const char *typed, char *ready, size_t room) {
     }
     size_t len = strlen(ready) - cmd - 10;
     if (len > APRS_TEXT_MAX) {
-        msg_update_text_fmt("APRS allows %d characters after the addressee, this is %u: shorten it", APRS_TEXT_MAX,
+        msg_update_text_fmt("APRS收件人后允许%d字符，当前%u：请缩短", APRS_TEXT_MAX,
                             (unsigned)len);
         return false;
     }
@@ -4038,7 +4038,7 @@ static bool aprs_gps(char out_grid[12], double *out_lat, double *out_lon) {
     if (!gps_last_fix(&fix_lat, &fix_lon, &age_s))
         return p3_refuse("No GPS fix: plug in a GPS and wait for a fix (APP > GPS shows it)");
     if (age_s > 120) {
-        msg_update_text_fmt("No current GPS fix (last one %d min ago)", age_s / 60);
+        msg_update_text_fmt("当前无GPS定位（上次%d分钟前）", age_s / 60);
         return false;
     }
     if (!js8_latlon_to_grid(fix_lat, fix_lon, 10, locator, sizeof(locator)))
@@ -4113,9 +4113,9 @@ static void beacon_changed_cb(lv_event_t *ev) {
     js8_tx_preview(params.callsign.x, station_qth(), beacon, cur_speed(), &preview);
     if (!preview.ok) return;
     if (*p3_skip_spaces(textarea_window_get()))
-        msg_update_text_fmt("Position + message: %d frames, %.0f s", preview.frames, preview.seconds);
+        msg_update_text_fmt("位置+消息：%d帧，%.0f秒", preview.frames, preview.seconds);
     else
-        msg_update_text_fmt("Plain position: %d frames, %.0f s - type a message, or Enter", preview.frames,
+        msg_update_text_fmt("仅位置：%d帧，%.0f秒 - 输入消息或按Enter", preview.frames,
                             preview.seconds);
 }
 
@@ -4292,7 +4292,7 @@ static void p3_spot_update(void) {
 static void p3_spot_send(void) {
     const char *gateway = spot_sota ? "APRS2SOTA" : "APSPOT";
     if ((spot_sota ? last_sota : last_pota)[0] == '\0') {
-        msg_update_text_fmt("Type the %s first", spot_sota ? "summit" : "park"); /* the form can't send without */
+        msg_update_text_fmt("请先输入%s", spot_sota ? "山峰" : "公园"); /* the form can't send without */
         return;
     }
     char body[96], text[TX_TEXT_MAX + 8], ready[TX_TEXT_MAX + 8];
@@ -4451,7 +4451,7 @@ static void p3_log_save(void) {
     }
     log_entry.off_ms = now_wall_ms(); /* the QSO ends when it's saved */
     if (!js8_log_append(JS8_LOG_PATH, &log_entry, why, sizeof(why))) {
-        msg_update_text_fmt("Not logged: %s", why);
+        msg_update_text_fmt("未记录：%s", why);
         return;
     }
     /* Also in the radio's QSO database, for the worked-before marks here
@@ -4472,7 +4472,7 @@ static void p3_log_save(void) {
     const char *ref       = log_entry.pota_ref[0] ? log_entry.pota_ref : log_entry.sota_ref;
     const char *sent      = log_entry.rst_sent[0] ? log_entry.rst_sent : "-";
     const char *rcvd      = log_entry.rst_rcvd[0] ? log_entry.rst_rcvd : "-";
-    msg_update_text_fmt("Logged %s%s%s", log_entry.call, band_name[0] ? " on " : "", band_name);
+    msg_update_text_fmt("已记录 %s%s%s", log_entry.call, band_name[0] ? " 于 " : "", band_name);
     add_info_row("Logged %s %s %s/%s%s%s", log_entry.call, band_name, sent, rcvd, log_entry.pota_ref[0] ? " POTA " : "",
                  ref);
     if (view_stations) rebuild_station_rows(); /* the worked mark */
@@ -4657,10 +4657,10 @@ static void log_offer(const char *with) {
     if (params.js8_log_prompt.x && !busy) {
         p3_log_fill(with);
         log_list_open(LOG_SAVE); /* the knob on Save */
-        msg_update_text_fmt("QSO with %s ended - Save to log?", with);
+        msg_update_text_fmt("与 %s 的QSO已结束 - 保存到日志？", with);
         return;
     }
-    if (params.js8_log_prompt.x) msg_update_text_fmt("QSO with %s ended: Log QSO (page 5) to log it", with);
+    if (params.js8_log_prompt.x) msg_update_text_fmt("与 %s 的QSO已结束：用“记录QSO”（第5页）记录", with);
     add_info_row("QSO with %s ended: Log QSO (page 5) to log it", with);
 }
 
@@ -4696,8 +4696,8 @@ static void act_cb(button_data_t *b) {
         return;
     }
     const char *ref = mode == 1 ? last_pota : last_sota;
-    if (ref[0]) msg_update_text_fmt("Logging as %s %s (hold to change)", mode == 1 ? "POTA" : "SOTA", ref);
-    else msg_update_text_fmt("Hold this button to set your %s", mode == 1 ? "park" : "summit");
+    if (ref[0]) msg_update_text_fmt("记录为 %s %s（长按修改）", mode == 1 ? "POTA" : "SOTA", ref);
+    else msg_update_text_fmt("长按此按钮设置你的%s", mode == 1 ? "公园" : "山峰");
 }
 
 static void act_hold_cb(button_data_t *b) {
@@ -4759,18 +4759,18 @@ static void stored_received(const js8_stored_t *s) {
     js8_path_display(s->path[0] ? s->path : s->from, by, sizeof by);
     if (s->kind == JS8_STORED_HELD) {
         if (s->resend) return;
-        if (s->id < 0) msg_update_text_fmt("Can't save %s", JS8_HELD_PATH);
-        else msg_update_text_fmt("Holding a message from %s for %s (Inbox)", by, s->to);
+        if (s->id < 0) msg_update_text_fmt("无法保存 %s", JS8_HELD_PATH);
+        else msg_update_text_fmt("为 %s 暂存来自 %s 的消息（收件箱）", by, s->to);
         add_info_row("Holding message %d from %s for %s: %s", s->id, by, s->to, s->text);
         return;
     }
     if (s->kind != JS8_STORED_INBOX) return;
-    if (s->id < 0) msg_update_text_fmt("Message from %s - can't save %s", by, JS8_INBOX_PATH);
+    if (s->id < 0) msg_update_text_fmt("来自 %s 的消息 - 无法保存 %s", by, JS8_INBOX_PATH);
     if (!s->resend) {
         if (s->id >= 0 && s->to[0] == '@')
-            msg_update_text_fmt("New message to %s from %s - Inbox on page 3", s->to, by);
+            msg_update_text_fmt("新消息：来自 %s 发给 %s —— 收件箱在第3页", s->to, by);
         else if (s->id >= 0)
-            msg_update_text_fmt("New message from %s - Inbox on page 3", by);
+            msg_update_text_fmt("新消息：来自 %s —— 收件箱在第3页", by);
         add_info_row("Message from %s in the Inbox: %s", by, s->text);
         if (params.js8_alerts.x & JS8_ALERT_INBOX) alert_beep(2);
     }
@@ -4829,8 +4829,8 @@ static void msg_compose(const char *to, const char *kind) {
     bool leave = strcmp(kind, "MSG TO:") == 0;
     snprintf(text, sizeof(text), "%s %s", to, kind);
     p3_keyboard(text);
-    if (leave) msg_update_text_fmt("Left at %s for someone: type their call, a space, the message", to);
-    else msg_update_text_fmt("Message for %s's inbox: type it and press Enter", to);
+    if (leave) msg_update_text_fmt("留给 %s 的某人：输入对方呼号、空格、消息", to);
+    else msg_update_text_fmt("给 %s 收件箱的消息：输入并按Enter", to);
 }
 
 static void p3_inbox_view(int id);
@@ -4884,12 +4884,12 @@ static void p3_inbox_answer(int action) {
     } else if (action == IB_REPLY_VIA) {
         snprintf(text, sizeof(text), "%s MSG TO:%s ", path, sender);
         p3_keyboard(text);
-        msg_update_text_fmt("Left at %s for %s: type the message and press Enter", path, sender);
+        msg_update_text_fmt("留给 %s 给 %s：输入消息并按Enter", path, sender);
     } else {
         snprintf(text, sizeof(text), APRS_CMD "%-9.9s:", aprs_to);
         aprs_compose(text);
         lv_group_set_editing(keyboard_group, true); /* the knob types */
-        msg_update_text_fmt("APRS message to %s: type it and press Enter", aprs_to);
+        msg_update_text_fmt("发给 %s 的APRS消息：输入并按Enter", aprs_to);
     }
 }
 
@@ -5231,7 +5231,7 @@ static void swr_guard_trip(float swr) {
     if (btn_hbauto.disp_btn) buttons_refresh(&btn_hbauto);
     if (btn_hbackk.disp_btn) buttons_refresh(&btn_hbackk);
     add_info_row("High SWR %.1f:1: AUTO, HB, HB ACK and auto CQ off", swr);
-    msg_update_text_fmt("High SWR %.1f:1: AUTO, HB, HB ACK and auto CQ off. Check the antenna", swr);
+    msg_update_text_fmt("高驻波 SWR %.1f:1：已关闭AUTO、HB、HB ACK和自动CQ。请检查天线", swr);
     update_status();
     swr_beep_due = true;
 }
@@ -5275,7 +5275,7 @@ static void alert_check(js8_rx_msg_t *msg, bool first_heard) {
     if (msg->low_confidence) return; /* likely a false decode */
     if (js8_alert_hit(msg->text, msg->from, alert_words, word, sizeof(word))) {
         msg->alert = true; /* the row turns purple */
-        msg_update_text_fmt("Alert %s: %s", word, msg->text);
+        msg_update_text_fmt("告警 %s：%s", word, msg->text);
         alert_beep(2); /* two beeps for a word */
         return;
     }
@@ -5289,7 +5289,7 @@ static void alert_check(js8_rx_msg_t *msg, bool first_heard) {
     } else if ((on & JS8_ALERT_NEW) && first_heard && msg->from[0]) {
         int band = qso_log_freq_to_band(cparam_i_get(cfg_fg_freq));
         if (qso_log_search_worked(msg->from, MODE_JS8, band) <= 0) {
-            msg_update_text_fmt("New station: %s", msg->from);
+            msg_update_text_fmt("新台站：%s", msg->from);
             beep = true;
         }
     }
@@ -5405,7 +5405,7 @@ static void speed_warn(void) { /* before a reply goes out */
     char        who[JS8_RX_CALL_LEN];
     float       audio_hz;
     if (!p3_selected_speed(&theirs) || theirs == ours || !p3_selected(who, &audio_hz)) return;
-    msg_update_text_fmt("%s was heard on %s, you send %s - hold Speed (page 6) to match", who, js8_speed_name(theirs),
+    msg_update_text_fmt("%s 在 %s 被听到，你发送 %s - 长按速度（第6页）对齐", who, js8_speed_name(theirs),
                         js8_speed_name(ours));
 }
 
@@ -5428,7 +5428,7 @@ static void p3_speed_set(js8_speed_t speed) {
     if (btn_speed.disp_btn) buttons_refresh(&btn_speed); /* the label shows the speed */
     update_tx_bar(); /* the bar's length follows the slot */
     const char *name = js8_speed_name(speed);
-    msg_update_text_fmt("Sending %s: %d s slots, %d Hz wide%s", name, js8_speed_period_s(speed),
+    msg_update_text_fmt("正在发送 %s：时隙%d秒，宽%d Hz%s", name, js8_speed_period_s(speed),
                         js8_speed_bandwidth_hz(speed), js8_speed_heartbeats(speed) ? "" : ", no heartbeats (as desktop)");
     add_info_row("Sending at %s speed", name);
 }
@@ -5450,7 +5450,7 @@ static void speed_hold_cb(button_data_t *b) {
     LV_UNUSED(b);
     if (p3_press_closes_popup()) return;
     if (!p3_selected_speed(&theirs)) p3_say("Select a station first (MFK)");
-    else if (theirs == cur_speed()) msg_update_text_fmt("Already sending %s", js8_speed_name(theirs));
+    else if (theirs == cur_speed()) msg_update_text_fmt("已在发送 %s", js8_speed_name(theirs));
     else p3_speed_set(theirs);
 }
 
@@ -5463,7 +5463,7 @@ static void decode_cb(button_data_t *b) {
     js8_rx_set_submodes(rx, rx_speed_mask()); /* every speed, or ours only */
     buttons_refresh(b);
     if (all) p3_say("Decoding every speed (Normal, Fast, Turbo, Slow)");
-    else msg_update_text_fmt("Decoding %s only", js8_speed_name(cur_speed())); /* My speed */
+    else msg_update_text_fmt("仅解码 %s", js8_speed_name(cur_speed())); /* My speed */
 }
 
 /* ---- Dial frequencies: JS8Call's, GhostNet's or your own ---------------- */
@@ -5612,7 +5612,7 @@ static void map_pick(const js8_map_station_t *st) {
     js8_station_t s;
     map_close();
     if (!find_station(st->call, &s)) {
-        msg_update_text_fmt("%s: not heard on this band", st->call);
+        msg_update_text_fmt("%s：本波段未听到", st->call);
         return;
     }
     snprintf(sel_call, sizeof(sel_call), "%s", s.call);
@@ -5635,7 +5635,7 @@ static void map_cb(button_data_t *btn) {
     if (composing) return;
     map_obj = js8_map_create(dialog.obj, WIDTH, WF_HEIGHT, station_qth(), JS8_LOG_PATH, map_fill, true, map_pick);
     if (!map_obj) {
-        msg_update_text_fmt("Not enough memory for the map");
+        msg_update_text_fmt("内存不足，无法显示地图");
         return;
     }
     lv_obj_set_pos(map_obj, 13, 13);

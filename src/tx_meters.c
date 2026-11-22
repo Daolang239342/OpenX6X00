@@ -190,13 +190,13 @@ static void update_head(void) {
     float     tune = tune_len;
 
     split_freq(f, &mhz, &khz, &hz);
-    lv_label_set_text_fmt(head_label, "%s - %i.%03i.%03i", tune > 0.0f ? "EXTERNAL TUNE" : info_params_mode_label_get(),
+    lv_label_set_text_fmt(head_label, "%s - %i.%03i.%03i", tune > 0.0f ? "外部调谐" : info_params_mode_label_get(),
                           mhz, khz, hz);
     if (tune > 0.0f)
         lv_label_set_text_fmt(time_label, "%u / %u s", (unsigned)s, (unsigned)(tune + 0.5f));
     else
         lv_label_set_text_fmt(time_label, "%02u:%02u", (unsigned)(s / 60), (unsigned)(s % 60));
-    lv_label_set_text(badge, tune > 0.0f ? "TUNE" : "TX");
+    lv_label_set_text(badge, tune > 0.0f ? "调谐" : "TX");
 }
 
 static void update_strip(void) {
@@ -215,7 +215,7 @@ static void update_strip(void) {
         lv_label_set_text_fmt(strip_time, "%u / %u s", (unsigned)s, (unsigned)(len + 0.5f));
     else
         lv_label_set_text_fmt(strip_time, "%02u:%02u", (unsigned)(s / 60), (unsigned)(s % 60));
-    lv_label_set_text(strip_tag, tune > 0.0f ? "TUNE" : "TX");
+    lv_label_set_text(strip_tag, tune > 0.0f ? "调谐" : "TX");
 }
 
 void tx_info_set_length(float seconds) {

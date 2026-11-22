@@ -47,11 +47,11 @@ static void msg_btn_cb(button_data_t *btn);
 static void enqueue(const char *text);
 static bool enqueue_raw(const char *text, bool space);
 
-static button_data_t btn_p1    = {.type = BTN_TEXT, .label = "(CW KBD 1:1)", .press = NULL};
-static button_data_t btn_send  = {.type = BTN_TEXT, .label = "Send", .press = send_btn_cb};
-static button_data_t btn_stop  = {.type = BTN_TEXT, .label = "Stop", .press = stop_btn_cb};
-static button_data_t btn_clear = {.type = BTN_TEXT, .label = "Clear", .press = clear_btn_cb};
-static button_data_t btn_close = {.type = BTN_TEXT, .label = "Close", .press = close_btn_cb};
+static button_data_t btn_p1    = {.type = BTN_TEXT, .label = "(CW键盘 1:1)", .press = NULL};
+static button_data_t btn_send  = {.type = BTN_TEXT, .label = "发送", .press = send_btn_cb};
+static button_data_t btn_stop  = {.type = BTN_TEXT, .label = "停止", .press = stop_btn_cb};
+static button_data_t btn_clear = {.type = BTN_TEXT, .label = "清除", .press = clear_btn_cb};
+static button_data_t btn_close = {.type = BTN_TEXT, .label = "关闭", .press = close_btn_cb};
 
 static buttons_page_t page = {{&btn_p1, &btn_send, &btn_stop, &btn_clear, &btn_close}};
 
@@ -162,11 +162,11 @@ static void update_view(void) {
              sending, COLOR_NEXT, sending + sent, theme_hex(TC_text_faint), queue);
     lv_label_set_text(log_lbl, buf);
 
-    lv_label_set_text_fmt(head, "CW KEYBOARD - #%06x %i WPM#", theme_hex(TC_text), (int)param_i_get(cfg_key_speed));
-    lv_label_set_text(head_right, keyboard_ready() ? "keyboard ready" : "no keyboard: MFK press");
+    lv_label_set_text_fmt(head, "CW键盘 - #%06x %i WPM#", theme_hex(TC_text), (int)param_i_get(cfg_key_speed));
+    lv_label_set_text(head_right, keyboard_ready() ? "键盘就绪" : "无键盘：按MFK");
 
     if (!cw_mode()) {
-        lv_label_set_text(state_lbl, "NOT CW");
+        lv_label_set_text(state_lbl, "非CW");
         lv_obj_set_style_bg_color(state_lbl, TC(warn_bg), 0);
         lv_obj_set_style_text_color(state_lbl, TC(warn), 0);
     } else if (busy()) {
@@ -174,7 +174,7 @@ static void update_view(void) {
         lv_obj_set_style_bg_color(state_lbl, TC(tx_bg), 0);
         lv_obj_set_style_text_color(state_lbl, TC(text), 0);
     } else {
-        lv_label_set_text(state_lbl, "READY");
+        lv_label_set_text(state_lbl, "就绪");
         lv_obj_set_style_bg_color(state_lbl, TC(chip), 0);
         lv_obj_set_style_text_color(state_lbl, lv_color_hex(COLOR_HEAD), 0);
     }
@@ -210,7 +210,7 @@ static bool enqueue_raw(const char *text, bool space) {
     text = cw_encoder_expand(text);
 
     if (!cw_mode()) {
-        msg_update_text_fmt("Set CW mode to transmit");
+        msg_update_text_fmt("设为CW模式以发射");
         return false;
     }
     for (; *text && len < sizeof(queue) - 2; text++) {
@@ -520,7 +520,7 @@ static void construct_cb(lv_obj_t *parent) {
     lv_obj_set_style_pad_top(state_lbl, 6, 0);
 
     hint = label(dialog.obj, &sony_18, COLOR_DIM);
-    lv_label_set_text(hint, "Enter: send - Esc: stop - arrows or MFK: speed - MFK press: send or type");
+    lv_label_set_text(hint, "Enter：发送 - Esc：停止 - 方向键或MFK：速度 - 按MFK：发送或打字");
     lv_obj_set_pos(hint, 16, DIALOG_H - 34);
 
     lv_group_add_obj(keyboard_group, dialog.obj);

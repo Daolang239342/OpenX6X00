@@ -1,5 +1,5 @@
 % rebase('base.html', title='Logs')
-<h2><svg class="i"><use href="#i-book"/></svg>Logs</h2>
+<h2><svg class="i"><use href="#i-book"/></svg>日志</h2>
 <p class="sub">Every QSO on the radio, day by day: the day's logs (FT8, FT4, JS8 and the phone's logger) and the POTA/SOTA activations. Edit a QSO in place, delete QSOs or whole days, export what the filter shows as ADIF or CSV. Below them, <a href="#textlog">the keyboard modes' text</a>.</p>
 
 <section class="dp-card">
@@ -7,15 +7,15 @@
   <div class="dp-body">
   <div class="log-filters">
     <input id="f-text" placeholder="Call, name, QTH, grid, reference…" autocomplete="off">
-    <select id="f-band"><option value="">All bands</option></select>
-    <select id="f-mode"><option value="">All modes</option></select>
-    <input id="f-from" type="date" title="From">
-    <input id="f-to" type="date" title="To">
+    <select id="f-band"><option value="">全部波段</option></select>
+    <select id="f-mode"><option value="">全部模式</option></select>
+    <input id="f-from" type="date" title="来自">
+    <input id="f-to" type="date" title="至">
   </div>
   <div class="actions">
-    <button type="button" class="primary" id="exp-adi"><svg class="i"><use href="#i-download"/></svg>Export ADIF</button>
-    <button type="button" id="exp-csv"><svg class="i"><use href="#i-download"/></svg>Export CSV</button>
-    <button type="button" id="del-shown" class="remove">Delete shown</button>
+    <button type="button" class="primary" id="exp-adi"><svg class="i"><use href="#i-download"/></svg>导出ADIF</button>
+    <button type="button" id="exp-csv"><svg class="i"><use href="#i-download"/></svg>导出CSV</button>
+    <button type="button" id="del-shown" class="remove">删除所选</button>
     <span class="status" id="status"></span>
   </div>
   </div>

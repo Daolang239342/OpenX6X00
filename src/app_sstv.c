@@ -79,16 +79,16 @@ static void page_cb(button_data_t *b);
 static button_data_t btn_p1 = { .type = BTN_TEXT, .label = "(SSTV 1:3)", .press = page_cb };
 static button_data_t btn_p2 = { .type = BTN_TEXT, .label = "(SSTV 2:3)", .press = page_cb };
 static button_data_t btn_p3 = { .type = BTN_TEXT, .label = "(SSTV 3:3)", .press = page_cb };
-static button_data_t btn_auto = { .type = BTN_TEXT, .label = "Start\nAuto RX", .press = auto_cb };
-static button_data_t btn_manual = { .type = BTN_TEXT, .label = "Start\nManual RX", .press = manual_cb };
-button_data_t sstv_btn_mode = { .type = BTN_TEXT, .label = "RX Mode\nAuto", .press = mode_cb };
+static button_data_t btn_auto = { .type = BTN_TEXT, .label = "开始\\n自动接收", .press = auto_cb };
+static button_data_t btn_manual = { .type = BTN_TEXT, .label = "开始\\n手动接收", .press = manual_cb };
+button_data_t sstv_btn_mode = { .type = BTN_TEXT, .label = "接收模式\\n自动", .press = mode_cb };
 button_data_t sstv_btn_tx = { .type = BTN_TEXT, .label = "TX", .press = tx_cb };
-static button_data_t btn_freq = { .type = BTN_TEXT, .label = "Freq.", .press = freq_cb };
-button_data_t sstv_btn_gallery = { .type = BTN_TEXT, .label = "RX Pics\nBrowser", .press = gallery_cb };
-button_data_t sstv_btn_delete = { .type = BTN_TEXT, .label = "Delete\npicture", .press = delete_cb };
-static button_data_t btn_restart = { .type = BTN_TEXT, .label = "Auto RX\nRestart ON", .press = restart_cb };
-static button_data_t btn_denoise = { .type = BTN_TEXT, .label = "Denoise\nON", .press = denoise_cb };
-static button_data_t btn_close = { .type = BTN_TEXT, .label = "Close", .press = close_cb };
+static button_data_t btn_freq = { .type = BTN_TEXT, .label = "频率", .press = freq_cb };
+button_data_t sstv_btn_gallery = { .type = BTN_TEXT, .label = "接收图片\\n浏览器", .press = gallery_cb };
+button_data_t sstv_btn_delete = { .type = BTN_TEXT, .label = "删除\\n图片", .press = delete_cb };
+static button_data_t btn_restart = { .type = BTN_TEXT, .label = "自动接收\\n重启开启", .press = restart_cb };
+static button_data_t btn_denoise = { .type = BTN_TEXT, .label = "降噪\\n开", .press = denoise_cb };
+static button_data_t btn_close = { .type = BTN_TEXT, .label = "关闭", .press = close_cb };
 
 static buttons_page_t page1 = { .items = { &btn_p1, &btn_auto, &btn_manual, &sstv_btn_mode, &sstv_btn_tx } };
 static buttons_page_t page2 = { .items = { &btn_p2, &btn_freq, &sstv_btn_gallery, &sstv_btn_delete, &btn_restart } };
@@ -913,7 +913,7 @@ static void manual_cb(button_data_t *b)
             man_free();
         }
         pthread_mutex_unlock(&rx_lock);
-        btn_manual.label = "Start\nManual RX";
+        btn_manual.label = "开始\\n手动接收";
         if (btn_manual.disp_btn) buttons_refresh(&btn_manual);
         sstv_controls();
         return;
@@ -954,7 +954,7 @@ static void manual_cb(button_data_t *b)
                  mode_label_of(sstv_mode));
     sstv_status(s);
     if (sstv_bar) lv_obj_add_flag(sstv_bar, LV_OBJ_FLAG_HIDDEN);
-    btn_manual.label = "Stop\nManual RX";
+    btn_manual.label = "停止\\n手动接收";
     if (btn_manual.disp_btn) buttons_refresh(&btn_manual);
     sstv_controls();
     fprintf(stderr, "SSTV: Manual RX %s, stops after %.0f s at most\n", rx_mode_name(), limit);
@@ -1150,9 +1150,9 @@ static void destruct_cb(void)
     sstv_mode = SSTV_ROBOT8;
     sstv_mode_auto = true;
     sstv_rx_last = SSTV_UNKNOWN;     /* its picture went with the window */
-    btn_auto.label = "Start\nAuto RX";
-    btn_manual.label = "Start\nManual RX";
-    sstv_btn_mode.label = "RX Mode\nAuto";
+    btn_auto.label = "开始\\n自动接收";
+    btn_manual.label = "开始\\n手动接收";
+    sstv_btn_mode.label = "接收模式\\n自动";
     page1.items[3] = &sstv_btn_mode;
     btn_freq.disabled = false;      /* closed during TX */
     sstv_gallery_close();

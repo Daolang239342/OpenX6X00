@@ -85,21 +85,21 @@ static const char *until_label(void);
 
 static button_data_t btn_p1 = {.type = BTN_TEXT, .label = "(MSG 1:3)", .press = button_next_page_cb};
 static button_data_t btn_tx = {.type = BTN_TEXT_FN, .label_fn = tx_label, .press = tx_btn_cb};
-static button_data_t btn_new = {.type = BTN_TEXT, .label = "New", .press = new_cb};
-static button_data_t btn_edit = {.type = BTN_TEXT, .label = "Edit", .press = edit_cb};
-static button_data_t btn_close = {.type = BTN_TEXT, .label = "Close", .press = close_cb};
+static button_data_t btn_new = {.type = BTN_TEXT, .label = "新建", .press = new_cb};
+static button_data_t btn_edit = {.type = BTN_TEXT, .label = "编辑", .press = edit_cb};
+static button_data_t btn_close = {.type = BTN_TEXT, .label = "关闭", .press = close_cb};
 
 static button_data_t btn_p2 = {.type = BTN_TEXT, .label = "(MSG 2:3)", .press = button_next_page_cb};
 static button_data_t btn_beacon = {.type = BTN_TEXT_FN, .label_fn = beacon_label, .press = beacon_cb};
-static button_data_t btn_delete = {.type = BTN_TEXT, .label = "Delete", .press = delete_cb};
+static button_data_t btn_delete = {.type = BTN_TEXT, .label = "删除", .press = delete_cb};
 static button_data_t btn_qrss = {.type = BTN_TEXT_FN, .label_fn = qrss_label, .press = qrss_cb};
-static button_data_t btn_close2 = {.type = BTN_TEXT, .label = "Close", .press = close_cb};
+static button_data_t btn_close2 = {.type = BTN_TEXT, .label = "关闭", .press = close_cb};
 
 static button_data_t btn_p3 = {.type = BTN_TEXT, .label = "(MSG 3:3)", .press = button_next_page_cb};
 static button_data_t btn_start = {.type = BTN_TEXT_FN, .label_fn = start_label, .press = start_cb};
 static button_data_t btn_until = {.type = BTN_TEXT_FN, .label_fn = until_label, .press = until_cb};
 static button_data_t btn_qfreq = {.type = BTN_TEXT_FN, .label_fn = qfreq_label, .press = qfreq_cb};
-static button_data_t btn_close3 = {.type = BTN_TEXT, .label = "Close", .press = close_cb};
+static button_data_t btn_close3 = {.type = BTN_TEXT, .label = "关闭", .press = close_cb};
 
 buttons_page_t buttons_page_msg_cw_1 = {{&btn_p1, &btn_tx, &btn_new, &btn_edit, &btn_close}};
 buttons_page_t buttons_page_msg_cw_2 = {{&btn_p2, &btn_beacon, &btn_delete, &btn_qrss, &btn_close2}};
@@ -129,7 +129,7 @@ static void load_msgs(int select) {
     params_msg_cw_load();
 
     lv_table_set_row_cnt(list, count > 0 ? count : 1);
-    if (count == 0) lv_table_set_cell_value(list, 0, 0, "No messages yet: press New");
+    if (count == 0) lv_table_set_cell_value(list, 0, 0, "尚无消息：按新建");
     for (int i = 0; i < count; i++) lv_table_set_cell_value(list, i, 0, texts[i]);
 
     sel = select < 0 ? count - 1 : select;
@@ -343,9 +343,9 @@ static void update_status(void) {
     char        f[16], lo[16], hi[16];
 
     if (!qrss_on)
-        lv_label_set_text_fmt(head, "CW KEYER - #%06x %i WPM#", theme_hex(TC_text), wpm);
+        lv_label_set_text_fmt(head, "CW键控 - #%06x %i WPM#", theme_hex(TC_text), wpm);
     else if (band >= 0)
-        lv_label_set_text_fmt(head, "CW KEYER - #%06x QRSS3 %s MHz#", theme_hex(TC_text), mhz(f, qrss_hz(band)));
+        lv_label_set_text_fmt(head, "CW键控 - #%06x QRSS3 %s MHz#", theme_hex(TC_text), mhz(f, qrss_hz(band)));
     else
         lv_label_set_text_fmt(head, "CW KEYER - #%06x QRSS3: 30 m or 80 m#", theme_hex(TC_text));
     lv_label_set_text(text_lbl, text ? text : "-");
@@ -400,7 +400,7 @@ static void update_status(void) {
             else if (adjusting == ADJ_UNTIL)
                 lv_label_set_text(hint, "MFK or VOL: how many - Until: next kind - MFK: done");
             else
-                lv_label_set_text(hint, count ? "MFK: choose - press MFK: edit" : "New: write the first message");
+                lv_label_set_text(hint, count ? "MFK: choose - press MFK: edit" : "新建：编写第一条消息");
             break;
     }
 
@@ -553,7 +553,7 @@ static void edit_end(void) {
 static bool edit_ok(void) {
     const char *val = textarea_window_get();
     if (!val || !*val) {
-        msg_update_text_fmt("Empty message");
+        msg_update_text_fmt("空消息");
         return false;
     }
     edit_t what = editing;
@@ -740,12 +740,12 @@ static void delete_cb(button_data_t *btn) {
 
     if (!delete_armed) {
         delete_armed = lv_tick_get();
-        msg_update_text_fmt("Press Delete again to delete the message");
+        msg_update_text_fmt("再次按删除以删除该消息");
         return;
     }
     params_msg_cw_delete(ids[sel]);
     delete_armed = 0;
-    msg_update_text_fmt("Message deleted");
+    msg_update_text_fmt("消息已删除");
     load_msgs(sel);
     timer_cb(NULL);
 }

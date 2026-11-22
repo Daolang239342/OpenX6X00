@@ -68,7 +68,7 @@ static bool create_file() {
 
 /* GUI thread, from the audio thread's failure */
 static void write_failed(void *arg) {
-    msg_update_text_fmt("RX recorder: the microSD could not be written");
+    msg_update_text_fmt("RX录音机：无法写入microSD");
     recorder_set_on(false);
 }
 
@@ -77,14 +77,14 @@ void recorder_set_on(bool x) {
         return;                         /* on already, or off already: nothing to do twice */
     if (x) {
         if (!create_file()) {
-            msg_update_text_fmt("Problem with create file");
+            msg_update_text_fmt("创建文件出错");
             return;
         } else {
-            msg_update_text_fmt("RX recorder is on");
+            msg_update_text_fmt("RX录音机开启");
         }
         atomic_store(&on, true);
     } else {
-        msg_update_text_fmt("RX recorder is off");
+        msg_update_text_fmt("RX录音机关闭");
         atomic_store(&on, false);
         pthread_mutex_lock(&lock);
         if (file)

@@ -1,15 +1,15 @@
 % rebase('base.html', title='Update')
-<h2><svg class="i"><use href="#i-download"/></svg>Update</h2>
+<h2><svg class="i"><use href="#i-download"/></svg>更新</h2>
 <p class="sub">The radio installs a newer OpenX6X00 by itself: the GUI, the web pages, the helpers and their data, from the project's GitHub releases or from a bundle file. The files are checked against the project's signature, the previous version is kept, and the radio software restarts at the end (about a minute). A version that does not come up is put back automatically. The kernel and the WiFi driver still come with a card image.</p>
 
 <div class="dp-card">
-  <div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-cpu"/></svg></span><div><h3>Version</h3><p>What runs now, and the latest release</p></div></div>
-  <div class="dp-row"><div class="dp-lbl"><b>Running</b></div><div class="dp-ctl" id="running">-</div></div>
+  <div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-cpu"/></svg></span><div><h3>版本</h3><p>What runs now, and the latest release</p></div></div>
+  <div class="dp-row"><div class="dp-lbl"><b>运行中</b></div><div class="dp-ctl" id="running">-</div></div>
   <div class="dp-row"><div class="dp-lbl"><b>Latest release</b><span id="notes"></span></div><div class="dp-ctl" id="latest">-</div></div>
-  <div class="dp-row"><div class="dp-lbl"><b>Card image</b><span id="imgnote">What the update cannot carry (the kernel, the WiFi driver) comes with a card image</span></div><div class="dp-ctl" id="image">-</div></div>
+  <div class="dp-row"><div class="dp-lbl"><b>SD卡镜像</b><span id="imgnote">What the update cannot carry (the kernel, the WiFi driver) comes with a card image</span></div><div class="dp-ctl" id="image">-</div></div>
   <div class="dp-body" style="border-top:1px solid #1a283c">
     <div class="actions" style="margin-top:0">
-      <button type="button" id="check">Check</button>
+      <button type="button" id="check">检查</button>
       <button type="button" id="upgrade" class="primary" style="display:none">Install</button>
       <span class="status" id="status"></span>
     </div>
@@ -17,7 +17,7 @@
 </div>
 
 <form class="dp-card" id="upl">
-  <div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-upload"/></svg></span><div><h3>Bundle file</h3><p>An OpenX6X00-x6100-vX.Y.Z-update.tar.gz or OpenX6X00-x6200-vX.Y.Z-update.tar.gz from the releases page, for a radio without internet</p></div></div>
+  <div class="dp-head"><span class="dp-ico"><svg class="i"><use href="#i-upload"/></svg></span><div><h3>捆绑包文件</h3><p>An OpenX6X00-x6100-vX.Y.Z-update.tar.gz or OpenX6X00-x6200-vX.Y.Z-update.tar.gz from the releases page, for a radio without internet</p></div></div>
   <div class="dp-row">
     <div class="dp-lbl"><label for="file"><b>File</b></label></div>
     <div class="dp-ctl"><input id="file" type="file" accept=".gz,.tar.gz"></div>
@@ -35,7 +35,7 @@
   <div class="dp-row"><div class="dp-lbl"><b>Last update</b></div><div class="dp-ctl" id="last">-</div></div>
   <div class="dp-body" style="border-top:1px solid #1a283c">
     <div class="actions" style="margin-top:0">
-      <button type="button" id="rollback">Go back to the previous version</button>
+      <button type="button" id="rollback">回退到上一个版本</button>
       <span class="status" id="rstatus"></span>
     </div>
   </div>
